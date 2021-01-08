@@ -1,0 +1,21 @@
+[0924/185604.914:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0924/185604.929:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0924/185604.898:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0924/185604.929:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0924/185604.898:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0924/185605.007:ERROR:exception_snapshot_win.cc(99)] thread ID 5364 not found in process
+[0924/185604.898:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0924/185605.007:ERROR:exception_snapshot_win.cc(99)] thread ID 5252 not found in process
+[0924/185604.898:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0924/185604.898:ERROR:process_reader_win.cc(123)] NtOpenThread: {Отказано в доступе} Процесс запросил доступ к объекту, но права на доступ не предоставлены. (0xc0000022)
+[0924/185605.007:ERROR:exception_snapshot_win.cc(99)] thread ID 12716 not found in process
+[0924/185605.007:ERROR:exception_snapshot_win.cc(99)] thread ID 10912 not found in process
+[0924/185605.007:ERROR:exception_snapshot_win.cc(99)] thread ID 12912 not found in process
+[0924/185605.007:ERROR:exception_snapshot_win.cc(99)] thread ID 12624 not found in process
+[0924/185605.007:ERROR:exception_snapshot_win.cc(99)] thread ID 3140 not found in process
+[0924/185605.007:ERROR:exception_snapshot_win.cc(99)] thread ID 528 not found in process
+[0924/185605.007:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения. (0xc000010a)
+[0924/185605.007:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Попытка доступа к процессу, выполняющему процедуру завершения. (0xc000010a)
+[1028/104707.428:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
+[1029/115100.288:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
+[1201/181532.970:ERROR:directory_reader_win.cc(43)] FindFirstFile: Системе не удается найти указанный путь. (0x3)
