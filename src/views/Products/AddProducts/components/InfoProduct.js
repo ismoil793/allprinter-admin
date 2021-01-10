@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { httpGet, httpPost } from "../../../../api";
-import { Notyf } from 'notyf'
+import React, {Component} from "react";
+import {httpGet, httpPost} from "../../../../api";
+import {Notyf} from 'notyf'
 import 'notyf/notyf.min.css'
 import {
   Button,
@@ -32,17 +32,29 @@ class InfoProduct extends Component {
       model: "",
       collapse: true,
       fadeIn: true,
-      timeout: 300
+      timeout: 300,
+
+      CreateProduct:this.CreateProduct.bind(this)
     };
   }
 
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.isCreateNewProduct) {
+      prevState.CreateProduct();
+      return null
+    }
+    return null
+  }
+
+
   async componentDidMount() {
+
     await httpGet({
-      url: "api/admin/class", 
+      url: "api/admin/class",
       params: {
         total: 1
       }
-      })
+    })
       .then(response => {
         this.setState({
           classes: response.data.data
@@ -52,11 +64,11 @@ class InfoProduct extends Component {
         console.log(error);
       });
     await httpGet({
-      url: "api/admin/brand", 
+      url: "api/admin/brand",
       params: {
         total: 1
       }
-      })
+    })
       .then(response => {
         this.setState({
           brands: response.data.data
@@ -65,25 +77,29 @@ class InfoProduct extends Component {
       .catch(error => {
         console.log(error);
       });
+
   }
 
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({[e.target.name]: e.target.value});
   };
 
 
   BrandCallbackFunction = (childData) => {
     this.setState({selectedbrand: childData})
-}
+  }
 
   ClassCallbackFunction = (childData) => {
     this.setState({selectedclass: childData})
   }
 
 
-  CreateProduct = e => {
-    e.preventDefault();
+  CreateProduct(e) {
+    if (e) {
+      e.preventDefault();
+    }
     const notyf = new Notyf()
+
     httpPost({
       url: "api/admin/product/create",
       data: {
@@ -103,20 +119,23 @@ class InfoProduct extends Component {
       .catch(error => {
         console.log(error);
       });
+
+    this.props.handleInfoProduct(false)
   };
 
   toggle() {
-    this.setState({ collapse: !this.state.collapse });
+    this.setState({collapse: !this.state.collapse});
   }
 
   toggleFade() {
     this.setState(prevState => {
-      return { fadeIn: !prevState };
+      return {fadeIn: !prevState};
     });
   }
 
   render() {
-    const { model } = this.state;
+
+    const {model} = this.state;
 
     return (
       <div className="animated fadeIn">
@@ -134,7 +153,7 @@ class InfoProduct extends Component {
                     </Col>
                     <Col xs="12" md="7">
                       <ClassIntegrationReactSelect
-                        classFunction = {this.ClassCallbackFunction}
+                        classFunction={this.ClassCallbackFunction}
                         classes={this.state.classes}
                       />
                     </Col>
@@ -145,9 +164,9 @@ class InfoProduct extends Component {
                       <Label htmlFor="text-input">Бренд</Label>
                     </Col>
                     <Col xs="12" md="7">
-                      <BrandIntegrationReactSelect 
-                      brandFunction={this.BrandCallbackFunction}
-                      brands={this.state.brands} />
+                      <BrandIntegrationReactSelect
+                        brandFunction={this.BrandCallbackFunction}
+                        brands={this.state.brands}/>
                     </Col>
                   </FormGroup>
 
@@ -168,11 +187,10 @@ class InfoProduct extends Component {
                     </Col>
                   </FormGroup>
 
-                
 
-                  <Button type="submit" size="sm" color="primary">
-                    <i className="fa fa-dot-circle-o"></i> Сохранить
-                  </Button>
+                  {/*<Button type="submit" size="sm" color="primary">*/}
+                  {/*  <i className="fa fa-dot-circle-o"></i> Сохранить*/}
+                  {/*</Button>*/}
                 </Form>
               </CardBody>
             </Card>

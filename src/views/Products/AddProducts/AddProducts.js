@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Col, Nav, NavItem, NavLink, Row, TabContent, TabPane,} from 'reactstrap';
+import {Button, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane,} from 'reactstrap';
 import AddForms from './AddForm'
 import InfoProduct from './components/InfoProduct'
 import Character from './components/Characteristics'
@@ -7,7 +7,6 @@ import SeoProduct from './components/SeoProduct'
 import ImageProduct from './components/ImageProduct'
 import PriceProduct from './components/PriceProduct';
 import DescriptionProduct from './components/DesciptionProduct';
-
 
 
 class AddProducts extends Component {
@@ -18,19 +17,23 @@ class AddProducts extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: new Array(4).fill('1'),
-      productData : [],
-      newProductData: [] //after connecting categories
+      productData: [],
+      newProductData: [], //after connecting categories
+      isCreateNewProduct: false
     };
   }
 
+  handleInfoProduct = (val) => {
+    this.setState({isCreateNewProduct: val})
+  }
 
-    callbackFunction = (childData) => {
-          this.setState({productData: childData})
-    }
+  callbackFunction = (childData) => {
+    this.setState({productData: childData})
+  }
 
-    newCallbackFunction = (childData) => {
-      this.setState({productData: childData})
-}
+  newCallbackFunction = (childData) => {
+    this.setState({productData: childData})
+  }
 
   lorem() {
     return 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.'
@@ -44,33 +47,59 @@ class AddProducts extends Component {
     });
   }
 
+  handleSubmit = () => {
+
+    this.handleInfoProduct(true)
+  }
+
   tabPane() {
     return (
       <>
         <TabPane tabId="1">
-          {<InfoProduct parentCallback = {this.callbackFunction} />}
-          {<DescriptionProduct id = {this.state.productData.id}  />}
-          {<AddForms  parentCallback = {this.newCallbackFunction}
-                      id={this.state.productData.id} category={this.state.productData.categories} />}
-          {<SeoProduct id = {this.state.productData.id}/>}
+
+          {
+            <InfoProduct
+              handleInfoProduct={this.handleInfoProduct}
+              isCreateNewProduct={this.state.isCreateNewProduct}
+              parentCallback={this.callbackFunction}
+            />}
+          {<DescriptionProduct isCreateNewProduct={this.state.isCreateNewProduct} id={this.state.productData.id}/>}
+          {<AddForms isCreateNewProduct={this.state.isCreateNewProduct} parentCallback={this.newCallbackFunction}
+                     id={this.state.productData.id} category={this.state.productData.categories}/>}
+          {<SeoProduct isCreateNewProduct={this.state.isCreateNewProduct} id={this.state.productData.id}/>}
+
+
+          <Button onClick={this.handleSubmit}
+                  type="button"
+                  size="sm"
+                  color="primary"
+          >
+            <i className="fa fa-dot-circle-o"></i> Сохранить
+          </Button>
+
         </TabPane>
-        <TabPane tabId="8">
-        </TabPane>
-        <TabPane tabId="3">
-        </TabPane>
+
+
+        {/*<TabPane tabId="8">*/}
+        {/*</TabPane>*/}
+        {/*<TabPane tabId="3">*/}
+        {/*</TabPane>*/}
+
         <TabPane tabId="2">
-          {<Character id = {this.state.productData.id} features={this.state.productData.features} />}
+          {<Character id={this.state.productData.id} features={this.state.productData.features}/>}
         </TabPane>
+
         {/* <TabPane tabId="4">
           {`4. ${this.lorem()}`}
         </TabPane> */}
         <TabPane tabId="5">
         </TabPane>
+
         <TabPane tabId="6">
-          {<ImageProduct id = {this.state.productData.id} />}
+          {<ImageProduct id={this.state.productData.id}/>}
         </TabPane>
         <TabPane tabId="7">
-          {<PriceProduct id = {this.state.productData.id} />}
+          {<PriceProduct id={this.state.productData.id}/>}
         </TabPane>
         {/*<TabPane tabId="1"> */}
         {/*  {<InfoProduct parentCallback = {this.callbackFunction} />}*/}
@@ -102,7 +131,6 @@ class AddProducts extends Component {
   }
 
   render() {
-    console.log(this.state.productData)
     return (
       <div className="animated fadeIn">
         <Row>
@@ -111,9 +139,11 @@ class AddProducts extends Component {
               <NavItem>
                 <NavLink
                   active={this.state.activeTab[0] === '1'}
-                  onClick={() => { this.toggle(0, '1'); }}
+                  onClick={() => {
+                    this.toggle(0, '1');
+                  }}
                 >
-                Информация
+                  Информация
                 </NavLink>
               </NavItem>
               {/*<NavItem>*/}
@@ -137,9 +167,11 @@ class AddProducts extends Component {
               <NavItem>
                 <NavLink
                   active={this.state.activeTab[0] === '2'}
-                  onClick={() => { this.toggle(0, '2'); }}
+                  onClick={() => {
+                    this.toggle(0, '2');
+                  }}
                 >
-                Характеристики
+                  Характеристики
                 </NavLink>
               </NavItem>
 
@@ -170,7 +202,9 @@ class AddProducts extends Component {
               <NavItem>
                 <NavLink
                   active={this.state.activeTab[0] === '7'}
-                  onClick={() => { this.toggle(0, '7'); }}
+                  onClick={() => {
+                    this.toggle(0, '7');
+                  }}
                 >
                   Вариации Продукта
                 </NavLink>
