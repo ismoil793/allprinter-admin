@@ -178,7 +178,15 @@ class InfoProduct extends Component {
               },
               weight: descriptionData.weight,
               categories,
-              ...meta
+              meta_title: {
+                ru: meta.meta_title
+              },
+              meta_description: {
+                ru: meta.meta_description
+              },
+              meta_keywords: {
+                ru: meta.meta_keywords
+              }
             }
           })
             .then(response => {
