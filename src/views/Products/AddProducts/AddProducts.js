@@ -19,8 +19,21 @@ class AddProducts extends Component {
       activeTab: new Array(4).fill('1'),
       productData: [],
       newProductData: [], //after connecting categories
-      isCreateNewProduct: false
+      isCreateNewProduct: false,
+
+      descriptionData: {
+        weight: '',
+        description_short: '',
+        data: '',
+        isActive: null
+      },
+
+      files: []
     };
+  }
+
+  handleChildrenFormData = (type, data) => {
+    this.setState({[type]: data})
   }
 
   handleInfoProduct = (val) => {
@@ -59,14 +72,32 @@ class AddProducts extends Component {
 
           {
             <InfoProduct
+              id={this.state.productData.id}
               handleInfoProduct={this.handleInfoProduct}
               isCreateNewProduct={this.state.isCreateNewProduct}
               parentCallback={this.callbackFunction}
+              formData={this.state}
             />}
-          {<DescriptionProduct isCreateNewProduct={this.state.isCreateNewProduct} id={this.state.productData.id}/>}
-          {<AddForms isCreateNewProduct={this.state.isCreateNewProduct} parentCallback={this.newCallbackFunction}
-                     id={this.state.productData.id} category={this.state.productData.categories}/>}
-          {<SeoProduct isCreateNewProduct={this.state.isCreateNewProduct} id={this.state.productData.id}/>}
+
+          {<ImageProduct
+            id={this.state.productData.id}
+            handleChildrenFormData={this.handleChildrenFormData}
+          />}
+
+          {<DescriptionProduct
+            id={this.state.productData.id}
+            handleChildrenFormData={this.handleChildrenFormData}
+          />}
+
+          {<AddForms
+            parentCallback={this.newCallbackFunction}
+            id={this.state.productData.id}
+            category={this.state.productData.categories}
+          />}
+          {<SeoProduct
+            isCreateNewProduct={this.state.isCreateNewProduct}
+            id={this.state.productData.id}
+          />}
 
 
           <Button onClick={this.handleSubmit}

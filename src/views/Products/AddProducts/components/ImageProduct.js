@@ -48,15 +48,17 @@ class ImageProduct extends Component {
     const images = []
     for(let i = 0; i < e.target.files.length; i++){
       images.push(e.target.files[i])
-      
+
     }
-  
+
     this.setState({files: images,
     file: URL.createObjectURL(e.target.files[0])
     })
+
+     this.props.handleChildrenFormData('files', images)
    }
- 
-   
+
+
 
   }
 
@@ -68,15 +70,15 @@ class ImageProduct extends Component {
           formData.append('images[]', this.state.files[i])
     }
 
+
     e.preventDefault()
 
     httpPost({
       url: `api/admin/product/update/${this.props.id}`,
-      data: formData, 
+      data: formData,
       headers: {
         'Content-Type': 'multipart/form-data'
       }
-      
     })
     .then(response => {
       notyf.success('Вы добавили Фотографии')
@@ -84,7 +86,7 @@ class ImageProduct extends Component {
     .catch(error =>{
       console.log(error)
     })
-    
+
   }
 
 
@@ -99,14 +101,14 @@ class ImageProduct extends Component {
                   className="form-horizontal"
                 >
               <CardHeader>
-                <strong>Image Form</strong>
+                <strong>Изображение товара</strong>
               </CardHeader>
               <CardBody>
-                
+
                   <FormGroup row>
                     <Col md="3">
                       <Label htmlFor="file-multiple-input">
-                        Multiple File input
+                        * Изображение товара
                       </Label>
                     </Col>
                     <Col xs="12" md="9">
@@ -122,15 +124,14 @@ class ImageProduct extends Component {
                   <FormGroup row>
                     <Col md="3">
                       <Label htmlFor="file-multiple-input">
-                        Preview of an image
+                        Предварительный просмотр
                       </Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <img src={this.state.file}  alt="files"/>
-               
+                    <img src={this.state.file}  alt=""/>
                     </Col>
                   </FormGroup>
-               
+
               </CardBody>
               <CardFooter>
                 <Button type="submit" size="sm" color="primary">

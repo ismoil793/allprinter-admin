@@ -107,7 +107,7 @@ const AddForms = React.lazy(() => import('./views/Products/AddProducts/AddForm')
 
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
-  { path: '/', exact: true, name: 'Главная' },
+  { path: '/', exact: true, name: 'Главная', component: Dashboard },
   { path: '/dashboard', name: 'Мониторинг', component: Dashboard },
   // start of catalog
   { path: '/clerk-catalog', exact: true, name:'Каталог', component: () => <Redirect to={'/catalog/categories'}/>},
@@ -120,7 +120,7 @@ const routes = [
   { path: '/catalog/classes/add', name:'Добавить класс', component: AddClasses},
 
   { path: '/catalog/updateclass/:id', name:'Обновить класс', component: UpdateClass},
-  
+
   { path: '/catalog/brands', exact: true, name:'Бренды',  component: Brands},
   { path: '/catalog/brands/add', name:'Добавить бренды', component: AddBrands},
   { path: '/catalog/updatebrand/:id', name:'Обновить бренды', component: UpdateBrand},
@@ -145,23 +145,23 @@ const routes = [
   { path: '/suppliers', exact: true, name:'Поставщики', component: () => <Redirect to={'/suppliers/dealers'}/>},
   { path: '/suppliers/dealers', exact: true, name:'Дилеры', component: DealersList},
   { path: '/suppliers/dealers/add', name:'Добавить Дилера', component: AddDealer},
-  
+
   { path: '/suppliers/dealercard/:id', name:'Карточка Дилера', component: DealerCard},
-  
+
   { path: '/suppliers/shops', exact: true, name: 'Магазины', component: Shops},
   { path: '/suppliers/shops/add', name:'Добавить магазин', component: AddShop},
   { path: '/suppliers/updateshops/:id', name: 'Обновить магазин', component: UpdateShop},
 
   // end of dealers
-  
+
   // start of Personal
-  
+
   { path: '/personal', name: 'Персональный кабинет', component: Personal},
 
   // end of Personal
 
     // start of Dealers
-  
+
     { path: '/kpi', name: 'KPI', component: KPI},
     { path: '/addkpi', name:'Добавить KPI', component: AddKPI},
     { path: '/updatekpi/:id', name:'Обновить KPI', component: UpdateKPI},
@@ -189,7 +189,7 @@ const routes = [
     { path: '/statements', exact: true, name: 'Рекламные компания', component: Statements},
     { path: '/statement/add', name:'Добавить рекламу', component: AddLink},
     { path: '/updatestatement/:id', name: 'Обновить рекламу', component: UpdateStatement},
-  
+
     // end of Adverts
 
 
@@ -223,7 +223,7 @@ const routes = [
   { path: '/clients', exact: true, name: 'Покупатели', component: UserList },
   { path: '/clients/:id', name: 'Карточка Покупателя', component: UserCard },
   // end of clients
-  
+
   // start of delivery
   { path: '/delivery', exact: true, name:'Доставка', component: () => <Redirect to={'/delivery/carriers'}/>},
   { path: '/delivery/deliveries', exact: true, name:'Методы Доставок', component: Deliveries},
@@ -249,14 +249,14 @@ const routes = [
   { path: '/navigations/add', name: 'Добавить Навигацию', component: AddNavigation},
   { path: '/navigations/:id', name: 'Изменить Навигацию', component: UpdateNavigation},
   // end of navigations
-  
+
   // start of news
   { path: '/visual', exact: true, name: 'Визуализация', component: () => <Redirect to={'/visual/news'}/>},
   { path: '/visual/news', exact: true, name: 'Новости', component: News},
   { path: '/visual/news/add', name: 'Добавить новость', component: AddNews},
   { path: '/visual/news/:id', name: 'Обновить новости', component: UpdateNews},
   // end of news
-  
+
   // start of visuals
   { path: '/visual/sliders/web', name: 'Веб версия', component: SlidersWeb},
   { path: '/visual/sliders/mobile', name: 'Мобильная версия', component: SlidersMobile},

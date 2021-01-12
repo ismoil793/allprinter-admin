@@ -34,7 +34,7 @@ class InfoProduct extends Component {
       fadeIn: true,
       timeout: 300,
 
-      CreateProduct:this.CreateProduct.bind(this)
+      CreateProduct: this.CreateProduct.bind(this)
     };
   }
 
@@ -100,25 +100,98 @@ class InfoProduct extends Component {
     }
     const notyf = new Notyf()
 
-    httpPost({
-      url: "api/admin/product/create",
-      data: {
-        brand_id: this.state.selectedbrand.value,
-        model: this.state.model,
-        class_id: this.state.selectedclass.value
-      },
-      headers: {
-        "X-Requested-With": "XMLHttpRequest",
-        "Content-Type": "application/json"
+    const {descriptionData, files} = this.props.formData;
+
+    let formData = files.length ? new FormData() : null;
+
+    if (files.length) {
+      for (let i = 0; i < files.length; i++)
+        formData.append('images[]', files[i])
+    }
+
+    if (this.props.id) {
+
+      if (formData) {
+        httpPost({
+          url: `api/admin/product/update/${this.props.id}`,
+          data: formData,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
       }
-    })
-      .then(response => {
-        this.props.parentCallback(response.data.data);
-        notyf.success('Вы создали Продукт')
+
+      httpPost({
+        url: `api/admin/product/update/${this.props.id}`,
+        data: {
+          active: descriptionData.isActive,
+          description_short: {
+            ru: descriptionData.description_short
+          },
+          description: {
+            ru: descriptionData.data
+          },
+          weight: descriptionData.weight,
+        }
       })
-      .catch(error => {
-        console.log(error);
-      });
+        .then(response => {
+          notyf.success('Информация продукта обновлена')
+
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      httpPost({
+        url: "api/admin/product/create",
+        data: {
+          brand_id: this.state.selectedbrand.value,
+          model: this.state.model,
+          class_id: this.state.selectedclass.value,
+        },
+        headers: {
+          "X-Requested-With": "XMLHttpRequest",
+          "Content-Type": "application/json"
+        }
+      })
+        .then(response => {
+          this.props.parentCallback(response.data.data);
+
+          if(formData) {
+            httpPost({
+              url: `api/admin/product/update/${response.data.data.id}`,
+              data: formData,
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            });
+          }
+
+
+          httpPost({
+            url: `api/admin/product/update/${response.data.data.id}`,
+            data: {
+              active: descriptionData.isActive,
+              description_short: {
+                ru: descriptionData.description_short
+              },
+              description: {
+                ru: descriptionData.data
+              },
+              weight: descriptionData.weight,
+            }
+          })
+            .then(response => {
+              notyf.success('Вы создали Продукт')
+            })
+            .catch(error => {
+              console.log(error);
+            });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
 
     this.props.handleInfoProduct(false)
   };
@@ -149,7 +222,7 @@ class InfoProduct extends Component {
                 <Form onSubmit={this.CreateProduct} className="form-horizontal">
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="select">Класс товара</Label>
+                      <Label htmlFor="select">* Класс товара</Label>
                     </Col>
                     <Col xs="12" md="7">
                       <ClassIntegrationReactSelect
@@ -161,7 +234,7 @@ class InfoProduct extends Component {
 
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="text-input">Бренд</Label>
+                      <Label htmlFor="text-input">* Бренд</Label>
                     </Col>
                     <Col xs="12" md="7">
                       <BrandIntegrationReactSelect
@@ -172,7 +245,7 @@ class InfoProduct extends Component {
 
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="text-input">Модель</Label>
+                      <Label htmlFor="text-input">* Модель</Label>
                     </Col>
                     <Col xs="12" md="7">
                       <Input

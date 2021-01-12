@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { httpPost } from "../../../../api";
+import React, {Component} from "react";
+import {httpPost} from "../../../../api";
 import PropTypes from 'prop-types';
-import { Notyf } from 'notyf'
+import {Notyf} from 'notyf'
 import 'notyf/notyf.min.css'
 import {
   Button,
@@ -28,75 +28,107 @@ class DescriptionProduct extends Component {
       collapse: true,
       fadeIn: true,
       timeout: 300,
-      weight:'',
+      weight: '',
       description_short: '',
-      data:'',
+      data: '',
       isActive: null
     };
   }
 
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+
+    const formData = {
+      weight: this.state.weight,
+      data: this.state.data,
+      isActive: this.state.isActive,
+      description_short: this.state.description_short,
+      [e.target.name]: e.target.value
+    };
+
+    this.props.handleChildrenFormData('descriptionData', formData);
+    this.setState({[e.target.name]: e.target.value});
+    // this.updateProduct(null, formData)
   };
 
-  onEditorChange = ( evt ) =>{
-    this.setState( {
-        data: evt.editor.getData()
-    } );
-}
+  onEditorChange = (evt) => {
+    const formData = {
+      weight: this.state.weight,
+      description_short: this.state.description_short,
+      data: evt.editor.getData(),
+      isActive: this.state.isActive,
+    };
 
-handleChange( changeEvent ) {
-    this.setState( {
-        data: changeEvent.target.value
-    } );
-}
+    this.props.handleChildrenFormData('descriptionData', formData);
+    this.setState({
+      data: evt.editor.getData()
+    });
+    // this.updateProduct(null, formData)
+  }
 
-  updateProduct = e => {
-    e.preventDefault();
+  handleChange(changeEvent) {
+    const formData = {
+      weight: this.state.weight,
+      data: changeEvent.target.value,
+      description_short: this.state.description_short,
+      isActive: this.state.isActive,
+    };
+
+    this.props.handleChildrenFormData('descriptionData', formData);
+    this.setState({
+      data: changeEvent.target.value
+    });
+    // this.updateProduct(null, formData)
+  }
+
+  updateProduct = (e, formData) => {
+    if (e) {
+      e.preventDefault();
+    }
     const notyf = new Notyf()
-    httpPost({
-      url: `api/admin/product/update/${this.props.id}`,
-      data: {
-        active: this.state.isActive,
-        description_short : {
-         ru: this.state.description_short
-        },
-        description:{
-          ru: this.state.data
-        },
-        weight: this.state.weight,
-      }
-    })
-      .then(response => {
-        notyf.success('Вы добавили описание к данному продукту')
-     
+    if (this.props.id) {
+      httpPost({
+        url: `api/admin/product/update/${this.props.id}`,
+        data: {
+          active: formData.isActive,
+          description_short: {
+            ru: formData.description_short
+          },
+          description: {
+            ru: formData.data
+          },
+          weight: formData.weight,
+        }
       })
-      .catch(error => {
-        console.log(error);
-      });
+        .then(response => {
+          notyf.success('Вы добавили описание к данному продукту')
+
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
   };
 
-      // Activation = (e) =>{
-      //   e.preventDefault()
-      //   this.setState({
-      //     isActive: this.state.isActive
-      //   });
-      //   console.log(this.state.isActive)
-      // }
- 
+  // Activation = (e) =>{
+  //   e.preventDefault()
+  //   this.setState({
+  //     isActive: this.state.isActive
+  //   });
+  //   console.log(this.state.isActive)
+  // }
+
 
   toggle() {
-    this.setState({ collapse: !this.state.collapse });
+    this.setState({collapse: !this.state.collapse});
   }
 
   toggleFade() {
     this.setState(prevState => {
-      return { fadeIn: !prevState };
+      return {fadeIn: !prevState};
     });
   }
 
   render() {
-
     return (
       <div className="animated fadeIn">
         <Row>
@@ -109,7 +141,7 @@ handleChange( changeEvent ) {
                 <Form onSubmit={this.updateProduct} className="form-horizontal">
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="textarea-input">Краткое Описание</Label>
+                      <Label htmlFor="textarea-input">* Краткое Описание</Label>
                     </Col>
                     <Col xs="12" md="9">
                       <Input
@@ -126,7 +158,7 @@ handleChange( changeEvent ) {
 
                   <FormGroup row>
                     <Col md="3">
-                      <Label htmlFor="textarea-input">Полное Описание</Label>
+                      <Label htmlFor="textarea-input">* Полное Описание</Label>
                     </Col>
                     <Col xs="12" md="9">
                       <CKEditor data={this.state.data} onChange={this.onEditorChange}/>
@@ -134,7 +166,7 @@ handleChange( changeEvent ) {
                         Change value:
                         <textarea defaultValue={this.state.data} onChange={this.handleChange} />
                     </label> */}
-                    <EditorPreview data={this.state.data} />
+                      <EditorPreview data={this.state.data}/>
                     </Col>
                   </FormGroup>
 
@@ -144,7 +176,7 @@ handleChange( changeEvent ) {
                       <Label htmlFor="input">Вес товара</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input onChange={this.handleChange} value={this.state.weight} type="text" name="weight" />
+                      <Input onChange={this.handleChange} value={this.state.weight} type="text" name="weight"/>
                       <FormText color="muted">kg</FormText>
                     </Col>
                   </FormGroup>
@@ -154,20 +186,21 @@ handleChange( changeEvent ) {
                       <Label htmlFor="select">Статус товара</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <Input onChange={this.handleChange} value={this.state.isActive} type="select" name="isActive" id="select">
-                      <option value="2" >Выберите Статус товара</option>
+                      <Input onChange={this.handleChange} value={this.state.isActive} type="select" name="isActive"
+                             id="select">
+                        <option value="2">Выберите Статус товара</option>
                         <option value="1">Включен</option>
                         <option value="0">Выключен</option>
                       </Input>
                     </Col>
                   </FormGroup>
                   <Button type="submit" size="sm" color="primary">
-                  <i className="fa fa-dot-circle-o"></i> Сохранить
-                </Button>
+                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                  </Button>
                 </Form>
-                
+
               </CardBody>
-              
+
             </Card>
           </Col>
         </Row>
@@ -178,12 +211,12 @@ handleChange( changeEvent ) {
 
 class EditorPreview extends Component {
   render() {
-      return (
-          <div className="editor-preview">
-              <h2>Предварительный просмотр</h2>
-              <div dangerouslySetInnerHTML={ { __html: this.props.data } }></div>
-          </div>
-      );
+    return (
+      <div className="editor-preview">
+        <h2>Предварительный просмотр</h2>
+        <div dangerouslySetInnerHTML={{__html: this.props.data}}></div>
+      </div>
+    );
   }
 }
 
