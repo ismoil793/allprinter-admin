@@ -194,9 +194,9 @@ class DescriptionProduct extends Component {
                       </Input>
                     </Col>
                   </FormGroup>
-                  <Button type="submit" size="sm" color="primary">
-                    <i className="fa fa-dot-circle-o"></i> Сохранить
-                  </Button>
+                  {/*<Button type="submit" size="sm" color="primary">*/}
+                  {/*  <i className="fa fa-dot-circle-o"></i> Сохранить*/}
+                  {/*</Button>*/}
                 </Form>
 
               </CardBody>

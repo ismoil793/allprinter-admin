@@ -100,7 +100,7 @@ class InfoProduct extends Component {
     }
     const notyf = new Notyf()
 
-    const {descriptionData, files} = this.props.formData;
+    const {descriptionData, files, categories, meta} = this.props.formData;
 
     let formData = files.length ? new FormData() : null;
 
@@ -110,17 +110,6 @@ class InfoProduct extends Component {
     }
 
     if (this.props.id) {
-
-      if (formData) {
-        httpPost({
-          url: `api/admin/product/update/${this.props.id}`,
-          data: formData,
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        });
-      }
-
       httpPost({
         url: `api/admin/product/update/${this.props.id}`,
         data: {
@@ -132,6 +121,16 @@ class InfoProduct extends Component {
             ru: descriptionData.data
           },
           weight: descriptionData.weight,
+          categories,
+          meta_title: {
+            ru: meta.meta_title
+          },
+          meta_description: {
+            ru: meta.meta_description
+          },
+          meta_keywords: {
+            ru: meta.meta_keywords
+          }
         }
       })
         .then(response => {
@@ -157,7 +156,7 @@ class InfoProduct extends Component {
         .then(response => {
           this.props.parentCallback(response.data.data);
 
-          if(formData) {
+          if (formData) {
             httpPost({
               url: `api/admin/product/update/${response.data.data.id}`,
               data: formData,
@@ -166,7 +165,6 @@ class InfoProduct extends Component {
               }
             });
           }
-
 
           httpPost({
             url: `api/admin/product/update/${response.data.data.id}`,
@@ -179,6 +177,8 @@ class InfoProduct extends Component {
                 ru: descriptionData.data
               },
               weight: descriptionData.weight,
+              categories,
+              ...meta
             }
           })
             .then(response => {

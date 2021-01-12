@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
   Button,
   Card,
@@ -13,8 +13,8 @@ import {
   Label,
   Row
 } from "reactstrap";
-import { httpPost } from "../../../../api";
-import { Notyf } from "notyf";
+import {httpPost} from "../../../../api";
+import {Notyf} from "notyf";
 import "notyf/notyf.min.css";
 
 class SeoProduct extends Component {
@@ -34,7 +34,13 @@ class SeoProduct extends Component {
   }
 
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({[e.target.name]: e.target.value});
+    this.props.handleChildrenFormData('meta', {
+      meta_title: this.state.meta_title,
+      meta_description: this.state.meta_description,
+      meta_keywords: this.state.meta_keywords,
+      [e.target.name]: e.target.value
+    })
   };
 
   updateProduct = e => {
@@ -63,31 +69,31 @@ class SeoProduct extends Component {
   };
 
   toggle() {
-    this.setState({ collapse: !this.state.collapse });
+    this.setState({collapse: !this.state.collapse});
   }
 
   toggleFade() {
     this.setState(prevState => {
-      return { fadeIn: !prevState };
+      return {fadeIn: !prevState};
     });
   }
 
   render() {
-    const { meta_description, meta_keywords, meta_title } = this.state;
+    const {meta_description, meta_keywords, meta_title} = this.state;
     return (
       <div className="animated fadeIn">
         <Row>
           <Col xs="12" md="12">
             <Card>
-            <Form
+              <Form
                 onSubmit={this.updateProduct}
-                  className="form-horizontal"
-                >
-              <CardHeader>
-                <strong>Search Engine Optimization</strong>
-              </CardHeader>
-              <CardBody>
-               
+                className="form-horizontal"
+              >
+                <CardHeader>
+                  <strong>Search Engine Optimization</strong>
+                </CardHeader>
+                <CardBody>
+
                   <FormGroup row>
                     <Col md="3">
                       <Label htmlFor="text-input">Мета Заголовок</Label>
@@ -140,16 +146,16 @@ class SeoProduct extends Component {
                       />
                     </Col>
                   </FormGroup>
-                
-              </CardBody>
-              <CardFooter>
-                <Button type="submit" size="sm" color="primary">
-                  <i className="fa fa-dot-circle-o"></i> Сохранить
-                </Button>
-                <Button type="reset" size="sm" color="danger">
-                  <i className="fa fa-ban"></i> Сбросить
-                </Button>
-              </CardFooter>
+
+                </CardBody>
+                {/*<CardFooter>*/}
+                {/*  <Button type="submit" size="sm" color="primary">*/}
+                {/*    <i className="fa fa-dot-circle-o"></i> Сохранить*/}
+                {/*  </Button>*/}
+                {/*  <Button type="reset" size="sm" color="danger">*/}
+                {/*    <i className="fa fa-ban"></i> Сбросить*/}
+                {/*  </Button>*/}
+                {/*</CardFooter>*/}
               </Form>
             </Card>
           </Col>

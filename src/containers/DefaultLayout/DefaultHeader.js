@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { NavLink } from "react-router-dom";
-import { Redirect } from "react-router-dom";
+import React, {Component} from "react";
+import {NavLink} from "react-router-dom";
+import {Redirect} from "react-router-dom";
 import {
   Badge,
   UncontrolledDropdown,
@@ -11,11 +11,11 @@ import {
   NavItem
 } from "reactstrap";
 import PropTypes from "prop-types";
-import { httpGet } from "../../api";
+import {httpGet} from "../../api";
 import Cookies from "universal-cookie";
-import { Notyf } from "notyf";
+import {Notyf} from "notyf";
 import "notyf/notyf.min.css";
-import { AppNavbarBrand, AppSidebarToggler } from "@coreui/react";
+import {AppNavbarBrand, AppSidebarToggler} from "@coreui/react";
 import logo from "../../assets/img/brand/logo2.jpg";
 import sygnet from "../../assets/img/brand/sygnet.svg";
 
@@ -48,7 +48,7 @@ class DefaultHeader extends Component {
           cookies.remove("access_token");
           cookies.remove("refresh_token");
           notyf.success("Вы вышли из системы");
-          this.setState({ loggedOut: true });
+          this.setState({loggedOut: true});
         }
       })
       .catch(error => {
@@ -59,16 +59,16 @@ class DefaultHeader extends Component {
 
   render() {
     if (this.state.loggedOut) {
-      return <Redirect to="/login" />;
+      return <Redirect to="/login"/>;
     }
     // eslint-disable-next-line
-    const { children, ...attributes } = this.props;
+    const {children, ...attributes} = this.props;
 
     return (
       <React.Fragment>
-        <AppSidebarToggler className="d-lg-none" display="md" mobile />
+        <AppSidebarToggler className="d-lg-none" display="md" mobile/>
         <AppNavbarBrand
-          full={{ src: logo, width: 104, height: 52, alt: "Printershop Logo" }}
+          full={{src: logo, width: 104, height: 52, alt: "Printershop Logo"}}
           minimized={{
             src: sygnet,
             width: 30,
@@ -77,7 +77,7 @@ class DefaultHeader extends Component {
           }}
         />
 
-        <AppSidebarToggler className="d-md-down-none" display="lg" />
+        <AppSidebarToggler className="d-md-down-none" display="lg"/>
 
         <Nav className="d-md-down-none" navbar>
           <NavItem className="px-3">
@@ -90,12 +90,12 @@ class DefaultHeader extends Component {
 
         <Nav className="ml-auto" navbar>
           <NavItem className="d-md-down-none">
-            <NavLink to="#" className="nav-link">
-              <i className="icon-bell"></i>
-              <Badge pill color="danger">
-                5
-              </Badge>
-            </NavLink>
+            {/*<NavLink to="#" className="nav-link">*/}
+            {/*  <i className="icon-bell"></i>*/}
+            {/*  <Badge pill color="danger">*/}
+            {/*    5*/}
+            {/*  </Badge>*/}
+            {/*</NavLink>*/}
           </NavItem>
           {/* <NavItem className="d-md-down-none">
             <NavLink to="#" className="nav-link"><i className="icon-list"></i></NavLink>
@@ -105,19 +105,22 @@ class DefaultHeader extends Component {
           </NavItem> */}
           <UncontrolledDropdown nav direction="down">
             <DropdownToggle nav>
-              <img
-                src={"../../assets/img/avatars/6.jpg"}
-                className="img-avatar"
-                alt="admin@bootstrapmaster.com"
-              />
+              <h4 className="mr-3 mt-1" style={{border: '2px solid #ccc', padding: '8px 10px', borderRadius: '100%'}}>
+                <i className="icon-user"></i>
+              </h4>
+              {/*<img*/}
+              {/*  src={"../../assets/img/avatars/6.jpg"}*/}
+              {/*  className="img-avatar"*/}
+              {/*  alt="admin@bootstrapmaster.com"*/}
+              {/*/>*/}
             </DropdownToggle>
             <DropdownMenu right>
               <DropdownItem header tag="div" className="text-center">
                 <strong>Аккаунт</strong>
               </DropdownItem>
               <DropdownItem>
-              <NavLink to="/personal" className="nav-link">
-                <i className="fa fa-user"></i> Личный кабинет
+                <NavLink to="/personal" className="nav-link">
+                  <i className="fa fa-user"></i> Личный кабинет
                 </NavLink>
               </DropdownItem>
               <DropdownItem>
@@ -126,7 +129,7 @@ class DefaultHeader extends Component {
               <DropdownItem>
                 <i className="fa fa-wrench"></i> Обновить Профиль
               </DropdownItem>
-              <DropdownItem divider />
+              <DropdownItem divider/>
               <DropdownItem onClick={this.Logout}>
                 <i className="fa fa-lock"></i> Выйти
               </DropdownItem>

@@ -28,7 +28,13 @@ class AddProducts extends Component {
         isActive: null
       },
 
-      files: []
+      files: [],
+      categories: [],
+      meta: {
+        meta_title: "",
+        meta_description: "",
+        meta_keywords: "",
+      }
     };
   }
 
@@ -69,7 +75,6 @@ class AddProducts extends Component {
     return (
       <>
         <TabPane tabId="1">
-
           {
             <InfoProduct
               id={this.state.productData.id}
@@ -93,10 +98,11 @@ class AddProducts extends Component {
             parentCallback={this.newCallbackFunction}
             id={this.state.productData.id}
             category={this.state.productData.categories}
+            handleChildrenFormData={this.handleChildrenFormData}
           />}
           {<SeoProduct
-            isCreateNewProduct={this.state.isCreateNewProduct}
             id={this.state.productData.id}
+            handleChildrenFormData={this.handleChildrenFormData}
           />}
 
 
@@ -162,6 +168,7 @@ class AddProducts extends Component {
   }
 
   render() {
+
     return (
       <div className="animated fadeIn">
         <Row>

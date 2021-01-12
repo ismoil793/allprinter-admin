@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
   Button,
   Card,
@@ -14,8 +14,8 @@ import {
 } from "reactstrap";
 
 import "file-upload-with-preview/dist/file-upload-with-preview.min.css";
-import { httpPost } from "../../../../api";
-import { Notyf } from 'notyf'
+import {httpPost} from "../../../../api";
+import {Notyf} from 'notyf'
 import 'notyf/notyf.min.css'
 
 class ImageProduct extends Component {
@@ -34,44 +34,46 @@ class ImageProduct extends Component {
   }
 
   toggle() {
-    this.setState({ collapse: !this.state.collapse });
+    this.setState({collapse: !this.state.collapse});
   }
 
   toggleFade() {
     this.setState(prevState => {
-      return { fadeIn: !prevState };
+      return {fadeIn: !prevState};
     });
   }
 
   fileSelectedHandler = (e) => {
-   if(e.target.files.length){
-    const images = []
-    for(let i = 0; i < e.target.files.length; i++){
-      images.push(e.target.files[i])
+    if (e.target.files.length) {
+      const images = []
+      for (let i = 0; i < e.target.files.length; i++) {
+        images.push(e.target.files[i])
+      }
 
+      if (this.props.id)
+        this.UpdateImage(null, images)
+
+      this.setState({
+        files: images,
+        file: URL.createObjectURL(e.target.files[0])
+      })
+
+
+      this.props.handleChildrenFormData('files', images)
     }
-
-    this.setState({files: images,
-    file: URL.createObjectURL(e.target.files[0])
-    })
-
-     this.props.handleChildrenFormData('files', images)
-   }
-
-
-
   }
 
-  UpdateImage = (e) => {
+  UpdateImage = (e, images) => {
     const notyf = new Notyf()
     let formData = new FormData()
-    if(this.state.files){
-      for(let i = 0; i < this.state.files.length; i++)
-          formData.append('images[]', this.state.files[i])
+    if (images) {
+      for (let i = 0; i < images.length; i++)
+        formData.append('images[]', images[i])
     }
 
-
-    e.preventDefault()
+    if (e) {
+      e.preventDefault()
+    }
 
     httpPost({
       url: `api/admin/product/update/${this.props.id}`,
@@ -80,12 +82,12 @@ class ImageProduct extends Component {
         'Content-Type': 'multipart/form-data'
       }
     })
-    .then(response => {
-      notyf.success('Вы добавили Фотографии')
-    })
-    .catch(error =>{
-      console.log(error)
-    })
+      .then(response => {
+        notyf.success('Вы добавили Фотографии')
+      })
+      .catch(error => {
+        console.log(error)
+      })
 
   }
 
@@ -96,14 +98,14 @@ class ImageProduct extends Component {
         <Row>
           <Col xs="12" md="12">
             <Card>
-            <Form
-                  onSubmit={this.UpdateImage}
-                  className="form-horizontal"
-                >
-              <CardHeader>
-                <strong>Изображение товара</strong>
-              </CardHeader>
-              <CardBody>
+              <Form
+                onSubmit={this.UpdateImage}
+                className="form-horizontal"
+              >
+                <CardHeader>
+                  <strong>Изображение товара</strong>
+                </CardHeader>
+                <CardBody>
 
                   <FormGroup row>
                     <Col md="3">
@@ -128,19 +130,19 @@ class ImageProduct extends Component {
                       </Label>
                     </Col>
                     <Col xs="12" md="9">
-                    <img src={this.state.file}  alt=""/>
+                      <img src={this.state.file} alt=""/>
                     </Col>
                   </FormGroup>
 
-              </CardBody>
-              <CardFooter>
-                <Button type="submit" size="sm" color="primary">
-                  <i className="fa fa-dot-circle-o"></i> Сохранить
-                </Button>
-                <Button type="reset" size="sm" color="danger">
-                  <i className="fa fa-ban"></i> Сбросить
-                </Button>
-              </CardFooter>
+                </CardBody>
+                {/*<CardFooter>*/}
+                {/*  <Button type="submit" size="sm" color="primary">*/}
+                {/*    <i className="fa fa-dot-circle-o"></i> Сохранить*/}
+                {/*  </Button>*/}
+                {/*  <Button type="reset" size="sm" color="danger">*/}
+                {/*    <i className="fa fa-ban"></i> Сбросить*/}
+                {/*  </Button>*/}
+                {/*</CardFooter>*/}
               </Form>
             </Card>
           </Col>

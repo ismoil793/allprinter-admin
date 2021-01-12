@@ -45,7 +45,7 @@ httpClient.interceptors.response.use(response => {
     const notyf = new Notyf()
 
     if (error.hasOwnProperty('response')) {
-      if (error.response.hasOwnProperty('status')) {
+      if (error.response && error.response.hasOwnProperty('status')) {
         if(parseInt(error.response.status) === 422){
           notyf.error(error.response.data.message)
         }
