@@ -6,14 +6,14 @@ import 'notyf/notyf.min.css'
 class   CategorySwitchExample extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       checked: this.props.active
     };
     this.handleChange = this.handleChange.bind(this);
   }
- 
+
   handleChange(checked) {
-    this.setState(prevState => 
+    this.setState(prevState =>
       ({ checked: !prevState.checked })
       );
 
@@ -23,8 +23,8 @@ class   CategorySwitchExample extends Component {
         httpPost({
           url: `api/admin/category/update/${this.props.id}`,
           data:{
-            active: this.state.checked
-          } 
+            [this.props.type]: this.state.checked ? 1 : 0
+          }
         })
         .then(response => {
           console.log(response)
@@ -33,7 +33,7 @@ class   CategorySwitchExample extends Component {
           } else {
             notyf.error('Категория отключена')
           }
-         
+
         })
         .catch(error =>{
           console.log(error)
@@ -41,9 +41,9 @@ class   CategorySwitchExample extends Component {
 
 
       }, 100)
-     
+
     }
- 
+
   render() {
     return (
       <label>

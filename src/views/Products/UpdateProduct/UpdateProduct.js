@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
   Col,
   Nav,
+  Button,
   NavItem,
   NavLink,
   Row,
@@ -15,8 +16,9 @@ import SeoProduct from "./components/SeoProduct";
 import ImageProduct from "./components/ImageProduct";
 import PriceProduct from "./components/PriceProduct";
 import DescriptionProduct from "./components/DesciptionProduct";
-import { httpGet } from "../../../api";
+import {httpGet, httpPost} from "../../../api";
 import UpdateCharacter from "./components/Characteristics";
+import {Notyf} from "notyf";
 
 class UpdateProduct extends Component {
   constructor(props) {
@@ -25,28 +27,47 @@ class UpdateProduct extends Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       activeTab: new Array(4).fill("1"),
-      productData: []
+      productData: [],
+
+      files: [],
+      related_product_ids: [],
+      descriptionData: {
+        weight: '',
+        description_short: '',
+        data: '',
+        isActive: null
+      },
+      categories: [],
+      meta: {
+        meta_title: "",
+        meta_description: "",
+        meta_keywords: "",
+      }
     };
+
+
   }
 
-  componentWillMount(){
-   
-    if(this.props.location.updateproduct_id !== undefined) {
+  componentWillMount() {
+
+    if (this.props.location.updateproduct_id !== undefined) {
       localStorage.setItem('id', this.props.location.updateproduct_id);
     }
   }
 
   componentDidMount() {
-    this.getProduct()
+    this.getProduct(this.props.match.params.id)
   }
 
-    getProduct = () => {
-      httpGet({
-        url: "api/admin/product",
-        params: {
-          product_id: localStorage.getItem('id')
-        }
-      })
+  getProduct = (id) => {
+
+
+    httpGet({
+      url: "api/admin/product",
+      params: {
+        product_id: id ? id : localStorage.getItem('id')
+      }
+    })
       .then(response => {
         this.setState({
           productData: response.data.data
@@ -55,7 +76,7 @@ class UpdateProduct extends Component {
       .catch(error => {
         console.log(error);
       });
-    }
+  }
 
   lorem() {
     return "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit.";
@@ -67,6 +88,53 @@ class UpdateProduct extends Component {
     this.setState({
       activeTab: newArray
     });
+  }
+
+
+
+  handleUpdate = () => {
+
+    const notyf = new Notyf();
+
+    const {descriptionData, files, categories, meta} = this.props.state;
+
+    let formData = files.length ? new FormData() : null;
+
+    if (files.length) {
+      for (let i = 0; i < files.length; i++)
+        formData.append('images[]', files[i])
+    }
+
+    httpPost({
+      url: `api/admin/product/update/${this.state.productData.id}`,
+      data: {
+        active: descriptionData.isActive,
+        description_short: {
+          ru: descriptionData.description_short
+        },
+        description: {
+          ru: descriptionData.data
+        },
+        weight: descriptionData.weight,
+        categories,
+        meta_title: {
+          ru: meta.meta_title
+        },
+        meta_description: {
+          ru: meta.meta_description
+        },
+        meta_keywords: {
+          ru: meta.meta_keywords
+        }
+      }
+    })
+      .then(response => {
+        notyf.success('Информация продукта обновлена')
+
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   tabPane() {
@@ -81,8 +149,16 @@ class UpdateProduct extends Component {
               model={this.state.productData.model}
             />
           }
-        </TabPane>
-        <TabPane tabId="8">
+          {
+            <ImageProduct
+              id={this.state.productData.id}
+              images={this.state.productData.images}
+              brand={this.state.productData.brand}
+              class={this.state.productData.class}
+              model={this.state.productData.model}
+            />
+          }
+
           {
             <DescriptionProduct
               id={this.state.productData.id}
@@ -91,8 +167,7 @@ class UpdateProduct extends Component {
               model={this.state.productData.model}
             />
           }
-        </TabPane>
-        <TabPane tabId="3">
+
           {
             <AddForms
               checked={this.state.productData.categories}
@@ -102,23 +177,6 @@ class UpdateProduct extends Component {
               model={this.state.productData.model}
             />
           }
-        </TabPane>
-        <TabPane tabId="2">
-          {
-            <UpdateCharacter
-              getProduct = {this.getProduct}
-              features={this.state.productData.features}
-              id={this.state.productData.id}
-              brand={this.state.productData.brand}
-              class={this.state.productData.class}
-              model={this.state.productData.model}
-            />
-          }
-        </TabPane>
-        {/* <TabPane tabId="4">
-          {`4. ${this.lorem()}`}
-        </TabPane> */}
-        <TabPane tabId="5">
           {
             <SeoProduct
               id={this.props.location.updateproduct_id}
@@ -130,18 +188,34 @@ class UpdateProduct extends Component {
               model={this.state.productData.model}
             />
           }
+
+          <Button onClick={this.handleUpdate}
+                  type="button"
+                  size="sm"
+                  color="primary"
+          >
+            <i className="fa fa-dot-circle-o"></i> Сохранить
+          </Button>
+
         </TabPane>
-        <TabPane tabId="6">
+
+        <TabPane tabId="2">
           {
-            <ImageProduct
+            <UpdateCharacter
+              getProduct={this.getProduct}
+              features={this.state.productData.features}
               id={this.state.productData.id}
-              images={this.state.productData.images}
               brand={this.state.productData.brand}
               class={this.state.productData.class}
               model={this.state.productData.model}
             />
           }
         </TabPane>
+        {/* <TabPane tabId="4">
+          {`4. ${this.lorem()}`}
+        </TabPane> */}
+
+
         <TabPane tabId="7">
           {
             <PriceProduct
@@ -151,7 +225,7 @@ class UpdateProduct extends Component {
               class={this.state.productData.class}
               model={this.state.productData.model}
               shop_reference={this.state.productData.shop_reference}
-              getProducts = {this.getProduct}
+              getProducts={this.getProduct}
             />
           }
         </TabPane>
@@ -160,6 +234,8 @@ class UpdateProduct extends Component {
   }
 
   render() {
+
+
     return (
       <div className="animated fadeIn">
         <Row>
@@ -175,27 +251,7 @@ class UpdateProduct extends Component {
                   Информация
                 </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink
-                  active={this.state.activeTab[0] === "8"}
-                  onClick={() => {
-                    this.toggle(0, "8");
-                  }}
-                >
-                  Описание
-                </NavLink>
-              </NavItem>
 
-              <NavItem>
-                <NavLink
-                  active={this.state.activeTab[0] === "3"}
-                  onClick={() => {
-                    this.toggle(0, "3");
-                  }}
-                >
-                  Линки
-                </NavLink>
-              </NavItem>
 
               <NavItem>
                 <NavLink
@@ -216,26 +272,8 @@ class UpdateProduct extends Component {
                  Доставка
                 </NavLink>
               </NavItem> */}
-              <NavItem>
-                <NavLink
-                  active={this.state.activeTab[0] === "5"}
-                  onClick={() => {
-                    this.toggle(0, "5");
-                  }}
-                >
-                  Seo
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  active={this.state.activeTab[0] === "6"}
-                  onClick={() => {
-                    this.toggle(0, "6");
-                  }}
-                >
-                  Изображение
-                </NavLink>
-              </NavItem>
+
+
               <NavItem>
                 <NavLink
                   active={this.state.activeTab[0] === "7"}

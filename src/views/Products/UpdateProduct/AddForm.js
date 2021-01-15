@@ -100,20 +100,20 @@ class AddForms extends Component {
                       />
                     </Col>
                   </FormGroup>
-                  <hr></hr>
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="select">Сопутсвующие товары</Label>
-                    </Col>
-                    <Col xs="9" md="9">
-                      <Row>
-                        <RelatedProductsIntegrationReactSelect />
-                      </Row>
-                    </Col>
-                  </FormGroup>
-                  <Button type="submit" size="sm" color="primary">
-                    <i className="fa fa-dot-circle-o"></i> Сохранить
-                  </Button>
+                  {/*<hr></hr>*/}
+                  {/*<FormGroup row>*/}
+                  {/*  <Col md="3">*/}
+                  {/*    <Label htmlFor="select">Сопутсвующие товары</Label>*/}
+                  {/*  </Col>*/}
+                  {/*  <Col xs="9" md="9">*/}
+                  {/*    <Row>*/}
+                  {/*      <RelatedProductsIntegrationReactSelect />*/}
+                  {/*    </Row>*/}
+                  {/*  </Col>*/}
+                  {/*</FormGroup>*/}
+                  {/*<Button type="submit" size="sm" color="primary">*/}
+                  {/*  <i className="fa fa-dot-circle-o"></i> Сохранить*/}
+                  {/*</Button>*/}
                 </CardBody>
               </Form>
 

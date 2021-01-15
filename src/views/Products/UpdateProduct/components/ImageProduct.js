@@ -110,7 +110,7 @@ class ImageProduct extends Component {
                   <Row>
                     <Col md="4">
                       {" "}
-                      <strong>Image Form</strong>
+                      <strong>Изображение товара</strong>
                     </Col>
                     <Col md="4"></Col>
                     <Col md="4">

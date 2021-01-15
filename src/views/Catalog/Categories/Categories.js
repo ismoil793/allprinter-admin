@@ -46,11 +46,11 @@ class Categories extends Component {
 
   getCategories = () => {
       httpGet({
-        url: "api/admin/category", 
+        url: "api/admin/category",
         params: {
           page: this.state.meta.current_page,
           per_page: this.state.meta.per_page,
-       
+
           search: this.state.search,
           active: this.state.status
         }
@@ -98,7 +98,7 @@ class Categories extends Component {
       }
 
       }
-    
+
       return paging.slice(this.state.first, this.state.last);
   };
 
@@ -137,7 +137,7 @@ class Categories extends Component {
   };
 
   Reset = () => {
-    this.setState({  
+    this.setState({
       search: '',
       status: null
     },() => {
@@ -147,14 +147,14 @@ class Categories extends Component {
 
   render() {
     const { categories } = this.state;
- 
+
     return (
       <div className="animated fadeIn">
         <Row>
         <Col xs="12" lg="12">
           <Card>
               <CardHeader>
-                <strong>Фильтры</strong> 
+                <strong>Фильтры</strong>
               </CardHeader>
               <CardBody>
                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
@@ -165,7 +165,7 @@ class Categories extends Component {
                     </Col>
                     <Col xs="12" md="12">
                       <Input type="text" id="text-input"  name="search" value={this.state.search} onChange={this.handleChange} placeholder="" />
-                     
+
                     </Col>
                   </FormGroup>
 
@@ -179,16 +179,16 @@ class Categories extends Component {
                         <option value="1">Активный</option>
                         <option value="0">Не активный</option>
                       </Input>
-                     
+
                     </Col>
                   </FormGroup>
 
                   </Row>
-                
+
                 </Form>
               </CardBody>
               <CardFooter>
-                
+
                 <Button onClick={this.Reset} type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Сбросить</Button>
               </CardFooter>
             </Card>
@@ -207,7 +207,7 @@ class Categories extends Component {
                       <span className="ml-1">Добавить</span>
                     </Button>
                   </Link>
-                </div> 
+                </div>
               </div>
               </CardHeader>
               <CardBody>
@@ -217,22 +217,39 @@ class Categories extends Component {
                       <th>ID</th>
                       <th>Наименование</th>
                       <th>Под категории</th>
-                      <th>Показывать</th>
+                      {/*<th>Показывать</th>*/}
+                      <th>На главной</th>
+                      <th>В меню</th>
                       <th>Позиция</th>
                       <th>Действие</th>
                     </tr>
                   </thead>
                   <tbody>
-                
+
                     {categories
                       ? categories.map(category => (
-                       
+
                           <tr>
+                            {console.log(category)}
                             <td>{category.id}</td>
                             <td>{category.name.ru}</td>
                             <td>{category.child_count}</td>
+                            {/*<td>*/}
+                            {/*  <CategorySwitchExample active={category.active} id={category.id} />*/}
+                            {/*</td>*/}
                             <td>
-                              <CategorySwitchExample active={category.active} id={category.id} />
+                              <CategorySwitchExample
+                                active={category.main_menu_visible}
+                                type={"main_menu_visible"}
+                                id={category.id}
+                              />
+                            </td>
+                            <td>
+                              <CategorySwitchExample
+                                active={category.menu_visible}
+                                type={"menu_visible"}
+                                id={category.id}
+                              />
                             </td>
                             <td> 1</td>
                             <td>
