@@ -101,17 +101,17 @@ class UpdateInfoProduct extends Component {
   }
 
   handleChange = e => {
-    // this.props
+    this.props.handleChildrenFormData('model', e.target.value)
     this.setState({[e.target.name]: e.target.value});
   };
 
   BrandCallbackFunction = childData => {
-    alert(JSON.stringify(childData))
+    this.props.handleChildrenFormData('brand_id', childData.value)
     this.setState({selectedbrand: childData});
   };
 
   ClassCallbackFunction = childData => {
-    alert(JSON.stringify(childData                                                                                                                                 ))
+    this.props.handleChildrenFormData('class_id', childData.value)
     this.setState({selectedclass: childData});
   };
 
@@ -208,19 +208,19 @@ class UpdateInfoProduct extends Component {
                     </Col>
                   </FormGroup>
 
-                  <Button type="submit" size="sm" color="primary">
-                    <i className="fa fa-dot-circle-o"></i> Сохранить
-                  </Button>
+                  {/*<Button type="submit" size="sm" color="primary">*/}
+                  {/*  <i className="fa fa-dot-circle-o"></i> Сохранить*/}
+                  {/*</Button>*/}
 
                 </Form>
               </CardBody>
-              <CardFooter>
-                <Link to="/buttons/products">
-                  <Button size="sm" color="danger">
-                    <i className="fa fa-dot-circle-o"></i> Назад
-                  </Button>
-                </Link>
-              </CardFooter>
+              {/*<CardFooter>*/}
+              {/*  <Link to="/buttons/products">*/}
+              {/*    <Button size="sm" color="danger">*/}
+              {/*      <i className="fa fa-dot-circle-o"></i> Назад*/}
+              {/*    </Button>*/}
+              {/*  </Link>*/}
+              {/*</CardFooter>*/}
             </Card>
           </Col>
         </Row>

@@ -52,6 +52,8 @@ class AddForms extends Component {
   };
 
   categoryCallbackFunction = childData => {
+
+    this.props.handleChildrenFormData('categories', childData)
     this.setState({ checked: childData });
   };
 
@@ -76,7 +78,7 @@ class AddForms extends Component {
                   <Row>
                     <Col md="4">
                       {" "}
-                      <strong>Выберите </strong> Категорию>
+                      <strong>Выберите </strong> Категорию
                     </Col>
                     <Col md="4"></Col>
                     <Col md="4">
@@ -117,13 +119,13 @@ class AddForms extends Component {
                 </CardBody>
               </Form>
 
-              <CardFooter>
-                <Link to="/buttons/products">
-                  <Button size="sm" color="danger">
-                    <i className="fa fa-dot-circle-o"></i> Назад
-                  </Button>
-                </Link>
-              </CardFooter>
+              {/*<CardFooter>*/}
+              {/*  <Link to="/buttons/products">*/}
+              {/*    <Button size="sm" color="danger">*/}
+              {/*      <i className="fa fa-dot-circle-o"></i> Назад*/}
+              {/*    </Button>*/}
+              {/*  </Link>*/}
+              {/*</CardFooter>*/}
             </Card>
           </Col>
         </Row>

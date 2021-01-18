@@ -54,6 +54,7 @@ class ImageProduct extends Component {
       this.setState({
         file: URL.createObjectURL(e.target.files[0])
       });
+      this.props.handleChildrenFormData('files', images)
     }
   };
 
@@ -175,18 +176,18 @@ class ImageProduct extends Component {
                       ))
                     : null}
 
-                  <Button type="submit" size="sm" color="primary">
-                    <i className="fa fa-dot-circle-o"></i> Сохранить
-                  </Button>
+                  {/*<Button type="submit" size="sm" color="primary">*/}
+                  {/*  <i className="fa fa-dot-circle-o"></i> Сохранить*/}
+                  {/*</Button>*/}
                 </CardBody>
               </Form>
-              <CardFooter>
-                <Link to="/buttons/products">
-                  <Button size="sm" color="danger">
-                    <i className="fa fa-dot-circle-o"></i> Назад
-                  </Button>
-                </Link>
-              </CardFooter>
+              {/*<CardFooter>*/}
+              {/*  <Link to="/buttons/products">*/}
+              {/*    <Button size="sm" color="danger">*/}
+              {/*      <i className="fa fa-dot-circle-o"></i> Назад*/}
+              {/*    </Button>*/}
+              {/*  </Link>*/}
+              {/*</CardFooter>*/}
             </Card>
           </Col>
         </Row>

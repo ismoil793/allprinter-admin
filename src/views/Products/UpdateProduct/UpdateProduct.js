@@ -30,10 +30,11 @@ class UpdateProduct extends Component {
       productData: [],
 
       brand_id: '',
+      class_id: '',
+      model: '',
 
 
       files: [],
-      related_product_ids: [],
       descriptionData: {
         weight: '',
         description_short: '',
@@ -72,8 +73,25 @@ class UpdateProduct extends Component {
       }
     })
       .then(response => {
+        const data = response.data.data;
+        console.log(data)
         this.setState({
-          productData: response.data.data
+          productData: data,
+          brand_id: data.brand.id,
+          class_id: data.class.id,
+          model: data.model,
+          descriptionData: {
+            weight: data.weight,
+            description_short: data.description_short.ru ? data.description_short.ru : '',
+            data: data.description.ru ? data.description.ru : '',
+            isActive: data.active
+          },
+          categories: data.categories.map(c => c.id),
+          meta: {
+            meta_title: data.meta_title.ru ? data.meta_title.ru : '',
+            meta_description: data.meta_description.ru ? data.meta_description.ru : '',
+            meta_keywords: data.meta_keywords.ru ? data.meta_keywords.ru : '',
+          }
         });
       })
       .catch(error => {
@@ -110,32 +128,46 @@ class UpdateProduct extends Component {
         formData.append('images[]', files[i])
     }
 
+    const data = {
+      brand_id: this.state.brand_id,
+      class_id: this.state.class_id,
+      model: this.state.model,
+      active: descriptionData.isActive,
+      description_short: {
+        ru: descriptionData.description_short
+      },
+      description: {
+        ru: descriptionData.data
+      },
+      weight: descriptionData.weight,
+      categories: categories.map(c => +c),
+      meta_title: {
+        ru: meta.meta_title
+      },
+      meta_description: {
+        ru: meta.meta_description
+      },
+      meta_keywords: {
+        ru: meta.meta_keywords
+      }
+    };
+
     httpPost({
       url: `api/admin/product/update/${this.state.productData.id}`,
-      data: {
-        active: descriptionData.isActive,
-        description_short: {
-          ru: descriptionData.description_short
-        },
-        description: {
-          ru: descriptionData.data
-        },
-        weight: descriptionData.weight,
-        categories,
-        meta_title: {
-          ru: meta.meta_title
-        },
-        meta_description: {
-          ru: meta.meta_description
-        },
-        meta_keywords: {
-          ru: meta.meta_keywords
-        }
-      }
+      data
     })
       .then(response => {
-        notyf.success('Информация продукта обновлена')
-
+        if (formData) {
+          httpPost({
+            url: `api/admin/product/update/${response.data.data.id}`,
+            data: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(r => notyf.success('Информация продукта обновлена'))
+        }else {
+          notyf.success('Информация продукта обновлена')
+        }
       })
       .catch(error => {
         console.log(error);
@@ -162,6 +194,7 @@ class UpdateProduct extends Component {
               brand={this.state.productData.brand}
               class={this.state.productData.class}
               model={this.state.productData.model}
+              handleChildrenFormData={this.handleChildrenFormData}
             />
           }
 
@@ -171,6 +204,7 @@ class UpdateProduct extends Component {
               brand={this.state.productData.brand}
               class={this.state.productData.class}
               model={this.state.productData.model}
+              handleChildrenFormData={this.handleChildrenFormData}
             />
           }
 
@@ -181,6 +215,7 @@ class UpdateProduct extends Component {
               brand={this.state.productData.brand}
               class={this.state.productData.class}
               model={this.state.productData.model}
+              handleChildrenFormData={this.handleChildrenFormData}
             />
           }
           {
@@ -192,6 +227,7 @@ class UpdateProduct extends Component {
               brand={this.state.productData.brand}
               class={this.state.productData.class}
               model={this.state.productData.model}
+              handleChildrenFormData={this.handleChildrenFormData}
             />
           }
 

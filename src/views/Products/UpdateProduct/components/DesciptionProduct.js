@@ -62,16 +62,42 @@ export default class DescriptionProduct extends Component {
   }
 
   handleChange = e => {
+    const formData = {
+      weight: this.state.weight,
+      data: this.state.data,
+      isActive: this.state.isActive,
+      description_short: this.state.description_short,
+      [e.target.name]: e.target.value
+    };
+
+    this.props.handleChildrenFormData('descriptionData', formData);
+
     this.setState({ [e.target.name]: e.target.value });
   };
 
   onEditorChange = evt => {
+    const formData = {
+      weight: this.state.weight,
+      description_short: this.state.description_short,
+      data: evt.editor.getData(),
+      isActive: this.state.isActive,
+    };
+
+    this.props.handleChildrenFormData('descriptionData', formData);
     this.setState({
       data: evt.editor.getData()
     });
   };
 
   handleChange(changeEvent) {
+    const formData = {
+      weight: this.state.weight,
+      data: changeEvent.target.value,
+      description_short: this.state.description_short,
+      isActive: this.state.isActive,
+    };
+
+    this.props.handleChildrenFormData('descriptionData', formData);
     this.setState({
       data: changeEvent.target.value
     });
@@ -202,18 +228,18 @@ export default class DescriptionProduct extends Component {
                       </Input>
                     </Col>
                   </FormGroup>
-                  <Button type="submit" size="sm" color="primary">
-                    <i className="fa fa-dot-circle-o"></i> Сохранить
-                  </Button>
+                  {/*<Button type="submit" size="sm" color="primary">*/}
+                  {/*  <i className="fa fa-dot-circle-o"></i> Сохранить*/}
+                  {/*</Button>*/}
                 </Form>
               </CardBody>
-              <CardFooter>
-                <Link to="/buttons/products">
-                  <Button size="sm" color="danger">
-                    <i className="fa fa-dot-circle-o"></i> Назад
-                  </Button>
-                </Link>
-              </CardFooter>
+              {/*<CardFooter>*/}
+              {/*  <Link to="/buttons/products">*/}
+              {/*    <Button size="sm" color="danger">*/}
+              {/*      <i className="fa fa-dot-circle-o"></i> Назад*/}
+              {/*    </Button>*/}
+              {/*  </Link>*/}
+              {/*</CardFooter>*/}
             </Card>
           </Col>
         </Row>
