@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 
-import {  Link  } from 'react-router-dom'
-import { httpGet, httpPost } from "../../../../api";
-import { Notyf } from "notyf";
+import {Link} from 'react-router-dom'
+import {httpGet, httpPost} from "../../../../api";
+import {Notyf} from "notyf";
 import "notyf/notyf.min.css";
 import {
   Button,
@@ -46,7 +46,7 @@ class UpdateInfoProduct extends Component {
   }
 
 
-componentDidMount() {
+  componentDidMount() {
 
     httpGet({
       url: "api/admin/product",
@@ -54,20 +54,20 @@ componentDidMount() {
         product_id: localStorage.getItem('id')
       }
     })
-    .then(response => {
-      this.setState({
-        model: response.data.data.model
-      });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-      httpGet({
-        url: "api/admin/class", 
-        params: {
-          total: 1
-        }
+      .then(response => {
+        this.setState({
+          model: response.data.data.model
+        });
       })
+      .catch(error => {
+        console.log(error);
+      });
+    httpGet({
+      url: "api/admin/class",
+      params: {
+        total: 1
+      }
+    })
       .then(response => {
         this.setState({
           classes: response.data.data
@@ -77,12 +77,12 @@ componentDidMount() {
         console.log(error);
       });
 
-   httpGet({
-        url: "api/admin/brand", 
-        params: {
-          total: 1
-        }
-      })
+    httpGet({
+      url: "api/admin/brand",
+      params: {
+        total: 1
+      }
+    })
       .then(response => {
         this.setState({
           brands: response.data.data,
@@ -94,8 +94,6 @@ componentDidMount() {
       });
 
 
-   
-
   }
 
   handleBack = () => {
@@ -103,15 +101,18 @@ componentDidMount() {
   }
 
   handleChange = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    // this.props
+    this.setState({[e.target.name]: e.target.value});
   };
 
   BrandCallbackFunction = childData => {
-    this.setState({ selectedbrand: childData });
+    alert(JSON.stringify(childData))
+    this.setState({selectedbrand: childData});
   };
 
   ClassCallbackFunction = childData => {
-    this.setState({ selectedclass: childData });
+    alert(JSON.stringify(childData                                                                                                                                 ))
+    this.setState({selectedclass: childData});
   };
 
   UpdateProduct = e => {
@@ -120,9 +121,9 @@ componentDidMount() {
     httpPost({
       url: `api/admin/product/update/${this.props.id}`,
       data: {
-        brand_id: this.state.selectedbrand ? this.state.selectedbrand.value  : this.props.brand.id,
+        brand_id: this.state.selectedbrand ? this.state.selectedbrand.value : this.props.brand.id,
         model: this.state.model,
-        class_id: this.state.selectedclass ? this.state.selectedclass.value  : this.props.class.id
+        class_id: this.state.selectedclass ? this.state.selectedclass.value : this.props.class.id
       },
       header: {
         "X-Requested-With": "XMLHttpRequest",
@@ -138,17 +139,17 @@ componentDidMount() {
   };
 
   toggle() {
-    this.setState({ collapse: !this.state.collapse });
+    this.setState({collapse: !this.state.collapse});
   }
 
   toggleFade() {
     this.setState(prevState => {
-      return { fadeIn: !prevState };
+      return {fadeIn: !prevState};
     });
   }
 
   render() {
-  const { model } = this.state;
+    const {model} = this.state;
     return (
       <div className="animated fadeIn">
         <Row>
@@ -156,9 +157,10 @@ componentDidMount() {
             <Card>
               <CardHeader>
                 <Row>
-                <Col md="4"> <strong>Главная Информация</strong></Col>
-                <Col md="4"></Col>
-                <Col md="4"><strong>{this.props.brand ? this.props.brand.name : null} {this.props.class ? this.props.class.name : null} {this.props.model}</strong></Col>
+                  <Col md="4"> <strong>Главная Информация</strong></Col>
+                  <Col md="4"></Col>
+                  <Col
+                    md="4"><strong>{this.props.brand ? this.props.brand.name : null} {this.props.class ? this.props.class.name : null} {this.props.model}</strong></Col>
                 </Row>
               </CardHeader>
               <CardBody>
@@ -209,14 +211,14 @@ componentDidMount() {
                   <Button type="submit" size="sm" color="primary">
                     <i className="fa fa-dot-circle-o"></i> Сохранить
                   </Button>
-                 
+
                 </Form>
               </CardBody>
               <CardFooter>
-                <Link to="/buttons/products"> 
-                    <Button  size="sm" color="danger">
-                      <i className="fa fa-dot-circle-o"></i> Назад
-                    </Button>
+                <Link to="/buttons/products">
+                  <Button size="sm" color="danger">
+                    <i className="fa fa-dot-circle-o"></i> Назад
+                  </Button>
                 </Link>
               </CardFooter>
             </Card>

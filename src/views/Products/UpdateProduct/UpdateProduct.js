@@ -29,6 +29,9 @@ class UpdateProduct extends Component {
       activeTab: new Array(4).fill("1"),
       productData: [],
 
+      brand_id: '',
+
+
       files: [],
       related_product_ids: [],
       descriptionData: {
@@ -90,13 +93,15 @@ class UpdateProduct extends Component {
     });
   }
 
-
+  handleChildrenFormData = (type, data) => {
+    this.setState({[type]: data})
+  }
 
   handleUpdate = () => {
 
     const notyf = new Notyf();
 
-    const {descriptionData, files, categories, meta} = this.props.state;
+    const {descriptionData, files, categories, meta} = this.state;
 
     let formData = files.length ? new FormData() : null;
 
@@ -147,6 +152,7 @@ class UpdateProduct extends Component {
               brand={this.state.productData.brand}
               class={this.state.productData.class}
               model={this.state.productData.model}
+              handleChildrenFormData={this.handleChildrenFormData}
             />
           }
           {

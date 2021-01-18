@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
   Card,
 
@@ -13,9 +13,9 @@ import {
   Row,
   Table
 } from "reactstrap";
-import { Form, FormGroup, Label, Input } from "reactstrap";
-import { Link } from "react-router-dom";
-import { httpGet } from "../../../api";
+import {Form, FormGroup, Label, Input} from "reactstrap";
+import {Link} from "react-router-dom";
+import {httpGet} from "../../../api";
 import UpdateDeleteOptionValues from "./DeleteUpdateOptionValues";
 import OptionValueSwitchExample from "./switchButton";
 
@@ -37,21 +37,19 @@ class OptionValues extends Component {
   }
 
   componentDidMount() {
-    setTimeout(() => {
-      this.getOptionValues();
-    }, 100);
+    this.getOptionValues();
   }
 
   getOptionValues = () => {
-      httpGet({
-        url: "api/admin/value",
-        params: {
-          search: this.state.search,
-          active: this.state.active,
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page
-        }
-      })
+    httpGet({
+      url: "api/admin/value",
+      params: {
+        search: this.state.search,
+        active: this.state.active,
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page
+      }
+    })
       .then(response => {
         this.setState({
           optionvalues: response.data.data,
@@ -71,7 +69,7 @@ class OptionValues extends Component {
     const meta = this.state.meta;
     meta.current_page = e;
 
-    this.setState({ meta: meta });
+    this.setState({meta: meta});
 
     this.getOptionValues();
   };
@@ -80,13 +78,13 @@ class OptionValues extends Component {
     let paging = [];
 
     for (let i = 1; i <= this.state.meta.last_page; i++) {
-      if(this.state.meta.current_page === i){
+      if (this.state.meta.current_page === i) {
         paging.push(
           <PaginationItem active key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
           </PaginationItem>
         )
-      }else{
+      } else {
         paging.push(
           <PaginationItem key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
@@ -94,9 +92,9 @@ class OptionValues extends Component {
         )
       }
 
-      }
-    
-      return paging.slice(this.state.first, this.state.last);
+    }
+
+    return paging.slice(this.state.first, this.state.last);
   };
 
   IncrementPage = e => {
@@ -133,7 +131,7 @@ class OptionValues extends Component {
         });
       }
     } else {
-      this.setState({ meta: meta });
+      this.setState({meta: meta});
     }
 
     this.getOptionValues();
@@ -141,7 +139,7 @@ class OptionValues extends Component {
 
   handleChange = e => {
     e.preventDefault()
-    this.setState({ [e.target.name]: e.target.value }, () => {
+    this.setState({[e.target.name]: e.target.value}, () => {
       setTimeout(() => {
         this.getOptionValues();
       }, 300);
@@ -161,7 +159,7 @@ class OptionValues extends Component {
   };
 
   render() {
-    const { optionvalues } = this.state;
+    const {optionvalues} = this.state;
 
     return (
       <div className="animated fadeIn">
@@ -207,7 +205,7 @@ class OptionValues extends Component {
                           onChange={this.handleChange}
                           id="select"
                         >
-                          <option value=""> Выберите статус </option>
+                          <option value=""> Выберите статус</option>
                           <option value="1">Активный</option>
                           <option value="0">Не активный</option>
                         </Input>
@@ -242,38 +240,38 @@ class OptionValues extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
                 <Table responsive striped>
                   <thead>
-                    <tr>
-                      <th>Feature ID</th>
-                      <th>Наименование</th>
-                      <th>Характеристика</th>
-                      <th>К-во продуктов</th>
-                      <th>Показывать</th>
-                      <th>Действие</th>
-                    </tr>
+                  <tr>
+                    <th>Feature ID</th>
+                    <th>Наименование</th>
+                    <th>Характеристика</th>
+                    <th>К-во продуктов</th>
+                    <th>Показывать</th>
+                    <th>Действие</th>
+                  </tr>
                   </thead>
                   <tbody>
-                    {optionvalues
-                      ? optionvalues.map(option => (
-                          <tr>
-                            <td>{option.id}</td>
-                            <td>{option.name.ru}</td>
-                            <td>{option.feature.name.ru}</td>
-                            <td>{option.product_count}</td>
-                            <td>
-                             <OptionValueSwitchExample active={option.active} id={option.id}/>
-                            </td>
-                            <td>
-                              <UpdateDeleteOptionValues function={this.getOptionValues} id={option.id} />
-                            </td>
-                          </tr>
-                        ))
-                      : null}
+                  {optionvalues
+                    ? optionvalues.map(option => (
+                      <tr>
+                        <td>{option.id}</td>
+                        <td>{option.name.ru}</td>
+                        <td>{option.feature.name.ru}</td>
+                        <td>{option.product_count}</td>
+                        <td>
+                          <OptionValueSwitchExample active={option.active} id={option.id}/>
+                        </td>
+                        <td>
+                          <UpdateDeleteOptionValues function={this.getOptionValues} id={option.id}/>
+                        </td>
+                      </tr>
+                    ))
+                    : null}
                   </tbody>
                 </Table>
                 <Pagination>

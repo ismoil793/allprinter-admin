@@ -31,7 +31,7 @@ class UpdateCharacter extends Component {
       collapse: true,
       fadeIn: true,
       timeout: 300,
-   
+
       features: [],
       selected: [],
       old_selected: [],
@@ -64,7 +64,7 @@ class UpdateCharacter extends Component {
     let a = [];
     if (this.props.features) {
       for (let i = 0; i < this.props.features.length; i++) {
-       
+
         if (this.props.features[i].selected_value) {
           a.push(this.props.features[i].selected_value.id);
         }else{
@@ -72,11 +72,9 @@ class UpdateCharacter extends Component {
         }
       }
     }
-    console.log('props')
-    console.log(this.props)
     this.setState({
       features: this.props.features,
-      selected: a 
+      selected: a
     });
   }
 
@@ -94,7 +92,7 @@ class UpdateCharacter extends Component {
 
   // getFeatures = () => {
   //   httpGet({
-  //     url: "api/admin/feature", 
+  //     url: "api/admin/feature",
   //     params: {
   //       total: 1
   //     }
@@ -193,12 +191,10 @@ class UpdateCharacter extends Component {
     let array = this.state.selected;
     array[index] = childData;
     this.setState({ selected: array });
-  
+
   };
 
  Attach = e => {
-  console.log('e')
-   console.log(e)
 
     const notyf = new Notyf();
     httpPost({
@@ -222,12 +218,12 @@ class UpdateCharacter extends Component {
       url: `api/admin/product/update/${this.props.id}`,
       data: {
         features: this.state.selected.filter(Boolean),
-       
+
       }
     })
       .then(response => {
         notyf.success("Вы обновили характеристики");
-       
+
       })
       .catch(error => {
         console.log(error);
@@ -235,7 +231,7 @@ class UpdateCharacter extends Component {
   };
 
   render() {
-  
+
     return (
       <div className="animated fadeIn">
         <Row>
@@ -281,7 +277,7 @@ class UpdateCharacter extends Component {
                           value={this.state.feature_ru}
                           onChange={this.handleChange}
                           placeholder=""
-                          
+
                         />
                         <FormText color="muted">ru</FormText>
                       </Col>
@@ -296,7 +292,7 @@ class UpdateCharacter extends Component {
                           value={this.state.feature_uz}
                           onChange={this.handleChange}
                           placeholder=""
-                        
+
                         />
                         <FormText color="muted">uz</FormText>
                       </Col>
@@ -311,7 +307,7 @@ class UpdateCharacter extends Component {
                           value={this.state.feature_en}
                           onChange={this.handleChange}
                           placeholder=""
-                         
+
                         />
                         <FormText color="muted">en</FormText>
                       </Col>
@@ -338,10 +334,10 @@ class UpdateCharacter extends Component {
                       <Col xs="9" md="9">
                         <Row>
                           <Col md="9">
-                          
-                            <OptionSuggest    
+
+                            <OptionSuggest
                               callbackFunction={this.FeatureCallbackFunction}
-                              features={this.state.features} 
+                              features={this.state.features}
                             />
                           </Col>
                         </Row>

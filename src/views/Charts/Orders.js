@@ -548,6 +548,7 @@ class Orders extends Component {
                 </div>
               </CardHeader>
               <CardBody>
+
                 <Table responsive striped>
                   <thead>
                   <tr>
@@ -558,9 +559,9 @@ class Orders extends Component {
                     <th>Дата</th>
                     <th>Дата доставки</th>
                     <th>Сумма</th>
-                    <th>Оплата</th>
+                    {/*<th>Оплата</th>*/}
                     <th>Дилеры</th>
-                    <th>Открыл</th>
+                    {/*<th>Открыл</th>*/}
                     <th>Область</th>
                     <th>Ответ склада (Обработан)</th>
                     <th>Статус</th>
@@ -579,6 +580,9 @@ class Orders extends Component {
                         )}
 
 
+
+
+                        {console.log(order)}
                         <td>
                           {order.user_phone.replace(
                             /^(\d{3})(\d{2})\s*(\d{3})(\d{2})(\d{2})/,
@@ -597,14 +601,17 @@ class Orders extends Component {
                             .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}{" "}
                           сум
                         </td>
-                        <td>{order.payment.name}</td>
+                        {/*<td>{order.payment.name}</td>*/}
                         <td>{order.shop_name}</td>
-                        <td>
-                          {order.history[0].user ? order.history[0].user.type === "App\\Models\\Admin"
-                            ? order.history[0].user.first_name + " " +
-                            order.history[0].user.last_name
-                            : "Пользователь" : null}
-                        </td>
+
+
+                        {/*<td>*/}
+                        {/*  {order.history && order.history[0].user ? order.history[0].user.type === "App\\Models\\Admin"*/}
+                        {/*    ? order.history[0].user.first_name + " " +*/}
+                        {/*    order.history[0].user.last_name*/}
+                        {/*    : "Пользователь" : null}*/}
+                        {/*</td>*/}
+
                         <td>
                           {order.address ?
                             order.address.region && order.address.region.city.id === 1 ? null
