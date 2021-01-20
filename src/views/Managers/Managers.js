@@ -36,8 +36,8 @@ class Managers extends Component {
 
 
   componentDidMount() {
-   this.getManagers();
- }
+    this.getManagers();
+  }
 
   getManagers = () => {
     httpGet({
@@ -135,7 +135,7 @@ class Managers extends Component {
 
   render() {
     const { managers } = this.state;
- 
+
     return (
       <div className="animated fadeIn">
         <Row>
@@ -215,7 +215,7 @@ class Managers extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
@@ -228,36 +228,36 @@ class Managers extends Component {
                       <th>Роль</th>
                       <th>Дата добавление</th>
                       <th>Дата последней активности</th>
-                      <th>Баланс</th>
+                      {/* <th>Баланс</th> */}
                       <th>Действие</th>
                     </tr>
                   </thead>
                   <tbody>
                     {managers
                       ? managers.map(manager => (
-                          <tr>
-                            <td>{manager.id}</td>
-                            <td>
-                              {manager.first_name} {manager.last_name}
-                            </td>
-                            <td>{manager.email}</td>
-                            <td>
-                              {manager.roles
-                                ? manager.roles.map(role => role.name)
-                                : null}
-                            </td>
-                            <td>{manager.created_at}</td>
-                            <td>{manager.logged_at}</td>
-                            <td>{manager.bonus.toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")} сум</td>
-                            <td>
-                              <ManagerButtons
-                                function={this.getRoles}
-                                id={manager.id}
-                              />
-                            </td>
-                          </tr>
-                        ))
+                        <tr>
+                          <td>{manager.id}</td>
+                          <td>
+                            {manager.first_name} {manager.last_name}
+                          </td>
+                          <td>{manager.email}</td>
+                          <td>
+                            {manager.roles
+                              ? manager.roles.map(role => role.name)
+                              : null}
+                          </td>
+                          <td>{manager.created_at}</td>
+                          <td>{manager.logged_at}</td>
+                          {/* <td>{manager.bonus ? manager.bonus.toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, " ") : null} сум</td> */}
+                          <td>
+                            <ManagerButtons
+                              function={this.getRoles}
+                              id={manager.id}
+                            />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>
