@@ -99,7 +99,7 @@ class UpdateValueOptions extends Component {
     e.preventDefault();
 
     httpPost({
-      url: `api/admin/value/${this.props.location.feature_value_id}/`,
+      url: `api/admin/value/${this.props.location.feature_value_id}`,
       data: {
         feature_id: this.state.selectedfeature.value,
         name: {
@@ -111,7 +111,7 @@ class UpdateValueOptions extends Component {
     })
       .then(response => {
 
-        notyf.success('Вы добавили значение характеристики')
+        notyf.success('Вы обновили значение характеристики')
       })
       .catch(error => {
         console.log(error);
