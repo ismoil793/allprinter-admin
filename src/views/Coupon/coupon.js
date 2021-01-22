@@ -38,17 +38,17 @@ class Coupon extends Component {
   }
 
   componentDidMount() {
-   this.getCouriers();
+    this.getCouriers();
   }
 
   getCouriers = () => {
     httpGet({
       url: "api/admin/coupon",
-        params: {
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page
-        }
-      })
+      params: {
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page
+      }
+    })
       .then(response => {
         this.setState({
           deliveries: response.data.data,
@@ -93,7 +93,8 @@ class Coupon extends Component {
       }
     }
 
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -177,38 +178,38 @@ class Coupon extends Component {
                   <tbody>
                     {deliveries
                       ? deliveries.map((delivery) => (
-                          <tr key={delivery.id}>
-                            <td>{delivery.id}</td>
-                            <td>{delivery.code}</td>
-                            <td>
-                              {delivery.created_at ? delivery.created_at : null}
-                            </td>
-                            <td>
-                              {delivery.until ? delivery.until : "Бесконечно"}
-                            </td>
-                            <td>
-                             {delivery.value}  {delivery.type === 2 || delivery.type === 4 ? " %" : " сум"}
-                            </td>
-                            <td>
-                              {delivery.type === 1
-                                ? "Сумма купона для товара"
-                                : delivery.type === 2
+                        <tr key={delivery.id}>
+                          <td>{delivery.id}</td>
+                          <td>{delivery.code}</td>
+                          <td>
+                            {delivery.created_at ? delivery.created_at : null}
+                          </td>
+                          <td>
+                            {delivery.until ? delivery.until : "Бесконечно"}
+                          </td>
+                          <td>
+                            {delivery.value}  {delivery.type === 2 || delivery.type === 4 ? " %" : " сум"}
+                          </td>
+                          <td>
+                            {delivery.type === 1
+                              ? "Сумма купона для товара"
+                              : delivery.type === 2
                                 ? "Процент купона для товара"
                                 : delivery.type === 3
-                                ? "Сумма купона для корзины"
-                                : "Процент купона для корзины"}
-                            </td>
-                            <td>{delivery.status === 1 ? "Купон" : "Подарочный гифт"}</td>
-                            <td>{delivery.used}</td>
-                           <td> {delivery.is_finished === 0 ? <Badge color="success">Активный</Badge> : <Badge color="danger">Неактивный</Badge>}</td>
-                            <td>
-                              <UpdateDeleteKPI
-                                function={this.getCouriers}
-                                id={delivery.id}
-                              />
-                            </td>
-                          </tr>
-                        ))
+                                  ? "Сумма купона для корзины"
+                                  : "Процент купона для корзины"}
+                          </td>
+                          <td>{delivery.status === 1 ? "Купон" : "Подарочный гифт"}</td>
+                          <td>{delivery.used}</td>
+                          <td> {delivery.is_finished === 0 ? <Badge color="success">Активный</Badge> : <Badge color="danger">Неактивный</Badge>}</td>
+                          <td>
+                            <UpdateDeleteKPI
+                              function={this.getCouriers}
+                              id={delivery.id}
+                            />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>

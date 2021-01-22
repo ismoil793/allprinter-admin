@@ -100,8 +100,8 @@ class NewProducts extends Component {
         );
       }
     }
-
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -275,8 +275,8 @@ class NewProducts extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
-                </div>  
+                  </div>
+                </div>
               </CardHeader>
               <CardBody>
                 <Table responsive striped>
@@ -295,39 +295,39 @@ class NewProducts extends Component {
                   <tbody>
                     {products
                       ? products.map(product => (
-                          <tr key={product.id}>
-                            <td>{product.id}</td>
-                            <td>
-                              <img
-                                style={{ width: "50%" }}
-                                alt={product.model}
-                                src={
-                                  product.images && product.images.length
-                                    ? product.images[0].types.small_default
-                                    : null
-                                }
-                              />
-                            </td>
-                            <td>{product.name} </td>
-                            <td>
-                              {product.categories.map(
-                                (name, index) => (index ? ", " : "") + name.name
-                              )}
-                            </td>
-                            <td>{product.all_quantity}</td>
-                            <td> {product.min_price} сум</td>
-                            <td>
-                              {product.active ? (
-                                <Badge color="success">Активный</Badge>
-                              ) : (
+                        <tr key={product.id}>
+                          <td>{product.id}</td>
+                          <td>
+                            <img
+                              style={{ width: "50%" }}
+                              alt={product.model}
+                              src={
+                                product.images && product.images.length
+                                  ? product.images[0].types.small_default
+                                  : null
+                              }
+                            />
+                          </td>
+                          <td>{product.name} </td>
+                          <td>
+                            {product.categories.map(
+                              (name, index) => (index ? ", " : "") + name.name
+                            )}
+                          </td>
+                          <td>{product.all_quantity}</td>
+                          <td> {product.min_price} сум</td>
+                          <td>
+                            {product.active ? (
+                              <Badge color="success">Активный</Badge>
+                            ) : (
                                 <Badge color="danger">Не активный</Badge>
                               )}
-                            </td>
-                            <td>
-                              <UpdateDeleteProducts id={product.id} />
-                            </td>
-                          </tr>
-                        ))
+                          </td>
+                          <td>
+                            <UpdateDeleteProducts id={product.id} />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>

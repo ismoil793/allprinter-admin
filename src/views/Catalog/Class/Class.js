@@ -42,15 +42,15 @@ class Classes extends Component {
   }
 
   getClasses = () => {
-      httpGet({
-        url: "api/admin/class",
-        params: {
-          search: this.state.search,
-          status: this.state.status,
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page
-        }
-      })
+    httpGet({
+      url: "api/admin/class",
+      params: {
+        search: this.state.search,
+        status: this.state.status,
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page
+      }
+    })
       .then(response => {
         this.setState({
           classes: response.data.data,
@@ -93,7 +93,8 @@ class Classes extends Component {
         );
       }
     }
-
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
     return paging.slice(this.state.first, this.state.last);
   };
 
@@ -129,16 +130,16 @@ class Classes extends Component {
     e.preventDefault()
     this.setState({ [e.target.name]: e.target.value }, () => {
       setTimeout(() => {
-      this.getClasses();
-    }, 100);
+        this.getClasses();
+      }, 100);
     });
   };
 
   Reset = () => {
-    this.setState({  
+    this.setState({
       search: '',
       status: null
-    },() => {
+    }, () => {
       this.getClasses();
     });
   }
@@ -149,48 +150,48 @@ class Classes extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
-        <Col xs="12" lg="12">
-          <Card>
+          <Col xs="12" lg="12">
+            <Card>
               <CardHeader>
-                <strong>Фильтры</strong> 
+                <strong>Фильтры</strong>
               </CardHeader>
               <CardBody>
                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
-                <Row>
-                <FormGroup column>
-                    <Col md="12">
-                      <Label htmlFor="text-input">Поиск</Label>
-                    </Col>
-                    <Col xs="12" md="12">
-                      <Input type="text" id="text-input"  name="search" value={this.state.search} onChange={this.handleChange} placeholder="" />
-                     
-                    </Col>
-                  </FormGroup>
+                  <Row>
+                    <FormGroup column>
+                      <Col md="12">
+                        <Label htmlFor="text-input">Поиск</Label>
+                      </Col>
+                      <Col xs="12" md="12">
+                        <Input type="text" id="text-input" name="search" value={this.state.search} onChange={this.handleChange} placeholder="" />
+
+                      </Col>
+                    </FormGroup>
 
 
 
-                  
 
-                  <FormGroup column>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Статус</Label>
-                    </Col>
-                    <Col xs="12" md="12">
-                    <Input type="select"  name="status" value={this.state.status} onChange={this.handleChange} id="select">
-                        <option value=""> Выберите статус </option>
-                        <option value="1">Активный</option>
-                        <option value="0">Не активный</option>
-                      </Input>
-                     
-                    </Col>
-                  </FormGroup>
+
+                    <FormGroup column>
+                      <Col md="3">
+                        <Label htmlFor="text-input">Статус</Label>
+                      </Col>
+                      <Col xs="12" md="12">
+                        <Input type="select" name="status" value={this.state.status} onChange={this.handleChange} id="select">
+                          <option value=""> Выберите статус </option>
+                          <option value="1">Активный</option>
+                          <option value="0">Не активный</option>
+                        </Input>
+
+                      </Col>
+                    </FormGroup>
 
                   </Row>
-                
+
                 </Form>
               </CardBody>
               <CardFooter>
-                
+
                 <Button onClick={this.Reset} type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Сбросить</Button>
               </CardFooter>
             </Card>
@@ -209,7 +210,7 @@ class Classes extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
@@ -228,23 +229,23 @@ class Classes extends Component {
                   <tbody>
                     {classes
                       ? classes.map(clas => (
-                          <tr key={clas.id}>
-                            <td>{clas.id}</td>
-                            {typeof(clas.name) == 'object' ? (
-                            <td>{clas.name.ru}</td>): null}
-                           
-                            <td>{clas.reference}</td>
-                            {clas.category ? <td>{clas.category.name.ru}</td> : <td>Нет привязки</td>}
-                            <td>{clas.product_count}</td>
-                            <td>
-                              <ClassSwitchExample active={clas.status} id={clas.id} />
-                            </td>
-                            <td>
-                              {/* <ActionButton id={clas.id} /> */}
-                              <ActionButtonDelete function={this.getClasses} id={clas.id}/>
-                            </td>
-                          </tr>
-                        ))
+                        <tr key={clas.id}>
+                          <td>{clas.id}</td>
+                          {typeof (clas.name) == 'object' ? (
+                            <td>{clas.name.ru}</td>) : null}
+
+                          <td>{clas.reference}</td>
+                          {clas.category ? <td>{clas.category.name.ru}</td> : <td>Нет привязки</td>}
+                          <td>{clas.product_count}</td>
+                          <td>
+                            <ClassSwitchExample active={clas.status} id={clas.id} />
+                          </td>
+                          <td>
+                            {/* <ActionButton id={clas.id} /> */}
+                            <ActionButtonDelete function={this.getClasses} id={clas.id} />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>

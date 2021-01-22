@@ -1,5 +1,5 @@
-import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 import {
   Badge,
@@ -15,9 +15,9 @@ import {
   Row,
   Table
 } from "reactstrap";
-import {Form, FormGroup, Label, Input} from "reactstrap";
+import { Form, FormGroup, Label, Input } from "reactstrap";
 import SplitButton from "../Charts/components/SplitButton";
-import {httpGet} from "../../api";
+import { httpGet } from "../../api";
 
 class Orders extends Component {
   constructor() {
@@ -63,25 +63,25 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    httpGet({url: "api/order/deliveries"})
+    httpGet({ url: "api/order/deliveries" })
       .then(response => {
-        this.setState({deliveries: response.data.data});
+        this.setState({ deliveries: response.data.data });
       })
       .catch(error => {
         console.log(error);
       });
 
-    httpGet({url: "api/order/payments"})
+    httpGet({ url: "api/order/payments" })
       .then(response => {
-        this.setState({payments: response.data.data});
+        this.setState({ payments: response.data.data });
       })
       .catch(error => {
         console.log(error);
       });
 
-    httpGet({url: "api/order/states"})
+    httpGet({ url: "api/order/states" })
       .then(response => {
-        this.setState({states: response.data.data});
+        this.setState({ states: response.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -202,7 +202,7 @@ class Orders extends Component {
     const meta = this.state.meta;
     meta.current_page = e;
 
-    this.setState({meta: meta});
+    this.setState({ meta: meta });
 
     this.getOrders();
   };
@@ -225,8 +225,8 @@ class Orders extends Component {
         );
       }
     }
-
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -263,7 +263,7 @@ class Orders extends Component {
         });
       }
     } else {
-      this.setState({meta: meta});
+      this.setState({ meta: meta });
     }
 
     this.getOrders();
@@ -316,7 +316,7 @@ class Orders extends Component {
 
   render() {
 
-    const {orders} = this.state;
+    const { orders } = this.state;
 
     return (
       <div className="animated fadeIn">
@@ -551,131 +551,131 @@ class Orders extends Component {
 
                 <Table responsive striped>
                   <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Клиент</th>
+                    <tr>
+                      <th>ID</th>
+                      <th>Клиент</th>
 
-                    <th>Телефон</th>
-                    <th>Дата</th>
-                    <th>Дата доставки</th>
-                    <th>Сумма</th>
-                    {/*<th>Оплата</th>*/}
-                    <th>Дилеры</th>
-                    {/*<th>Открыл</th>*/}
-                    <th>Область</th>
-                    <th>Ответ склада (Обработан)</th>
-                    <th>Статус</th>
-                    <th>Действие</th>
-                  </tr>
+                      <th>Телефон</th>
+                      <th>Дата</th>
+                      <th>Дата доставки</th>
+                      <th>Сумма</th>
+                      {/*<th>Оплата</th>*/}
+                      <th>Дилеры</th>
+                      {/*<th>Открыл</th>*/}
+                      <th>Область</th>
+                      <th>Ответ склада (Обработан)</th>
+                      <th>Статус</th>
+                      <th>Действие</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  {orders
-                    ? orders.map((order) => (
-                      <tr>
-                        <td>{order.id}</td>
-                        {order.user_name === null ? (
-                          <td></td>
-                        ) : (
-                          <td>{order.user_name} </td>
-                        )}
+                    {orders
+                      ? orders.map((order) => (
+                        <tr>
+                          <td>{order.id}</td>
+                          {order.user_name === null ? (
+                            <td></td>
+                          ) : (
+                              <td>{order.user_name} </td>
+                            )}
 
 
 
 
-                        {console.log(order)}
-                        <td>
-                          {order.user_phone.replace(
-                            /^(\d{3})(\d{2})\s*(\d{3})(\d{2})(\d{2})/,
-                            "$1 $2 $3 $4 $5"
-                          )}{" "}
-                        </td>
-                        <td>{order.created_at}</td>
-                        <td>
-                          {order.delivered_at
-                            ? order.delivered_at
-                            : "Не доставлен"}
-                        </td>
-                        <td>
-                          {order.total
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}{" "}
+                          {console.log(order)}
+                          <td>
+                            {order.user_phone.replace(
+                              /^(\d{3})(\d{2})\s*(\d{3})(\d{2})(\d{2})/,
+                              "$1 $2 $3 $4 $5"
+                            )}{" "}
+                          </td>
+                          <td>{order.created_at}</td>
+                          <td>
+                            {order.delivered_at
+                              ? order.delivered_at
+                              : "Не доставлен"}
+                          </td>
+                          <td>
+                            {order.total
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}{" "}
                           сум
                         </td>
-                        {/*<td>{order.payment.name}</td>*/}
-                        <td>{order.shop_name}</td>
+                          {/*<td>{order.payment.name}</td>*/}
+                          <td>{order.shop_name}</td>
 
 
-                        {/*<td>*/}
-                        {/*  {order.history && order.history[0].user ? order.history[0].user.type === "App\\Models\\Admin"*/}
-                        {/*    ? order.history[0].user.first_name + " " +*/}
-                        {/*    order.history[0].user.last_name*/}
-                        {/*    : "Пользователь" : null}*/}
-                        {/*</td>*/}
+                          {/*<td>*/}
+                          {/*  {order.history && order.history[0].user ? order.history[0].user.type === "App\\Models\\Admin"*/}
+                          {/*    ? order.history[0].user.first_name + " " +*/}
+                          {/*    order.history[0].user.last_name*/}
+                          {/*    : "Пользователь" : null}*/}
+                          {/*</td>*/}
 
-                        <td>
-                          {order.address ?
-                            order.address.region && order.address.region.city.id === 1 ? null
-                              : order.address.region && order.address.region.city ?
-                              order.address.region.city.name
-                              : null
-                            : null}
-                        </td>
-                        <td>
-                          {order.one_in_process === null ? (
-                            "Не отправлен"
-                          ) : order.one_in_process === 1 ? (
-                            <img
-                              style={{width: "25px"}}
-                              src="../../assets/img/avatars/success.png"
-                              alt="success"
-                            />
-                          ) : order.one_in_process === 0 ? (
-                            <img
-                              style={{width: "25px"}}
-                              src="../../assets/img/avatars/error.png"
-                              alt="error"
-                            />
+                          <td>
+                            {order.address ?
+                              order.address.region && order.address.region.city.id === 1 ? null
+                                : order.address.region && order.address.region.city ?
+                                  order.address.region.city.name
+                                  : null
+                              : null}
+                          </td>
+                          <td>
+                            {order.one_in_process === null ? (
+                              "Не отправлен"
+                            ) : order.one_in_process === 1 ? (
+                              <img
+                                style={{ width: "25px" }}
+                                src="../../assets/img/avatars/success.png"
+                                alt="success"
+                              />
+                            ) : order.one_in_process === 0 ? (
+                              <img
+                                style={{ width: "25px" }}
+                                src="../../assets/img/avatars/error.png"
+                                alt="error"
+                              />
+                            ) : (
+                                    ""
+                                  )}
+                          </td>
+
+                          {order.state.name === "Открыт" ? (
+                            <td>
+                              <Badge color="warning">
+                                {order.state.name}
+                              </Badge>
+                            </td>
+                          ) : order.state.name === "Отменен" ? (
+                            <td>
+                              <Badge color="danger">{order.state.name}</Badge>
+                            </td>
+                          ) : order.state.name === "Доставлен" ? (
+                            <td>
+                              <Badge color="success">
+                                {order.state.name}
+                              </Badge>
+                            </td>
+                          ) : order.state.name === "В пути" ? (
+                            <td>
+                              <Badge color="secondary">
+                                {order.state.name}
+                              </Badge>
+                            </td>
                           ) : (
-                            ""
-                          )}
-                        </td>
+                                    <td>
+                                      <Badge color="primary">
+                                        {order.state.name}
+                                      </Badge>
+                                    </td>
+                                  )}
 
-                        {order.state.name === "Открыт" ? (
                           <td>
-                            <Badge color="warning">
-                              {order.state.name}
-                            </Badge>
+                            <SplitButton id={order.id} />
                           </td>
-                        ) : order.state.name === "Отменен" ? (
-                          <td>
-                            <Badge color="danger">{order.state.name}</Badge>
-                          </td>
-                        ) : order.state.name === "Доставлен" ? (
-                          <td>
-                            <Badge color="success">
-                              {order.state.name}
-                            </Badge>
-                          </td>
-                        ) : order.state.name === "В пути" ? (
-                          <td>
-                            <Badge color="secondary">
-                              {order.state.name}
-                            </Badge>
-                          </td>
-                        ) : (
-                          <td>
-                            <Badge color="primary">
-                              {order.state.name}
-                            </Badge>
-                          </td>
-                        )}
-
-                        <td>
-                          <SplitButton id={order.id}/>
-                        </td>
-                      </tr>
-                    ))
-                    : null}
+                        </tr>
+                      ))
+                      : null}
                   </tbody>
                 </Table>
                 <Pagination>

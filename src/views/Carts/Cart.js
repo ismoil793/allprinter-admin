@@ -90,8 +90,8 @@ class Carts extends Component {
         );
       }
     }
-
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -230,30 +230,30 @@ class Carts extends Component {
                   <tbody>
                     {carts
                       ? carts.map(cart => (
-                          <tr>
-                            <td>{cart.id}</td>
-                            {cart.device === null ? (
-                              <td></td>
-                            ) : (
+                        <tr>
+                          <td>{cart.id}</td>
+                          {cart.device === null ? (
+                            <td></td>
+                          ) : (
                               <td>
                                 {cart.device.user.first_name}{" "}
                                 {cart.device.user.last_name}{" "}
                               </td>
                             )}
-                            <td>{cart.device.user.phone.replace(/^(\d{3})(\d{2})\s*(\d{3})(\d{2})(\d{2})/, '+$1 $2 $3 $4 $5')} </td>
-                            <td>{cart.updated_at}</td>
-                            <td>
-                              {cart.total_with_discount
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}{" "}
+                          <td>{cart.device.user.phone.replace(/^(\d{3})(\d{2})\s*(\d{3})(\d{2})(\d{2})/, '+$1 $2 $3 $4 $5')} </td>
+                          <td>{cart.updated_at}</td>
+                          <td>
+                            {cart.total_with_discount
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}{" "}
                               сум
                             </td>
 
-                            <td>
-                              <CartButton id={cart.id} />
-                            </td>
-                          </tr>
-                        ))
+                          <td>
+                            <CartButton id={cart.id} />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>

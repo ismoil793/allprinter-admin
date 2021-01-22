@@ -83,7 +83,8 @@ class Managers extends Component {
         </PaginationItem>
       );
     }
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
 

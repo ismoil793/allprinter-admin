@@ -41,13 +41,13 @@ class Shops extends Component {
   getShops = () => {
     httpGet({
       url: "api/admin/dealer/shops",
-        params: {
-          search: this.state.search,
-          type: "new",
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page
-        }
-      })
+      params: {
+        search: this.state.search,
+        type: "new",
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page
+      }
+    })
       .then(response => {
         this.setState({
           shops: response.data.data,
@@ -76,13 +76,13 @@ class Shops extends Component {
     let paging = [];
 
     for (let i = 1; i <= this.state.meta.last_page; i++) {
-      if(this.state.meta.current_page === i){
+      if (this.state.meta.current_page === i) {
         paging.push(
           <PaginationItem active key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
           </PaginationItem>
         )
-      }else{
+      } else {
         paging.push(
           <PaginationItem key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
@@ -90,9 +90,9 @@ class Shops extends Component {
         )
       }
 
-      }
-    
-      return paging.slice(this.state.first, this.state.last);
+    }
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -135,7 +135,7 @@ class Shops extends Component {
     return (
       <div className="animated fadeIn">
         <Row>
-        <Col xs="12" lg="12">
+          <Col xs="12" lg="12">
             <Card>
               <Form>
                 <CardHeader>
@@ -159,7 +159,7 @@ class Shops extends Component {
                         />
                       </Col>
                     </FormGroup>
-                 
+
                   </Row>
                 </CardBody>
               </Form>
@@ -171,7 +171,7 @@ class Shops extends Component {
               <CardHeader>
                 <Row>
                   <Col xs="12" lg="2">
-                   
+
                   </Col>
                   <Col xs="12" lg="7"></Col>
                 </Row>
@@ -185,7 +185,7 @@ class Shops extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
@@ -202,23 +202,23 @@ class Shops extends Component {
                   <tbody>
                     {shops
                       ? shops.map(shop => (
-                          <tr>
-                            <td>{shop.id}</td>
-                            <td>
-                              {shop.reference ? shop.reference : "Нет артикула"}
-                            </td>
-                            {shop.name ? <td> {shop.name} </td> : <td></td>}
-                            <td>{shop.item_count}</td>
-                          
-                  { 
-                    shop.status === 1 ?  
-                    <td> <Badge color="success">Работает</Badge></td>
-                     : ( shop.status === 0 ?
-                    <td><Badge color="warning">Не работает</Badge></td>
-                     : (shop.status === 3 ?  <td><Badge color="warning">Другое</Badge></td>: null )) }
-                     <td><UpdateDeleteShops id={shop.id} function={this.getShops}/></td>
-                          </tr>
-                        ))
+                        <tr>
+                          <td>{shop.id}</td>
+                          <td>
+                            {shop.reference ? shop.reference : "Нет артикула"}
+                          </td>
+                          {shop.name ? <td> {shop.name} </td> : <td></td>}
+                          <td>{shop.item_count}</td>
+
+                          {
+                            shop.status === 1 ?
+                              <td> <Badge color="success">Работает</Badge></td>
+                              : (shop.status === 0 ?
+                                <td><Badge color="warning">Не работает</Badge></td>
+                                : (shop.status === 3 ? <td><Badge color="warning">Другое</Badge></td> : null))}
+                          <td><UpdateDeleteShops id={shop.id} function={this.getShops} /></td>
+                        </tr>
+                      ))
                       : null}
 
                   </tbody>

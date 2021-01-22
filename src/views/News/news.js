@@ -44,15 +44,15 @@ class News extends Component {
   }
 
   getNews = () => {
-      httpGet({
-        url: "api/admin/post", 
-        params: {
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page,
-          search: this.state.search,
-          active: this.state.status
-        }
-      })
+    httpGet({
+      url: "api/admin/post",
+      params: {
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page,
+        search: this.state.search,
+        active: this.state.status
+      }
+    })
       .then(response => {
         this.setState({
           news: response.data.data,
@@ -81,13 +81,13 @@ class News extends Component {
     let paging = [];
 
     for (let i = 1; i <= this.state.meta.last_page; i++) {
-      if(this.state.meta.current_page === i){
+      if (this.state.meta.current_page === i) {
         paging.push(
           <PaginationItem active key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
           </PaginationItem>
         )
-      }else{
+      } else {
         paging.push(
           <PaginationItem key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
@@ -95,9 +95,9 @@ class News extends Component {
         )
       }
 
-      }
-    
-      return paging.slice(this.state.first, this.state.last);
+    }
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -129,64 +129,64 @@ class News extends Component {
     e.preventDefault()
     this.setState({ [e.target.name]: e.target.value }, () => {
       setTimeout(() => {
-      this.getNews();
-    }, 100);
+        this.getNews();
+      }, 100);
     });
   };
 
   Reset = () => {
-    this.setState({  
+    this.setState({
       search: '',
       status: null
-    },() => {
+    }, () => {
       this.getNews();
     });
   }
 
   render() {
-    const {news} = this.state;
-   
+    const { news } = this.state;
+
     return (
       <div className="animated fadeIn">
         <Row>
-        <Col xs="12" lg="12">
-          <Card>
+          <Col xs="12" lg="12">
+            <Card>
               <CardHeader>
-                <strong>Фильтры</strong> 
+                <strong>Фильтры</strong>
               </CardHeader>
               <CardBody>
                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
-                <Row>
-                <FormGroup column>
-                    <Col md="12">
-                      <Label htmlFor="text-input">Поиск</Label>
-                    </Col>
-                    <Col xs="12" md="12">
-                      <Input type="text" id="text-input"  name="search" value={this.state.search} onChange={this.handleChange} placeholder="" />
-                     
-                    </Col>
-                  </FormGroup>
+                  <Row>
+                    <FormGroup column>
+                      <Col md="12">
+                        <Label htmlFor="text-input">Поиск</Label>
+                      </Col>
+                      <Col xs="12" md="12">
+                        <Input type="text" id="text-input" name="search" value={this.state.search} onChange={this.handleChange} placeholder="" />
 
-                  <FormGroup column>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Статус</Label>
-                    </Col>
-                    <Col xs="12" md="12">
-                    <Input type="select"  name="status" value={this.state.status} onChange={this.handleChange} id="select">
-                        <option value=""> Выберите статус </option>
-                        <option value="1">Активный</option>
-                        <option value="0">Не активный</option>
-                      </Input>
-                     
-                    </Col>
-                  </FormGroup>
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup column>
+                      <Col md="3">
+                        <Label htmlFor="text-input">Статус</Label>
+                      </Col>
+                      <Col xs="12" md="12">
+                        <Input type="select" name="status" value={this.state.status} onChange={this.handleChange} id="select">
+                          <option value=""> Выберите статус </option>
+                          <option value="1">Активный</option>
+                          <option value="0">Не активный</option>
+                        </Input>
+
+                      </Col>
+                    </FormGroup>
 
                   </Row>
-                
+
                 </Form>
               </CardBody>
               <CardFooter>
-                
+
                 <Button onClick={this.Reset} type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Сбросить</Button>
               </CardFooter>
             </Card>
@@ -198,14 +198,14 @@ class News extends Component {
                 <div className="row d-flex align-items-center justify-content-between">
                   <div className="col-auto">
                     <i className="fa fa-align-justify"></i> Категории
-                  </div>  
+                  </div>
                   <div className="col-auto">
                     <Link to='/visual/news/add'>
                       <Button className="fa fa-plus" color="primary">
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
@@ -219,18 +219,18 @@ class News extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                
+
                     {news
                       ? news.map(newest => (
                         <tr>
-                            <td>{newest.id}</td>
-                            <td>{newest.title.ru}</td>
-                            <td>{newest.created_at}</td>
-                            <td>
-                             <ActionNewsButton function={this.getNews} id={newest.id} />
-                            </td>
+                          <td>{newest.id}</td>
+                          <td>{newest.title.ru}</td>
+                          <td>{newest.created_at}</td>
+                          <td>
+                            <ActionNewsButton function={this.getNews} id={newest.id} />
+                          </td>
                         </tr>
-                        ))
+                      ))
                       : null}
                   </tbody>
                 </Table>

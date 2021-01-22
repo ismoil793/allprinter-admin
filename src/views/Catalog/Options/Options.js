@@ -42,15 +42,15 @@ class Options extends Component {
   }
 
   getOptions = () => {
-      httpGet({
-        url: "api/admin/feature", 
-        params: {
-          search: this.state.search,
-          active: this.state.active,
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page
-        }
-      })
+    httpGet({
+      url: "api/admin/feature",
+      params: {
+        search: this.state.search,
+        active: this.state.active,
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page
+      }
+    })
       .then(response => {
         this.setState({
           options: response.data.data,
@@ -79,13 +79,13 @@ class Options extends Component {
     let paging = [];
 
     for (let i = 1; i <= this.state.meta.last_page; i++) {
-      if(this.state.meta.current_page === i){
+      if (this.state.meta.current_page === i) {
         paging.push(
           <PaginationItem active key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
           </PaginationItem>
         )
-      }else{
+      } else {
         paging.push(
           <PaginationItem key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
@@ -93,9 +93,9 @@ class Options extends Component {
         )
       }
 
-      }
-    
-      return paging.slice(this.state.first, this.state.last);
+    }
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -236,7 +236,7 @@ class Options extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
@@ -253,21 +253,21 @@ class Options extends Component {
                   <tbody>
                     {options
                       ? options.map(option => (
-                          <tr>
-                            <td>{option.id}</td>
-                            <td>{option.name.ru}</td>
-                            <td>{option.value_count}</td>
-                            <td>
-                          <OptionSwitchExample active={option.active} id={option.id}/>
-                            </td>
-                            <td>
-                              <UpdateDeleteOptions
-                                function={this.getOptions}
-                                id={option.id}
-                              />
-                            </td>
-                          </tr>
-                        ))
+                        <tr>
+                          <td>{option.id}</td>
+                          <td>{option.name.ru}</td>
+                          <td>{option.value_count}</td>
+                          <td>
+                            <OptionSwitchExample active={option.active} id={option.id} />
+                          </td>
+                          <td>
+                            <UpdateDeleteOptions
+                              function={this.getOptions}
+                              id={option.id}
+                            />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>

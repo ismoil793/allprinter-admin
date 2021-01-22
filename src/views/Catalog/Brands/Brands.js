@@ -41,14 +41,14 @@ class Brands extends Component {
   }
 
   getBrands = () => {
-      httpGet({
-        url: "/api/admin/brand",
-        params: {
-          search: this.state.search,
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page
-        }
-      })
+    httpGet({
+      url: "/api/admin/brand",
+      params: {
+        search: this.state.search,
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page
+      }
+    })
       .then(response => {
         this.setState({
           brands: response.data.data,
@@ -91,11 +91,11 @@ class Brands extends Component {
         );
       }
     }
-
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
-  
+
   IncrementPage = e => {
     e.preventDefault();
     const meta = this.state.meta;
@@ -220,7 +220,7 @@ class Brands extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
@@ -237,18 +237,18 @@ class Brands extends Component {
                   <tbody>
                     {brands
                       ? brands.map(brand => (
-                          <tr>
-                            <td>{brand.id}</td>
-                            <td>{brand.name}</td>
-                            <td>{brand.reference}</td>
-                            <td>
-                              <img style={{ width: "10%" }} alt="brands" src={brand.image} />
-                            </td>
-                            <td>
-                              <UpdateDeleteBrands function={this.getBrands} id={brand.id} />
-                            </td>
-                          </tr>
-                        ))
+                        <tr>
+                          <td>{brand.id}</td>
+                          <td>{brand.name}</td>
+                          <td>{brand.reference}</td>
+                          <td>
+                            <img style={{ width: "10%" }} alt="brands" src={brand.image} />
+                          </td>
+                          <td>
+                            <UpdateDeleteBrands function={this.getBrands} id={brand.id} />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>

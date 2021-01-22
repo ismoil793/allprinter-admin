@@ -24,7 +24,7 @@ import GroupSwitchExample from "./components/SwitchGroups";
 class Groups extends Component {
   constructor(props) {
     super(props);
-  this.toggleAccordion = this.toggleAccordion.bind(this);
+    this.toggleAccordion = this.toggleAccordion.bind(this);
     this.state = {
       groups: [],
       search: '',
@@ -47,19 +47,19 @@ class Groups extends Component {
   }
 
   getGroups = () => {
-      httpGet({
-        url: "api/admin/group", 
-        params: {
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page,
-       
-          search: this.state.search,
-          active: this.state.status
-        }
-      })
+    httpGet({
+      url: "api/admin/group",
+      params: {
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page,
+
+        search: this.state.search,
+        active: this.state.status
+      }
+    })
       .then(response => {
         this.setState({
-         groups: response.data.data,
+          groups: response.data.data,
           meta: {
             current_page: response.data.meta.current_page,
             last_page: response.data.meta.last_page,
@@ -85,13 +85,13 @@ class Groups extends Component {
     let paging = [];
 
     for (let i = 1; i <= this.state.meta.last_page; i++) {
-      if(this.state.meta.current_page === i){
+      if (this.state.meta.current_page === i) {
         paging.push(
           <PaginationItem active key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
           </PaginationItem>
         )
-      }else{
+      } else {
         paging.push(
           <PaginationItem key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
@@ -99,9 +99,9 @@ class Groups extends Component {
         )
       }
 
-      }
-    
-      return paging.slice(this.state.first, this.state.last);
+    }
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -133,64 +133,64 @@ class Groups extends Component {
     e.preventDefault()
     this.setState({ [e.target.name]: e.target.value }, () => {
       setTimeout(() => {
-      this.getGroups();
-    }, 100);
+        this.getGroups();
+      }, 100);
     });
   };
 
   Reset = () => {
-    this.setState({  
+    this.setState({
       search: '',
       status: null
-    },() => {
+    }, () => {
       this.getGroups();
     });
   }
 
   render() {
     const { groups } = this.state;
- 
+
     return (
       <div className="animated fadeIn">
         <Row>
-        <Col xs="12" lg="12">
-          <Card>
+          <Col xs="12" lg="12">
+            <Card>
               <CardHeader>
-                <strong>Фильтры</strong> 
+                <strong>Фильтры</strong>
               </CardHeader>
               <CardBody>
                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
-                <Row>
-                <FormGroup column>
-                    <Col md="12">
-                      <Label htmlFor="text-input">Поиск</Label>
-                    </Col>
-                    <Col xs="12" md="12">
-                      <Input type="text" id="text-input"  name="search" value={this.state.search} onChange={this.handleChange} placeholder="" />
-                     
-                    </Col>
-                  </FormGroup>
+                  <Row>
+                    <FormGroup column>
+                      <Col md="12">
+                        <Label htmlFor="text-input">Поиск</Label>
+                      </Col>
+                      <Col xs="12" md="12">
+                        <Input type="text" id="text-input" name="search" value={this.state.search} onChange={this.handleChange} placeholder="" />
 
-                  <FormGroup column>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Статус</Label>
-                    </Col>
-                    <Col xs="12" md="12">
-                    <Input type="select"  name="status" value={this.state.status} onChange={this.handleChange} id="select">
-                        <option value=""> Выберите статус </option>
-                        <option value="1">Активный</option>
-                        <option value="0">Не активный</option>
-                      </Input>
-                     
-                    </Col>
-                  </FormGroup>
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup column>
+                      <Col md="3">
+                        <Label htmlFor="text-input">Статус</Label>
+                      </Col>
+                      <Col xs="12" md="12">
+                        <Input type="select" name="status" value={this.state.status} onChange={this.handleChange} id="select">
+                          <option value=""> Выберите статус </option>
+                          <option value="1">Активный</option>
+                          <option value="0">Не активный</option>
+                        </Input>
+
+                      </Col>
+                    </FormGroup>
 
                   </Row>
-                
+
                 </Form>
               </CardBody>
               <CardFooter>
-                
+
                 <Button onClick={this.Reset} type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Сбросить</Button>
               </CardFooter>
             </Card>
@@ -200,17 +200,17 @@ class Groups extends Component {
             <Card>
               <CardHeader>
                 <div className="row d-flex align-items-center justify-content-between">
-                <div className="col-auto">
-                  <i className="fa fa-align-justify"></i> Группы
+                  <div className="col-auto">
+                    <i className="fa fa-align-justify"></i> Группы
                 </div>
-                <div className="col-auto">
-                  <Link to='/catalog/groups/add'>
-                    <Button className="fa fa-plus" color="primary">
-                      <span className="ml-1">Добавить</span>
-                    </Button>
-                  </Link>
-                </div> 
-              </div>
+                  <div className="col-auto">
+                    <Link to='/catalog/groups/add'>
+                      <Button className="fa fa-plus" color="primary">
+                        <span className="ml-1">Добавить</span>
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               </CardHeader>
               <CardBody>
                 <Table responsive striped>
@@ -223,21 +223,21 @@ class Groups extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                
+
                     {groups
                       ? groups.map((group, i) => (
-                       
-                          <tr>
-                            <td>{group.id}</td>
-                            <td>{group.name.ru}</td>
-                          
-                            <td> <GroupSwitchExample active={group.active} id={group.id}/></td>
-                       
-                            <td>
-                            <UpdateDeleteGroups  function={this.getGroups} id={group.id}/>
-                            </td>
-                          </tr>
-                        ))
+
+                        <tr>
+                          <td>{group.id}</td>
+                          <td>{group.name.ru}</td>
+
+                          <td> <GroupSwitchExample active={group.active} id={group.id} /></td>
+
+                          <td>
+                            <UpdateDeleteGroups function={this.getGroups} id={group.id} />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>

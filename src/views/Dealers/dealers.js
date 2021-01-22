@@ -13,7 +13,7 @@ import {
   Label,
   Input,
   FormGroup,
-   Form
+  Form
 } from "reactstrap";
 import { PaginationLink, PaginationItem } from "reactstrap";
 import { httpGet } from "../../api";
@@ -63,141 +63,142 @@ import DealerBtn from "./components/Dealerbutton";
 // };
 
 class DealersList extends Component {
-        constructor() {
-          super()
-          this.state = {
-            dealers: [],
-            search: '',
-            stateID: null,
-            meta: {
-              current_page: null,
-              last_page: null,
-              per_page: 10
-            }
-          }
-        }
+  constructor() {
+    super()
+    this.state = {
+      dealers: [],
+      search: '',
+      stateID: null,
+      meta: {
+        current_page: null,
+        last_page: null,
+        per_page: 10
+      }
+    }
+  }
 
-  
-        componentDidMount(){
-          setTimeout(() => {
-            this.getDealer();
-          }, 10);
-        }
-      
-        getDealer = () => {
-          httpGet({ 
-            url: "api/admin/dealer",
-            params: {
-              search: this.state.search,
-              status: this.state.stateID,
-              all: 1,
-              page: this.state.meta.current_page,
-              per_page: this.state.meta.per_page,
-            
-            }
-          })
-          .then(response => { 
-            this.setState({
-             dealers: response.data.data,
-            meta: {
-              current_page: response.data.meta.current_page,
-              last_page: response.data.meta.last_page,
-              per_page: response.data.meta.per_page
-            }
-          })})
-          .catch(error => {
-            console.log(error);
-          });
-      
-         
-        }
-      
-      
-        Pagination = e => {
-          const meta = this.state.meta;
-          meta.current_page = e;
-      
-          this.setState({ meta: meta });
-      
-          this.getDealer();
-        };
-        createPaging = () => {
-          let paging = [];
-      
-          for (let i = 1; i <= this.state.meta.last_page; i++) {
-            if(this.state.meta.current_page === i){
-              paging.push(
-                <PaginationItem active key={i} onClick={() => this.Pagination(i)}>
-                  <PaginationLink tag="button">{i}</PaginationLink>
-                </PaginationItem>
-              )
-            }else{
-              paging.push(
-                <PaginationItem key={i} onClick={() => this.Pagination(i)}>
-                  <PaginationLink tag="button">{i}</PaginationLink>
-                </PaginationItem>
-              )
-            }
-      
-            }
-          
-            return paging.slice(this.state.first, this.state.last);
-        };
-      
-        IncrementPage = e => {
-          e.preventDefault();
-          const meta = this.state.meta;
-      
-          if (meta.current_page < meta.last_page) {
-            meta.current_page = meta.current_page + 1;
-            this.setState({ meta: meta });
-          } else {
-            this.setState({ meta: meta });
-          }
-      
-          this.getDealer();
-        };
-      
-        DecrementPage = e => {
-          const meta = this.state.meta;
-      
-          e.preventDefault();
-          if (meta.current_page > 1) {
-            meta.current_page = meta.current_page - 1;
-            this.setState({ meta: meta });
-          } else {
-            this.setState({ meta: meta });
-          }
-      
-          this.getDealer();
-        };
 
-        handleChange = e => {
-          
-          e.preventDefault()
-          this.setState({ [e.target.name]: e.target.value }, () => {
-            setTimeout(() => {
-            this.getDealer();
-          }, 100);
-          });
-        };
-        
-        Reset = () => {
-          this.setState({  
-            search: '',
-            stateID: null
-          });
-        }
-         
+  componentDidMount() {
+    setTimeout(() => {
+      this.getDealer();
+    }, 10);
+  }
+
+  getDealer = () => {
+    httpGet({
+      url: "api/admin/dealer",
+      params: {
+        search: this.state.search,
+        status: this.state.stateID,
+        all: 1,
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page,
+
+      }
+    })
+      .then(response => {
+        this.setState({
+          dealers: response.data.data,
+          meta: {
+            current_page: response.data.meta.current_page,
+            last_page: response.data.meta.last_page,
+            per_page: response.data.meta.per_page
+          }
+        })
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+
+  }
+
+
+  Pagination = e => {
+    const meta = this.state.meta;
+    meta.current_page = e;
+
+    this.setState({ meta: meta });
+
+    this.getDealer();
+  };
+  createPaging = () => {
+    let paging = [];
+
+    for (let i = 1; i <= this.state.meta.last_page; i++) {
+      if (this.state.meta.current_page === i) {
+        paging.push(
+          <PaginationItem active key={i} onClick={() => this.Pagination(i)}>
+            <PaginationLink tag="button">{i}</PaginationLink>
+          </PaginationItem>
+        )
+      } else {
+        paging.push(
+          <PaginationItem key={i} onClick={() => this.Pagination(i)}>
+            <PaginationLink tag="button">{i}</PaginationLink>
+          </PaginationItem>
+        )
+      }
+
+    }
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
+  };
+
+  IncrementPage = e => {
+    e.preventDefault();
+    const meta = this.state.meta;
+
+    if (meta.current_page < meta.last_page) {
+      meta.current_page = meta.current_page + 1;
+      this.setState({ meta: meta });
+    } else {
+      this.setState({ meta: meta });
+    }
+
+    this.getDealer();
+  };
+
+  DecrementPage = e => {
+    const meta = this.state.meta;
+
+    e.preventDefault();
+    if (meta.current_page > 1) {
+      meta.current_page = meta.current_page - 1;
+      this.setState({ meta: meta });
+    } else {
+      this.setState({ meta: meta });
+    }
+
+    this.getDealer();
+  };
+
+  handleChange = e => {
+
+    e.preventDefault()
+    this.setState({ [e.target.name]: e.target.value }, () => {
+      setTimeout(() => {
+        this.getDealer();
+      }, 100);
+    });
+  };
+
+  Reset = () => {
+    this.setState({
+      search: '',
+      stateID: null
+    });
+  }
+
 
 
   render() {
-  const {dealers} = this.state
+    const { dealers } = this.state
 
     return (
       <div className="animated fadeIn">
         <Row>
-         <Col xs="12" lg="12">
+          <Col xs="12" lg="12">
             <Card>
               <CardHeader>
                 <strong>Фильтры</strong>
@@ -225,7 +226,7 @@ class DealersList extends Component {
                         />
                       </Col>
                     </FormGroup>
-                    
+
                     {/* <FormGroup column>
                       <Col md="3">
                         <Label htmlFor="text-input">Статус</Label>
@@ -239,11 +240,11 @@ class DealersList extends Component {
                       </Col>
                     </FormGroup> */}
 
-                  
+
                   </Row>
                 </Form>
               </CardBody>
-             
+
             </Card>
           </Col>
 
@@ -261,7 +262,7 @@ class DealersList extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
@@ -278,26 +279,26 @@ class DealersList extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                {dealers ? dealers.map(dealer => (
-                  <tr key={dealer.id}>
-                    <th scope="row">
-                     {dealer.id}
-                    </th>
-                   
-                    <td>
-                      {dealer.first_name} {dealer.last_name}
-                    </td>
-                    <td>{dealer.created_at}</td>
-                    <td>{dealer.email}</td>
-                    <td>{dealer.phone.replace(/^(\d{3})(\d{2})\s*(\d{3})(\d{2})(\d{2})/, '+$1 $2 $3 $4 $5')}</td>
-                    {/* {dealer.status === 2  ?
+                    {dealers ? dealers.map(dealer => (
+                      <tr key={dealer.id}>
+                        <th scope="row">
+                          {dealer.id}
+                        </th>
+
+                        <td>
+                          {dealer.first_name} {dealer.last_name}
+                        </td>
+                        <td>{dealer.created_at}</td>
+                        <td>{dealer.email}</td>
+                        <td>{dealer.phone.replace(/^(\d{3})(\d{2})\s*(\d{3})(\d{2})(\d{2})/, '+$1 $2 $3 $4 $5')}</td>
+                        {/* {dealer.status === 2  ?
                     (
                       <td>
                       <Link to={`/icons/${dealer.id}`}>
                         <Badge color={getBadge(dealer.status)}>Зарегистрирован</Badge>
                       </Link>
                     </td>
-                    ) : 
+                    ) :
                     (
                       <td>
                       <Link to={`/icons/${dealer.id}`}>
@@ -305,14 +306,14 @@ class DealersList extends Component {
                       </Link>
                     </td>
                     )  */}
-                    
-                  
-                    
-                    <td>
-                      <DealerBtn function={this.getDealer} id={dealer.id} />
-                    </td>
-                  </tr>
-                  )): null}
+
+
+
+                        <td>
+                          <DealerBtn function={this.getDealer} id={dealer.id} />
+                        </td>
+                      </tr>
+                    )) : null}
                   </tbody>
                 </Table>
 

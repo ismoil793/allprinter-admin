@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardBody, CardHeader, Col, Pagination, PaginationItem, PaginationLink, Row, Table } from 'reactstrap';
 import { httpGet } from "../../../api";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 class CourierOrder extends Component {
 
@@ -19,28 +19,28 @@ class CourierOrder extends Component {
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     setTimeout(() => {
-        this.getOrder()
-      }, 100)
+      this.getOrder()
+    }, 100)
   }
 
-getOrder = e => {
+  getOrder = e => {
     httpGet({
       url: "api/admin/order",
-        params: {
-         carrier_id: this.props.id
-        }
-      })
-      .then(response => { 
+      params: {
+        carrier_id: this.props.id
+      }
+    })
+      .then(response => {
         this.setState({
-        order: response.data.data
-       })
+          order: response.data.data
+        })
       })
       .catch(error => {
         console.log(error);
       });
-}
+  }
 
   Pagination = e => {
     const meta = this.state.meta;
@@ -62,7 +62,8 @@ getOrder = e => {
         </PaginationItem>
       );
     }
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -71,14 +72,15 @@ getOrder = e => {
 
     if (meta.current_page < meta.last_page) {
       meta.current_page = meta.current_page + 1;
-      this.setState({ 
+      this.setState({
         meta: meta,
-        first: this.state.first + 10 ,
-        last: this.state.last + 10 
+        first: this.state.first + 10,
+        last: this.state.last + 10
       });
     } else {
-      this.setState({ 
-        meta: meta });
+      this.setState({
+        meta: meta
+      });
     }
 
     this.getOrder();
@@ -88,15 +90,16 @@ getOrder = e => {
     const meta = this.state.meta;
 
     e.preventDefault();
-    if (meta.current_page > 1 ) {
+    if (meta.current_page > 1) {
       meta.current_page = meta.current_page - 1;
-      if(this.state.first >= 0){
-        this.setState({ meta: meta,
-          first: this.state.first - 10 ,
-          last: this.state.last - 10 
-      });
-      } 
-     
+      if (this.state.first >= 0) {
+        this.setState({
+          meta: meta,
+          first: this.state.first - 10,
+          last: this.state.last - 10
+        });
+      }
+
     } else {
       this.setState({ meta: meta });
     }
@@ -107,11 +110,11 @@ getOrder = e => {
 
 
   render() {
-    const {order} = this.state
+    const { order } = this.state
     return (
       <div className="animated fadeIn">
         <Row>
-        
+
           <Col xs="12" lg="12">
             <Card>
               <CardHeader>
@@ -120,31 +123,31 @@ getOrder = e => {
               <CardBody>
                 <Table responsive striped>
                   <thead>
-                  <tr>  
-                    <th>ID</th>
-                    <th>Дата</th>
-                    <th>Вид доставки</th>
-                    <th>Вид оплаты</th>
-                    <th>Итого</th>
-                    <th>Статус</th>
-                  </tr>
+                    <tr>
+                      <th>ID</th>
+                      <th>Дата</th>
+                      <th>Вид доставки</th>
+                      <th>Вид оплаты</th>
+                      <th>Итого</th>
+                      <th>Статус</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  {order ?  
-                  order.map(order => (
-                 
-                 <tr>
-                   <Link to={{pathname: `/orderpage/${order.id}`, order_id: order.id}}>  <td>{order.id}</td>  </Link>
-                    <td>{order.created_at}</td>
-                    <td>{order.delivery.name}</td>
-                    <td>{order.payment.name}</td>
-                    <td>{order.total} сум</td>
-                    <td>{order.state.name}</td>
-                  </tr> 
-                
-                   )) : <p>Пользователь не имеет заказов </p> }
-                 
-               
+                    {order ?
+                      order.map(order => (
+
+                        <tr>
+                          <Link to={{ pathname: `/orderpage/${order.id}`, order_id: order.id }}>  <td>{order.id}</td>  </Link>
+                          <td>{order.created_at}</td>
+                          <td>{order.delivery.name}</td>
+                          <td>{order.payment.name}</td>
+                          <td>{order.total} сум</td>
+                          <td>{order.state.name}</td>
+                        </tr>
+
+                      )) : <p>Пользователь не имеет заказов </p>}
+
+
                   </tbody>
                 </Table>
                 <Pagination>
@@ -166,7 +169,7 @@ getOrder = e => {
             </Card>
           </Col>
         </Row>
-</div>
+      </div>
 
     );
   }

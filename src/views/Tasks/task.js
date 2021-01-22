@@ -37,20 +37,20 @@ class Tasks extends Component {
   }
 
   componentDidMount() {
-      this.getTasks();
+    this.getTasks();
   }
 
 
 
   getTasks = () => {
-      httpGet({
-        url: "/api/admin/task",
-        params: {
-          search: this.state.search,
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page
-        }
-      })
+    httpGet({
+      url: "/api/admin/task",
+      params: {
+        search: this.state.search,
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page
+      }
+    })
       .then(response => {
         this.setState({
           tasks: response.data.data,
@@ -93,11 +93,11 @@ class Tasks extends Component {
         );
       }
     }
-
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
-  
+
   IncrementPage = e => {
     e.preventDefault();
     const meta = this.state.meta;
@@ -222,7 +222,7 @@ class Tasks extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
+                  </div>
                 </div>
               </CardHeader>
               <CardBody>
@@ -240,24 +240,24 @@ class Tasks extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                    {tasks  
+                    {tasks
                       ? tasks.map(task => (
-                          <tr>
-                            <td>{task.id}</td>
-                            <td>{task.name}</td>
-                            <td>{task.description}</td>
-                            <td>{task.created_at}</td>
-                            <td>{task.until}</td>
-                            <td>{task.completed_at ? task.completed_at : "Не выполнен" }</td>
-                            <td>{task.carrier ? task.carrier.first_name + " " + task.carrier.last_name : null}</td>
+                        <tr>
+                          <td>{task.id}</td>
+                          <td>{task.name}</td>
+                          <td>{task.description}</td>
+                          <td>{task.created_at}</td>
+                          <td>{task.until}</td>
+                          <td>{task.completed_at ? task.completed_at : "Не выполнен"}</td>
+                          <td>{task.carrier ? task.carrier.first_name + " " + task.carrier.last_name : null}</td>
 
-                          
-                            <td>
-                              {/* <UpdateDeleteBrands  /> */}
-                              <UpdateDelete function={this.getTasks} id={task.id}/>
-                            </td>
-                          </tr>
-                        ))
+
+                          <td>
+                            {/* <UpdateDeleteBrands  /> */}
+                            <UpdateDelete function={this.getTasks} id={task.id} />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>

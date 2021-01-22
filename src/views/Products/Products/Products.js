@@ -58,7 +58,7 @@ class Products extends Component {
   }
   componentDidMount() {
     httpGet({
-      url: "api/admin/dealer/shops", params:{
+      url: "api/admin/dealer/shops", params: {
         per_page: 1000
       }
     })
@@ -152,8 +152,8 @@ class Products extends Component {
         );
       }
     }
-
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -362,8 +362,8 @@ class Products extends Component {
                           <option value=""> Выберите дилера </option>
                           {this.state.shops
                             ? this.state.shops.map(shop => (
-                                <option value={shop.id}>{shop.name}</option>
-                              ))
+                              <option value={shop.id}>{shop.name}</option>
+                            ))
                             : null}
                         </Input>
                       </Col>
@@ -384,10 +384,10 @@ class Products extends Component {
                           <option value=""> Выберите категорию </option>
                           {this.state.categories
                             ? this.state.categories.map(category => (
-                                <option value={category.id}>
-                                  {category.name ? category.name.ru : null}
-                                </option>
-                              ))
+                              <option value={category.id}>
+                                {category.name ? category.name.ru : null}
+                              </option>
+                            ))
                             : null}
                         </Input>
                       </Col>
@@ -421,8 +421,8 @@ class Products extends Component {
                         <span className="ml-1">Добавить</span>
                       </Button>
                     </Link>
-                  </div> 
-                </div>        
+                  </div>
+                </div>
               </CardHeader>
               <CardBody>
                 <Table responsive striped>
@@ -441,44 +441,44 @@ class Products extends Component {
                   <tbody>
                     {products
                       ? products.map(product => (
-                          <tr key={product.id}>
-                            <td>{product.id}</td>
-                            <td>
-                              <img
-                                style={{ width: "50%" }}
-                                alt={product.model}
-                                src={
-                                  product.images && product.images.length
-                                    ? product.images[0].types.small_default
-                                    : null
-                                }
-                              />
-                            </td>
-                            <td>{product.name} </td>
-                            <td>
-                              {product.categories.map(
-                                (name, index) => (index ? ", " : "") + name.name
-                              )}
-                            </td>
-                            <td>{product.all_quantity}</td>
-                            <td> {product.min_price} сум</td>
-                            <td>
-                              {product.active === 1 ? (
-                                <Badge color="success">Активный</Badge>
-                              ) : product.active === 2 ? (
-                                <Badge color="warning">Архив</Badge>
-                              ) : (
-                                <Badge color="danger">Не активный</Badge>
-                              )}
-                            </td>
-                            <td>
-                              <UpdateDeleteProducts
-                                function={this.getProduct}
-                                id={product.id}
-                              />
-                            </td>
-                          </tr>
-                        ))
+                        <tr key={product.id}>
+                          <td>{product.id}</td>
+                          <td>
+                            <img
+                              style={{ width: "50%" }}
+                              alt={product.model}
+                              src={
+                                product.images && product.images.length
+                                  ? product.images[0].types.small_default
+                                  : null
+                              }
+                            />
+                          </td>
+                          <td>{product.name} </td>
+                          <td>
+                            {product.categories.map(
+                              (name, index) => (index ? ", " : "") + name.name
+                            )}
+                          </td>
+                          <td>{product.all_quantity}</td>
+                          <td> {product.min_price} сум</td>
+                          <td>
+                            {product.active === 1 ? (
+                              <Badge color="success">Активный</Badge>
+                            ) : product.active === 2 ? (
+                              <Badge color="warning">Архив</Badge>
+                            ) : (
+                                  <Badge color="danger">Не активный</Badge>
+                                )}
+                          </td>
+                          <td>
+                            <UpdateDeleteProducts
+                              function={this.getProduct}
+                              id={product.id}
+                            />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>

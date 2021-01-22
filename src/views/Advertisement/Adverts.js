@@ -27,10 +27,10 @@ class Advertisement extends Component {
     this.state = {
       categories: [],
       vendors: [],
-      ads:[],
+      ads: [],
       image: '',
       start_time: '',
-      end_time:'',
+      end_time: '',
       search: '',
       status: null,
       accordion: [true, false, false],
@@ -51,21 +51,21 @@ class Advertisement extends Component {
   }
 
   getAds = () => {
-      httpGet({
-        url: "api/admin/ad", 
-        params: {
-          page: this.state.meta.current_page,
-          per_page: this.state.meta.per_page,
-          start_time: this.state.start_time,
-          end_time: this.state.end_time,
-          search: this.state.search,
-          active: this.state.status
-        }
-      })
+    httpGet({
+      url: "api/admin/ad",
+      params: {
+        page: this.state.meta.current_page,
+        per_page: this.state.meta.per_page,
+        start_time: this.state.start_time,
+        end_time: this.state.end_time,
+        search: this.state.search,
+        active: this.state.status
+      }
+    })
       .then(response => {
         console.log(response.data.data)
         this.setState({
-         ads: response.data.data,
+          ads: response.data.data,
           // meta: {
           //   current_page: response.data.meta.current_page,
           //   last_page: response.data.meta.last_page,
@@ -91,13 +91,13 @@ class Advertisement extends Component {
     let paging = [];
 
     for (let i = 1; i <= this.state.meta.last_page; i++) {
-      if(this.state.meta.current_page === i){
+      if (this.state.meta.current_page === i) {
         paging.push(
           <PaginationItem active key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
           </PaginationItem>
         )
-      }else{
+      } else {
         paging.push(
           <PaginationItem key={i} onClick={() => this.Pagination(i)}>
             <PaginationLink tag="button">{i}</PaginationLink>
@@ -105,9 +105,10 @@ class Advertisement extends Component {
         )
       }
 
-      }
-    
-      return paging.slice(this.state.first, this.state.last);
+    }
+
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -139,64 +140,64 @@ class Advertisement extends Component {
     e.preventDefault()
     this.setState({ [e.target.name]: e.target.value }, () => {
       setTimeout(() => {
-      this.getAds();
-    }, 100);
+        this.getAds();
+      }, 100);
     });
   };
 
   Reset = () => {
-    this.setState({  
+    this.setState({
       search: '',
       status: null
-    },() => {
+    }, () => {
       this.getAds();
     });
   }
 
   render() {
     const { ads } = this.state;
- 
+
     return (
       <div className="animated fadeIn">
         <Row>
-        <Col xs="12" lg="12">
-          <Card>
+          <Col xs="12" lg="12">
+            <Card>
               <CardHeader>
-                <strong>Фильтры</strong> 
+                <strong>Фильтры</strong>
               </CardHeader>
               <CardBody>
                 <Form action="" method="post" encType="multipart/form-data" className="form-horizontal">
-                <Row>
-                <FormGroup column>
-                    <Col md="12">
-                      <Label htmlFor="text-input">Поиск</Label>
-                    </Col>
-                    <Col xs="12" md="12">
-                      <Input type="text" id="text-input"  name="search" value={this.state.search} onChange={this.handleChange} placeholder="" />
-                     
-                    </Col>
-                  </FormGroup>
+                  <Row>
+                    <FormGroup column>
+                      <Col md="12">
+                        <Label htmlFor="text-input">Поиск</Label>
+                      </Col>
+                      <Col xs="12" md="12">
+                        <Input type="text" id="text-input" name="search" value={this.state.search} onChange={this.handleChange} placeholder="" />
 
-                  <FormGroup column>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Статус</Label>
-                    </Col>
-                    <Col xs="12" md="12">
-                    <Input type="select"  name="status" value={this.state.status} onChange={this.handleChange} id="select">
-                        <option value=""> Выберите статус </option>
-                        <option value="1">Активный</option>
-                        <option value="0">Не активный</option>
-                      </Input>
-                     
-                    </Col>
-                  </FormGroup>
+                      </Col>
+                    </FormGroup>
+
+                    <FormGroup column>
+                      <Col md="3">
+                        <Label htmlFor="text-input">Статус</Label>
+                      </Col>
+                      <Col xs="12" md="12">
+                        <Input type="select" name="status" value={this.state.status} onChange={this.handleChange} id="select">
+                          <option value=""> Выберите статус </option>
+                          <option value="1">Активный</option>
+                          <option value="0">Не активный</option>
+                        </Input>
+
+                      </Col>
+                    </FormGroup>
 
                   </Row>
-                
+
                 </Form>
               </CardBody>
               <CardFooter>
-                
+
                 <Button onClick={this.Reset} type="reset" size="sm" color="danger"><i className="fa fa-ban"></i> Сбросить</Button>
               </CardFooter>
             </Card>
@@ -206,17 +207,17 @@ class Advertisement extends Component {
             <Card>
               <CardHeader>
                 <div className="row d-flex align-items-center justify-content-between">
-                <div className="col-auto">
-                  <i className="fa fa-align-justify"></i> Рекламные компании
+                  <div className="col-auto">
+                    <i className="fa fa-align-justify"></i> Рекламные компании
                 </div>
-                <div className="col-auto">
-                  <Link to='/adverts/add'>
-                    <Button className="fa fa-plus" color="primary">
-                      <span className="ml-1">Добавить</span>
-                    </Button>
-                  </Link>
-                </div> 
-              </div>
+                  <div className="col-auto">
+                    <Link to='/adverts/add'>
+                      <Button className="fa fa-plus" color="primary">
+                        <span className="ml-1">Добавить</span>
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
               </CardHeader>
               <CardBody>
                 <Table responsive striped>
@@ -235,25 +236,25 @@ class Advertisement extends Component {
                     </tr>
                   </thead>
                   <tbody>
-                
+
                     {ads
                       ? ads.map((ad, i) => (
-                       
-                          <tr>
-                            <td>{ad.id}</td>
-                            <td>{ad.name}</td>
-                            <td>{ad.vendor}</td>
-                            <td><img style={{width:'25%'}} src={ad.image} alt={ad.name}/></td>
-                            <td>{ad.ad_link}</td>
-                            <td>{ad.clicks}</td>
-                            <td>{ad.start_date ? ad.start_date : null }</td>
-                            <td>{ad.end_date ? ad.end_date : null }</td>
-                            <td>{ad.category_name ? ad.category_name : ad.url && ad.position }</td>
-                            <td>
-                                <UpdateDeleteAds  function={this.getAds} id={ad.id}/>
-                            </td>
-                          </tr>
-                        ))
+
+                        <tr>
+                          <td>{ad.id}</td>
+                          <td>{ad.name}</td>
+                          <td>{ad.vendor}</td>
+                          <td><img style={{ width: '25%' }} src={ad.image} alt={ad.name} /></td>
+                          <td>{ad.ad_link}</td>
+                          <td>{ad.clicks}</td>
+                          <td>{ad.start_date ? ad.start_date : null}</td>
+                          <td>{ad.end_date ? ad.end_date : null}</td>
+                          <td>{ad.category_name ? ad.category_name : ad.url && ad.position}</td>
+                          <td>
+                            <UpdateDeleteAds function={this.getAds} id={ad.id} />
+                          </td>
+                        </tr>
+                      ))
                       : null}
                   </tbody>
                 </Table>
