@@ -231,7 +231,7 @@ class UpdateCharacter extends Component {
   };
 
   render() {
-    if (this.state.features && this.state.features.length)
+    if (this.state.features)
 
       return (
         <div className="animated fadeIn">

@@ -95,7 +95,6 @@ class Classes extends Component {
     }
     let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
     return newPaging
-    return paging.slice(this.state.first, this.state.last);
   };
 
   IncrementPage = e => {
