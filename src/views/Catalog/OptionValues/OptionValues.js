@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import {
   Card,
 
@@ -13,9 +13,9 @@ import {
   Row,
   Table
 } from "reactstrap";
-import {Form, FormGroup, Label, Input} from "reactstrap";
-import {Link} from "react-router-dom";
-import {httpGet} from "../../../api";
+import { Form, FormGroup, Label, Input } from "reactstrap";
+import { Link } from "react-router-dom";
+import { httpGet } from "../../../api";
 import UpdateDeleteOptionValues from "./DeleteUpdateOptionValues";
 import OptionValueSwitchExample from "./switchButton";
 
@@ -69,7 +69,7 @@ class OptionValues extends Component {
     const meta = this.state.meta;
     meta.current_page = e;
 
-    this.setState({meta: meta});
+    this.setState({ meta: meta });
 
     this.getOptionValues();
   };
@@ -91,10 +91,9 @@ class OptionValues extends Component {
           </PaginationItem>
         )
       }
-
     }
-
-    return paging.slice(this.state.first, this.state.last);
+    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    return newPaging
   };
 
   IncrementPage = e => {
@@ -131,7 +130,7 @@ class OptionValues extends Component {
         });
       }
     } else {
-      this.setState({meta: meta});
+      this.setState({ meta: meta });
     }
 
     this.getOptionValues();
@@ -139,7 +138,7 @@ class OptionValues extends Component {
 
   handleChange = e => {
     e.preventDefault()
-    this.setState({[e.target.name]: e.target.value}, () => {
+    this.setState({ [e.target.name]: e.target.value }, () => {
       setTimeout(() => {
         this.getOptionValues();
       }, 300);
@@ -159,7 +158,7 @@ class OptionValues extends Component {
   };
 
   render() {
-    const {optionvalues} = this.state;
+    const { optionvalues } = this.state;
 
     return (
       <div className="animated fadeIn">
@@ -246,49 +245,54 @@ class OptionValues extends Component {
               <CardBody>
                 <Table responsive striped>
                   <thead>
-                  <tr>
-                    <th>Feature ID</th>
-                    <th>Наименование</th>
-                    <th>Характеристика</th>
-                    <th>К-во продуктов</th>
-                    <th>Показывать</th>
-                    <th>Действие</th>
-                  </tr>
+                    <tr>
+                      <th>Feature ID</th>
+                      <th>Наименование</th>
+                      <th>Характеристика</th>
+                      <th>К-во продуктов</th>
+                      <th>Показывать</th>
+                      <th>Действие</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  {optionvalues
-                    ? optionvalues.map(option => (
-                      <tr>
-                        <td>{option.id}</td>
-                        <td>{option.name.ru}</td>
-                        <td>{option.feature.name.ru}</td>
-                        <td>{option.product_count}</td>
-                        <td>
-                          <OptionValueSwitchExample active={option.active} id={option.id}/>
-                        </td>
-                        <td>
-                          <UpdateDeleteOptionValues function={this.getOptionValues} id={option.id}/>
-                        </td>
-                      </tr>
-                    ))
-                    : null}
+                    {optionvalues
+                      ? optionvalues.map(option => (
+                        <tr>
+                          <td>{option.id}</td>
+                          <td>{option.name.ru}</td>
+                          <td>{option.feature.name.ru}</td>
+                          <td>{option.product_count}</td>
+                          <td>
+                            <OptionValueSwitchExample active={option.active} id={option.id} />
+                          </td>
+                          <td>
+                            <UpdateDeleteOptionValues function={this.getOptionValues} id={option.id} />
+                          </td>
+                        </tr>
+                      ))
+                      : null}
                   </tbody>
                 </Table>
-                <Pagination>
-                  <PaginationItem onClick={this.DecrementPage}>
-                    <PaginationLink previous tag="button">
-                      Пред
-                    </PaginationLink>
-                  </PaginationItem>
 
-                  {this.createPaging()}
-
-                  <PaginationItem onClick={this.IncrementPage}>
-                    <PaginationLink next tag="button">
-                      След
+                <div className="mt-3">
+                  <Pagination>
+                    <PaginationItem onClick={this.DecrementPage}>
+                      <PaginationLink previous tag="button">
+                        Пред
                     </PaginationLink>
-                  </PaginationItem>
-                </Pagination>
+                    </PaginationItem>
+
+                    {this.createPaging()}
+
+                    <PaginationItem onClick={this.IncrementPage}>
+                      <PaginationLink next tag="button">
+                        След
+                    </PaginationLink>
+                    </PaginationItem>
+                  </Pagination>
+                </div>
+
+
               </CardBody>
             </Card>
           </Col>
