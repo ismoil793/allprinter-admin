@@ -62,12 +62,12 @@ class UpdateCharacter extends Component {
 
   componentWillReceiveProps() {
     let a = [];
-    if (this.props.features) {
+    if (this.props.features && this.props.features.length) {
       for (let i = 0; i < this.props.features.length; i++) {
 
         if (this.props.features[i].selected_value) {
           a.push(this.props.features[i].selected_value.id);
-        }else{
+        } else {
           a.push(this.props.features[i].selected_value);
         }
       }
@@ -194,7 +194,7 @@ class UpdateCharacter extends Component {
 
   };
 
- Attach = e => {
+  Attach = e => {
 
     const notyf = new Notyf();
     httpPost({
@@ -231,263 +231,269 @@ class UpdateCharacter extends Component {
   };
 
   render() {
+    if (this.state.features && this.state.features.length)
 
-    return (
-      <div className="animated fadeIn">
-        <Row>
-          <Col xs="12" md="12">
-            <Card>
-              <CardHeader>
-                <Row>
-                  {" "}
-                  <Col xs="12" md="5">
-                    <strong>Добавить Характеристики/Значения</strong>
-                  </Col>
-                  <Col md="3">
-                    <Button onClick={this.toggleFeature} color="ghost-success">
-                      <i className="fa fa-lightbulb-o"></i>&nbsp;Добавить
+      return (
+        <div className="animated fadeIn">
+          <Row>
+            <Col xs="12" md="12">
+              <Card>
+                <CardHeader>
+                  <Row>
+                    {" "}
+                    <Col xs="12" md="5">
+                      <strong>Добавить Характеристики/Значения</strong>
+                    </Col>
+                    <Col md="3">
+                      <Button onClick={this.toggleFeature} color="ghost-success">
+                        <i className="fa fa-lightbulb-o"></i>&nbsp;Добавить
                       Характеристику
                     </Button>
-                  </Col>
-                  <Col md="3">
-                    <Button
-                      onClick={this.toggleValue}
-                      color="ghost-danger"
-                      className="btn-pill"
-                    >
-                      <i className="fa fa-lightbulb-o"></i>&nbsp;Добавить
+                    </Col>
+                    <Col md="3">
+                      <Button
+                        onClick={this.toggleValue}
+                        color="ghost-danger"
+                        className="btn-pill"
+                      >
+                        <i className="fa fa-lightbulb-o"></i>&nbsp;Добавить
                       значение
                     </Button>
-                  </Col>
-                </Row>
-              </CardHeader>
+                    </Col>
+                  </Row>
+                </CardHeader>
 
-              {this.state.feature_show ? (
-                <Form onSubmit={this.AddFeature} className="form-horizontal">
-                  <CardBody>
-                    <FormGroup row>
-                      <Col md="4">
-                        <Label htmlFor="text-input">
-                          Название Характеристики
+                {this.state.feature_show ? (
+                  <Form onSubmit={this.AddFeature} className="form-horizontal">
+                    <CardBody>
+                      <FormGroup row>
+                        <Col md="4">
+                          <Label htmlFor="text-input">
+                            Название Характеристики
                         </Label>
-                        <Input
-                          type="text"
-                          id="text-input"
-                          name="feature_ru"
-                          value={this.state.feature_ru}
-                          onChange={this.handleChange}
-                          placeholder=""
-
-                        />
-                        <FormText color="muted">ru</FormText>
-                      </Col>
-                      <Col md="4">
-                        <Label htmlFor="text-input">
-                          Название Характеристики
-                        </Label>
-                        <Input
-                          type="text"
-                          id="text-input"
-                          name="feature_uz"
-                          value={this.state.feature_uz}
-                          onChange={this.handleChange}
-                          placeholder=""
-
-                        />
-                        <FormText color="muted">uz</FormText>
-                      </Col>
-                      <Col md="4">
-                        <Label htmlFor="text-input">
-                          Название Характеристики
-                        </Label>
-                        <Input
-                          type="text"
-                          id="text-input"
-                          name="feature_en"
-                          value={this.state.feature_en}
-                          onChange={this.handleChange}
-                          placeholder=""
-
-                        />
-                        <FormText color="muted">en</FormText>
-                      </Col>
-                    </FormGroup>
-                  </CardBody>
-                  <CardFooter>
-                    <Button type="submit" size="sm" color="primary">
-                      <i className="fa fa-dot-circle-o"></i> Сохранить
-                    </Button>
-                  </CardFooter>
-                </Form>
-              ) : null}
-
-              {this.state.value_show ? (
-                <Form
-                  onSubmit={this.AddFeatureValue}
-                  className="form-horizontal"
-                >
-                  <CardBody>
-                    <FormGroup row>
-                      <Col md="3">
-                        <Label htmlFor="select">Характеристика</Label>
-                      </Col>
-                      <Col xs="9" md="9">
-                        <Row>
-                          <Col md="9">
-
-                            <OptionSuggest
-                              callbackFunction={this.FeatureCallbackFunction}
-                              features={this.state.features}
-                            />
-                          </Col>
-                        </Row>
-                      </Col>
-                    </FormGroup>
-
-                    <FormGroup>
-                      <Row>
-                        <Col md="3">
-                          <Label htmlFor="select">Значение</Label>
-                        </Col>
-
-                        <Col md="3">
-                          <FormGroup row>
-                            <Col md="12">
-                              <Input
-                                type="text"
-                                id="text-input"
-                                onChange={this.handleChange}
-                                placeholder=""
-                                name="feature_value_ru"
-                                value={this.state.feature_value_ru}
-                              />
-                              <FormText color="muted">ru</FormText>
-                            </Col>
-                          </FormGroup>
-                        </Col>
-
-                        <Col md="3">
-                          <FormGroup row>
-                            <Col md="12">
-                              <Input
-                                type="text"
-                                id="text-input"
-                                onChange={this.handleChange}
-                                placeholder=""
-                                name="feature_value_uz"
-                                value={this.state.feature_value_uz}
-                              />
-                              <FormText color="muted">uz</FormText>
-                            </Col>
-                          </FormGroup>
-                        </Col>
-
-                        <Col md="3">
-                          <FormGroup row>
-                            <Col md="12">
-                              <Input
-                                type="text"
-                                id="text-input"
-                                onChange={this.handleChange}
-                                placeholder=""
-                                name="feature_value_en"
-                                value={this.state.feature_value_en}
-                              />
-                              <FormText color="muted">en</FormText>
-                            </Col>
-                          </FormGroup>
-                        </Col>
-                      </Row>
-                    </FormGroup>
-                  </CardBody>
-                  <CardFooter>
-                    <Button type="submit" size="sm" color="primary">
-                      <i className="fa fa-dot-circle-o"></i> Сохранить
-                    </Button>
-                  </CardFooter>
-                </Form>
-              ) : null}
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs="12" md="12">
-            <Card>
-              <CardHeader>
-                <Row>
-                  <Col md="4">
-                    <strong>Характеристики</strong>
-                  </Col>
-                  <Col md="4">
-                    <Input type="select" name="select" id="select">
-                      <option value="1">ru</option>
-                      <option value="2">en</option>
-                      <option value="3">uz</option>
-                    </Input>
-                  </Col>
-                  <Col md="4">
-                    <strong>
-                      {this.props.brand ? this.props.brand.name : null}{" "}
-                      {this.props.class ? this.props.class.name : null}{" "}
-                      {this.props.model}
-                    </strong>
-                  </Col>
-                </Row>
-              </CardHeader>
-              <Form onSubmit={this.updateProduct} className="form-horizontal">
-                <CardBody>
-                  {this.props.features ? (
-                    this.props.features.map((feature, index) => (
-                      <FormGroup key={feature.id} row>
-                        <Col md="3">
                           <Input
                             type="text"
                             id="text-input"
-                            value={feature.name}
+                            name="feature_ru"
+                            value={this.state.feature_ru}
+                            onChange={this.handleChange}
                             placeholder=""
+
                           />
+                          <FormText color="muted">ru</FormText>
                         </Col>
-                        <Col xs="12" md="9">
-                          <UpdateCharacteristicsIntegrationReactSelect
-                            callbackFunction={this.CallbackFunction}
-                            index={index}
-                            feature_values={feature.values}
-                            selected_value={feature.selected_value}
+                        <Col md="4">
+                          <Label htmlFor="text-input">
+                            Название Характеристики
+                        </Label>
+                          <Input
+                            type="text"
+                            id="text-input"
+                            name="feature_uz"
+                            value={this.state.feature_uz}
+                            onChange={this.handleChange}
+                            placeholder=""
+
                           />
+                          <FormText color="muted">uz</FormText>
+                        </Col>
+                        <Col md="4">
+                          <Label htmlFor="text-input">
+                            Название Характеристики
+                        </Label>
+                          <Input
+                            type="text"
+                            id="text-input"
+                            name="feature_en"
+                            value={this.state.feature_en}
+                            onChange={this.handleChange}
+                            placeholder=""
+
+                          />
+                          <FormText color="muted">en</FormText>
                         </Col>
                       </FormGroup>
-                    ))
-                  ) : (
-                    <FormGroup row>
-                      <Col md="3">
-                        <Input
-                          type="text"
-                          id="text-input"
-                          placeholder="Характеристики отсуствуют"
-                        />
-                      </Col>
-                    </FormGroup>
-                  )}
-                </CardBody>
+                    </CardBody>
+                    <CardFooter>
+                      <Button type="submit" size="sm" color="primary">
+                        <i className="fa fa-dot-circle-o"></i> Сохранить
+                    </Button>
+                    </CardFooter>
+                  </Form>
+                ) : null}
 
+                {this.state.value_show ? (
+                  <Form
+                    onSubmit={this.AddFeatureValue}
+                    className="form-horizontal"
+                  >
+                    <CardBody>
+                      <FormGroup row>
+                        <Col md="3">
+                          <Label htmlFor="select">Характеристика</Label>
+                        </Col>
+                        <Col xs="9" md="9">
+                          <Row>
+                            <Col md="9">
+
+                              <OptionSuggest
+                                callbackFunction={this.FeatureCallbackFunction}
+                                features={this.state.features}
+                              />
+                            </Col>
+                          </Row>
+                        </Col>
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Row>
+                          <Col md="3">
+                            <Label htmlFor="select">Значение</Label>
+                          </Col>
+
+                          <Col md="3">
+                            <FormGroup row>
+                              <Col md="12">
+                                <Input
+                                  type="text"
+                                  id="text-input"
+                                  onChange={this.handleChange}
+                                  placeholder=""
+                                  name="feature_value_ru"
+                                  value={this.state.feature_value_ru}
+                                />
+                                <FormText color="muted">ru</FormText>
+                              </Col>
+                            </FormGroup>
+                          </Col>
+
+                          <Col md="3">
+                            <FormGroup row>
+                              <Col md="12">
+                                <Input
+                                  type="text"
+                                  id="text-input"
+                                  onChange={this.handleChange}
+                                  placeholder=""
+                                  name="feature_value_uz"
+                                  value={this.state.feature_value_uz}
+                                />
+                                <FormText color="muted">uz</FormText>
+                              </Col>
+                            </FormGroup>
+                          </Col>
+
+                          <Col md="3">
+                            <FormGroup row>
+                              <Col md="12">
+                                <Input
+                                  type="text"
+                                  id="text-input"
+                                  onChange={this.handleChange}
+                                  placeholder=""
+                                  name="feature_value_en"
+                                  value={this.state.feature_value_en}
+                                />
+                                <FormText color="muted">en</FormText>
+                              </Col>
+                            </FormGroup>
+                          </Col>
+                        </Row>
+                      </FormGroup>
+                    </CardBody>
+                    <CardFooter>
+                      <Button type="submit" size="sm" color="primary">
+                        <i className="fa fa-dot-circle-o"></i> Сохранить
+                    </Button>
+                    </CardFooter>
+                  </Form>
+                ) : null}
+              </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs="12" md="12">
+              <Card>
+                <CardHeader>
+                  <Row>
+                    <Col md="4">
+                      <strong>Характеристики</strong>
+                    </Col>
+                    <Col md="4">
+                      <Input type="select" name="select" id="select">
+                        <option value="1">ru</option>
+                        <option value="2">en</option>
+                        <option value="3">uz</option>
+                      </Input>
+                    </Col>
+                    <Col md="4">
+                      <strong>
+                        {this.props.brand ? this.props.brand.name : null}{" "}
+                        {this.props.class ? this.props.class.name : null}{" "}
+                        {this.props.model}
+                      </strong>
+                    </Col>
+                  </Row>
+                </CardHeader>
+                <Form onSubmit={this.updateProduct} className="form-horizontal">
+                  <CardBody>
+                    {this.props.features ? (
+                      this.props.features.map((feature, index) => (
+                        <FormGroup key={feature.id} row>
+                          <Col md="3">
+                            <Input
+                              type="text"
+                              id="text-input"
+                              value={feature.name}
+                              placeholder=""
+                            />
+                          </Col>
+                          <Col xs="12" md="9">
+                            <UpdateCharacteristicsIntegrationReactSelect
+                              callbackFunction={this.CallbackFunction}
+                              index={index}
+                              feature_values={feature.values}
+                              selected_value={feature.selected_value}
+                            />
+                          </Col>
+                        </FormGroup>
+                      ))
+                    ) : (
+                        <FormGroup row>
+                          <Col md="3">
+                            <Input
+                              type="text"
+                              id="text-input"
+                              placeholder="Характеристики отсуствуют"
+                            />
+                          </Col>
+                        </FormGroup>
+                      )}
+                  </CardBody>
+
+                  <CardFooter>
+                    <Button type="submit" size="sm" color="primary">
+                      <i className="fa fa-dot-circle-o"></i> Сохранить
+                  </Button>
+                  </CardFooter>
+                </Form>
                 <CardFooter>
-                  <Button type="submit" size="sm" color="primary">
-                    <i className="fa fa-dot-circle-o"></i> Сохранить
+                  <Link to="/buttons/products">
+                    <Button size="sm" color="danger">
+                      <i className="fa fa-dot-circle-o"></i> Назад
                   </Button>
+                  </Link>
                 </CardFooter>
-              </Form>
-              <CardFooter>
-                <Link to="/buttons/products">
-                  <Button size="sm" color="danger">
-                    <i className="fa fa-dot-circle-o"></i> Назад
-                  </Button>
-                </Link>
-              </CardFooter>
-            </Card>
-          </Col>
-        </Row>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      );
+    return (
+      <div>
+        Загрузка...
       </div>
-    );
+    )
   }
 }
 

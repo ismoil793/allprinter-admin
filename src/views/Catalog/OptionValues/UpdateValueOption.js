@@ -16,12 +16,11 @@ import {
 } from 'reactstrap';
 import { Notyf } from 'notyf'
 import 'notyf/notyf.min.css'
-import UpdateOptionIntegrationReactSelect from './UpdateFeatureSuggest';
+import Select from 'react-select'
 
 class UpdateValueOptions extends Component {
   constructor(props) {
     super(props);
-
     this.toggle = this.toggle.bind(this);
     this.toggleFade = this.toggleFade.bind(this);
     this.state = {
@@ -32,24 +31,36 @@ class UpdateValueOptions extends Component {
       uz: '',
       en: '',
       features: [],
-      feature_id: 82,
+      feature_id: {
+        value: '',
+        label: ''
+      },
       active: 1,
       visible: 1,
-      feature: '',
-      selectedfeature: {}
     };
+  }
+
+  componentWillMount() {
+    if (this.props.location.feature_value_id !== undefined) {
+      localStorage.setItem("feature_value_id", this.props.location.feature_value_id);
+    }
   }
 
 
   componentDidMount() {
-
     httpGet({
-      url: "api/admin/feature"
+      url: "api/admin/feature",
+      params: {
+        per_page: 1000
+      }
     })
       .then(response => {
-
+        const features = []
+        for (let i = 0; i < response.data.data.length; i++) {
+          features.push({ value: response.data.data[i].id, label: response.data.data[i].name.ru })
+        }
         this.setState({
-          features: response.data.data
+          features: features
         });
       })
       .catch(error => {
@@ -60,22 +71,27 @@ class UpdateValueOptions extends Component {
     httpGet({
       url: 'api/admin/value',
       params: {
-        feature_value_id: this.props.location.feature_value_id
+        feature_value_id: localStorage.getItem("feature_value_id")
       }
     })
       .then(response => {
-
         this.setState({
           ru: response.data.data.name.ru,
           uz: response.data.data.name.uz,
           en: response.data.data.name.en,
-          feature: response.data.data.feature.name.ru,
+          feature_id: {
+            label: response.data.data.feature.name.ru,
+            value: response.data.data.feature_id
+          }
         })
-
       })
       .catch(error => {
         console.log(error);
       });
+  }
+
+  handleChange = feature_id => {
+    this.setState({ feature_id });
   }
 
   changeHandler = (e) => {
@@ -85,42 +101,27 @@ class UpdateValueOptions extends Component {
 
   SubmitHandler = e => {
     const notyf = new Notyf()
-    // let formData = new FormData()
-    // formData.append('name.ru', this.state.ru)
-    // if(this.state.uz){
-    //   formData.append('name.uz', this.state.uz)
-    // }
-    // if(this.state.en){
-    //   formData.append('name.en', this.state.en)
-    // }
-    // formData.append('visible', this.state.visible)
-    // formData.append('active', this.state.active)
-
     e.preventDefault();
-
     httpPost({
-      url: `api/admin/value/${this.props.location.feature_value_id}`,
+      url: `api/admin/value/update/${localStorage.getItem("feature_value_id")}`,
       data: {
-        feature_id: this.state.selectedfeature.value,
+        feature_id: this.state.feature_id.value,
         name: {
-          ru: this.state.ru
+          ru: this.state.ru,
+          uz: this.state.uz,
+          en: this.state.en
         },
         active: this.state.active,
         visible: this.state.visible
       }
     })
       .then(response => {
-
         notyf.success('Вы обновили значение характеристики')
       })
       .catch(error => {
         console.log(error);
       });
   };
-
-  FeatureCallbackFunction = (childData) => {
-    this.setState({ selectedfeature: childData })
-  }
 
 
   toggle() {
@@ -154,10 +155,13 @@ class UpdateValueOptions extends Component {
                     <Col xs="9" md="9">
                       <Row>
                         <Col md="9">
-                          <UpdateOptionIntegrationReactSelect
-                            callbackFunction={this.FeatureCallbackFunction}
-                            features={this.state.features}
-                            selected={this.state.feature} />
+                          <Select
+                            placeholder=''
+                            value={this.state.feature_id}
+                            onChange={this.handleChange}
+                            options={this.state.features}
+                          />
+
                         </Col>
                       </Row>
                     </Col>
@@ -218,3 +222,4 @@ class UpdateValueOptions extends Component {
 }
 
 export default UpdateValueOptions;
+

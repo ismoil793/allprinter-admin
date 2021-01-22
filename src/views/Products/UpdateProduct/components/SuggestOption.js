@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Chip from '@material-ui/core/Chip';
 import MenuItem from '@material-ui/core/MenuItem';
 import CancelIcon from '@material-ui/icons/Cancel';
+import { httpGet } from '../../../../api';
 
 
 const useStyles = makeStyles(theme => ({
@@ -310,19 +311,18 @@ const components = {
 
 
 export default function OptionSuggest(props) {
- console.log('props')
- console.log(props)
+
   let newFeatures = [];
-if(props.features){
-  for (let i = 0; i < props.features.length; i++) {
-    newFeatures.push({ value: props.features[i].id, label: props.features[i].name});
+  if (props.features) {
+    for (let i = 0; i < props.features.length; i++) {
+      newFeatures.push({ value: props.features[i].id, label: props.features[i].name });
+    }
   }
-}
-  
 
   const classes = useStyles();
   const theme = useTheme();
   const [single, setSingle] = React.useState(null);
+  const [features, setFeatures] = React.useState([])
   // const [multi, setMulti] = React.useState(null);
 
   const handleChangeSingle = value => {
@@ -345,11 +345,26 @@ if(props.features){
     }),
   };
 
+  // React.useEffect(() => {
+  //   httpGet({
+  //     url: 'api/admin/feature?per_page=2000',
+  //   }).then(r => {
+  //     console.log(r.data.data)
+  //     if (r.data.data && r.data.data.length) {
+  //       for (let i = 0; i < r.data.data.length; i++) {
+  //         newFeatures.push({ value: r.data.data[i].id, label: r.data.data[i].name.ru });
+  //       }
+  //       setFeatures(newFeatures)
+  //     }
+  //   })
+  // }, [])
+
+
   return (
     <div className={classes.root}>
       <NoSsr>
-      
-        
+
+
         <Select
           classes={classes}
           styles={selectStyles}
@@ -363,6 +378,7 @@ if(props.features){
           }}
           placeholder="Выберите Характеристику"
           options={newFeatures}
+          // options={features}
           components={components}
           value={single}
           onChange={handleChangeSingle}

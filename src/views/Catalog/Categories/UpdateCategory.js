@@ -205,14 +205,14 @@ class UpdateCategory extends Component {
     if (this.state.description_uz) {
       formData.append("description[uz]", this.state.description_uz);
     }
-   
+
     if (this.state.meta_title) {
       formData.append("meta_title[ru]", this.state.meta_title);
     }
     if (this.state.meta_keywords) {
       formData.append("meta_keywords[ru]", this.state.meta_keywords);
     }
-   
+
 
     if (this.state.meta_title_uz) {
       formData.append("meta_title[uz]", this.state.meta_title_uz);
@@ -241,7 +241,7 @@ class UpdateCategory extends Component {
     }
 
     // for (var pair of formData.entries()) {
-    //   console.log(pair[0]+ ', ' + pair[1]); 
+    //   console.log(pair[0]+ ', ' + pair[1]);
     // }
 
     e.preventDefault();
@@ -329,7 +329,7 @@ class UpdateCategory extends Component {
                       </FormGroup>
                     </Col>
                   </Row>
-             
+
                   <Row>
                     <Col md="12">
                     <FormGroup row>
@@ -380,74 +380,74 @@ class UpdateCategory extends Component {
                     </Col>
                   </Row>
 
-                  <Row>
-                    <Col md="12">
-                      <FormGroup row>
-                        <Col md="3">
-                          <Label htmlFor="file-input">
-                            Добавить изображение
-                          </Label>
-                        </Col>
-                        <Col xs="12" md="3">
-                          <Input
-                            type="file"
-                            id="file-input"
-                            onChange={this.changeImageHandler}
-                          />
-                        </Col>
-                        <Col xs="12" md="6">
-                          {this.state.image_preview ? (
-                            <img
-                              style={{ width: "50%" }}
-                              src={this.state.image_preview}
-                              alt="Чего"
-                            />
-                          ) : (
-                            "Изображение отсуствует в данной категории"
-                          )}
-                        </Col>
-                      </FormGroup>
-                    </Col>
-                  </Row>
+                  {/*<Row>*/}
+                  {/*  <Col md="12">*/}
+                  {/*    <FormGroup row>*/}
+                  {/*      <Col md="3">*/}
+                  {/*        <Label htmlFor="file-input">*/}
+                  {/*          Добавить изображение*/}
+                  {/*        </Label>*/}
+                  {/*      </Col>*/}
+                  {/*      <Col xs="12" md="3">*/}
+                  {/*        <Input*/}
+                  {/*          type="file"*/}
+                  {/*          id="file-input"*/}
+                  {/*          onChange={this.changeImageHandler}*/}
+                  {/*        />*/}
+                  {/*      </Col>*/}
+                  {/*      <Col xs="12" md="6">*/}
+                  {/*        {this.state.image_preview ? (*/}
+                  {/*          <img*/}
+                  {/*            style={{ width: "50%" }}*/}
+                  {/*            src={this.state.image_preview}*/}
+                  {/*            alt="Чего"*/}
+                  {/*          />*/}
+                  {/*        ) : (*/}
+                  {/*          "Изображение отсуствует в данной категории"*/}
+                  {/*        )}*/}
+                  {/*      </Col>*/}
+                  {/*    </FormGroup>*/}
+                  {/*  </Col>*/}
+                  {/*</Row>*/}
+
+                  {/*<Row>*/}
+                  {/*  <Col md="12">*/}
+                  {/*    <FormGroup row>*/}
+                  {/*      <Col md="3">*/}
+                  {/*        <Label htmlFor="file-input">*/}
+                  {/*          Добавить иконку для Mobile*/}
+                  {/*        </Label>*/}
+                  {/*      </Col>*/}
+                  {/*      <Col xs="12" md="3">*/}
+                  {/*        <Input*/}
+                  {/*          type="file"*/}
+                  {/*          id="file-input"*/}
+                  {/*          name="icon"*/}
+                  {/*          onChange={this.changeIconHandler}*/}
+                  {/*        />*/}
+                  {/*      </Col>*/}
+
+                  {/*      <Col xs="12" md="6">*/}
+                  {/*        {this.state.icon_preview ? (*/}
+                  {/*          <img*/}
+                  {/*            style={{ width: "20%" }}*/}
+                  {/*            src={this.state.icon_preview}*/}
+                  {/*            alt="Чего"*/}
+                  {/*          />*/}
+                  {/*        ) : (*/}
+                  {/*          "Мобильная иконка отсуствует в данной категории"*/}
+                  {/*        )}*/}
+                  {/*      </Col>*/}
+                  {/*    </FormGroup>*/}
+                  {/*  </Col>*/}
+                  {/*</Row>*/}
 
                   <Row>
                     <Col md="12">
                       <FormGroup row>
                         <Col md="3">
                           <Label htmlFor="file-input">
-                            Добавить иконку для Mobile
-                          </Label>
-                        </Col>
-                        <Col xs="12" md="3">
-                          <Input
-                            type="file"
-                            id="file-input"
-                            name="icon"
-                            onChange={this.changeIconHandler}
-                          />
-                        </Col>
-
-                        <Col xs="12" md="6">
-                          {this.state.icon_preview ? (
-                            <img
-                              style={{ width: "20%" }}
-                              src={this.state.icon_preview}
-                              alt="Чего"
-                            />
-                          ) : (
-                            "Мобильная иконка отсуствует в данной категории"
-                          )}
-                        </Col>
-                      </FormGroup>
-                    </Col>
-                  </Row>
-
-                  <Row>
-                    <Col md="12">
-                      <FormGroup row>
-                        <Col md="3">
-                          <Label htmlFor="file-input">
-                            Добавить иконку для Web
+                            Добавить изображение{/* для Web*/}
                           </Label>
                         </Col>
                         <Col xs="12" md="3">
@@ -509,13 +509,13 @@ class UpdateCategory extends Component {
                             value={this.state.reference}
                             onChange={this.changeHandler}
                           />
-                        
+
                         </Col>
                       </FormGroup>
                     </Col>
                   </Row>
 
-              
+
                   <Row>
                   <Col md="12">
                     <FormGroup row>
@@ -529,7 +529,7 @@ class UpdateCategory extends Component {
                           <option value="en">en</option>
                           <option value="uz">uz</option>
                         </Input>
-                        
+
                         </Col>
                       </FormGroup>
                     </Col>
@@ -549,11 +549,11 @@ class UpdateCategory extends Component {
                             value={this.state.meta_title}
                             onChange={this.changeHandler}
                           />
-                        
+
                         </Col>
                       </FormGroup>
                     </Col>
-          
+
                    <Col md="12">
                       <FormGroup row>
                         <Col md="3">
@@ -568,11 +568,11 @@ class UpdateCategory extends Component {
                             value={this.state.meta_keywords}
                             onChange={this.changeHandler}
                           />
-                         
+
                         </Col>
                       </FormGroup>
                     </Col>
-                
+
                     <Col md="12">
                       <FormGroup row>
                         <Col md="3">
@@ -587,7 +587,7 @@ class UpdateCategory extends Component {
                             value={this.state.meta_description}
                             onChange={this.changeHandler}
                           />
-                  
+
                         </Col>
                       </FormGroup>
                     </Col>
@@ -607,11 +607,11 @@ class UpdateCategory extends Component {
                         value={this.state.meta_title_uz}
                         onChange={this.changeHandler}
                       />
-                    
+
                     </Col>
                   </FormGroup>
                 </Col>
-      
+
                <Col md="12">
                   <FormGroup row>
                     <Col md="3">
@@ -626,11 +626,11 @@ class UpdateCategory extends Component {
                         value={this.state.meta_keywords_uz}
                         onChange={this.changeHandler}
                       />
-                     
+
                     </Col>
                   </FormGroup>
                 </Col>
-            
+
                 <Col md="12">
                   <FormGroup row>
                     <Col md="3">
@@ -645,11 +645,11 @@ class UpdateCategory extends Component {
                         value={this.state.meta_description_uz}
                         onChange={this.changeHandler}
                       />
-              
+
                     </Col>
                   </FormGroup>
                 </Col>
-          
+
                 </>
                 ) : (
                   <>
@@ -667,11 +667,11 @@ class UpdateCategory extends Component {
                         value={this.state.meta_title_en}
                         onChange={this.changeHandler}
                       />
-                    
+
                     </Col>
                   </FormGroup>
                 </Col>
-      
+
                <Col md="12">
                   <FormGroup row>
                     <Col md="3">
@@ -686,11 +686,11 @@ class UpdateCategory extends Component {
                         value={this.state.meta_keywords_en}
                         onChange={this.changeHandler}
                       />
-                     
+
                     </Col>
                   </FormGroup>
                 </Col>
-            
+
                 <Col md="12">
                   <FormGroup row>
                     <Col md="3">
@@ -705,7 +705,7 @@ class UpdateCategory extends Component {
                         value={this.state.meta_description_en}
                         onChange={this.changeHandler}
                       />
-              
+
                     </Col>
                   </FormGroup>
                 </Col>
@@ -713,8 +713,8 @@ class UpdateCategory extends Component {
                 )}
                 </Row>
 
-                 
-              
+
+
                   <Row>
                     <Col md="12">
                       <FormGroup row>

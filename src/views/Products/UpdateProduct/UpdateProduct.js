@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import {
   Col,
   Nav,
@@ -16,9 +16,9 @@ import SeoProduct from "./components/SeoProduct";
 import ImageProduct from "./components/ImageProduct";
 import PriceProduct from "./components/PriceProduct";
 import DescriptionProduct from "./components/DesciptionProduct";
-import {httpGet, httpPost} from "../../../api";
+import { httpGet, httpPost } from "../../../api";
 import UpdateCharacter from "./components/Characteristics";
-import {Notyf} from "notyf";
+import { Notyf } from "notyf";
 
 class UpdateProduct extends Component {
   constructor(props) {
@@ -74,7 +74,6 @@ class UpdateProduct extends Component {
     })
       .then(response => {
         const data = response.data.data;
-        console.log(data)
         this.setState({
           productData: data,
           brand_id: data.brand.id,
@@ -112,14 +111,14 @@ class UpdateProduct extends Component {
   }
 
   handleChildrenFormData = (type, data) => {
-    this.setState({[type]: data})
+    this.setState({ [type]: data })
   }
 
   handleUpdate = () => {
 
     const notyf = new Notyf();
 
-    const {descriptionData, files, categories, meta} = this.state;
+    const { descriptionData, files, categories, meta } = this.state;
 
     let formData = files.length ? new FormData() : null;
 
@@ -165,7 +164,7 @@ class UpdateProduct extends Component {
               'Content-Type': 'multipart/form-data'
             }
           }).then(r => notyf.success('Информация продукта обновлена'))
-        }else {
+        } else {
           notyf.success('Информация продукта обновлена')
         }
       })
@@ -232,9 +231,9 @@ class UpdateProduct extends Component {
           }
 
           <Button onClick={this.handleUpdate}
-                  type="button"
-                  size="sm"
-                  color="primary"
+            type="button"
+            size="sm"
+            color="primary"
           >
             <i className="fa fa-dot-circle-o"></i> Сохранить
           </Button>
@@ -277,36 +276,36 @@ class UpdateProduct extends Component {
 
   render() {
 
-
-    return (
-      <div className="animated fadeIn">
-        <Row>
-          <Col xs="12" md="12" className="mb-12">
-            <Nav tabs>
-              <NavItem>
-                <NavLink
-                  active={this.state.activeTab[0] === "1"}
-                  onClick={() => {
-                    this.toggle(0, "1");
-                  }}
-                >
-                  Информация
+    if (this.state.productData.id)
+      return (
+        <div className="animated fadeIn">
+          <Row>
+            <Col xs="12" md="12" className="mb-12">
+              <Nav tabs>
+                <NavItem>
+                  <NavLink
+                    active={this.state.activeTab[0] === "1"}
+                    onClick={() => {
+                      this.toggle(0, "1");
+                    }}
+                  >
+                    Информация
                 </NavLink>
-              </NavItem>
+                </NavItem>
 
 
-              <NavItem>
-                <NavLink
-                  active={this.state.activeTab[0] === "2"}
-                  onClick={() => {
-                    this.toggle(0, "2");
-                  }}
-                >
-                  Характеристики
+                <NavItem>
+                  <NavLink
+                    active={this.state.activeTab[0] === "2"}
+                    onClick={() => {
+                      this.toggle(0, "2");
+                    }}
+                  >
+                    Характеристики
                 </NavLink>
-              </NavItem>
+                </NavItem>
 
-              {/* <NavItem>
+                {/* <NavItem>
                 <NavLink
                   active={this.state.activeTab[0] === '4'}
                   onClick={() => { this.toggle(0, '4'); }}
@@ -316,24 +315,29 @@ class UpdateProduct extends Component {
               </NavItem> */}
 
 
-              <NavItem>
-                <NavLink
-                  active={this.state.activeTab[0] === "7"}
-                  onClick={() => {
-                    this.toggle(0, "7");
-                  }}
-                >
-                  Вариации Продукта
+                <NavItem>
+                  <NavLink
+                    active={this.state.activeTab[0] === "7"}
+                    onClick={() => {
+                      this.toggle(0, "7");
+                    }}
+                  >
+                    Вариации Продукта
                 </NavLink>
-              </NavItem>
-            </Nav>
-            <TabContent activeTab={this.state.activeTab[0]}>
-              {this.tabPane()}
-            </TabContent>
-          </Col>
-        </Row>
+                </NavItem>
+              </Nav>
+              <TabContent activeTab={this.state.activeTab[0]}>
+                {this.tabPane()}
+              </TabContent>
+            </Col>
+          </Row>
+        </div>
+      );
+    return (
+      <div className="animated fadeIn">
+        Загрузка...
       </div>
-    );
+    )
   }
 }
 
