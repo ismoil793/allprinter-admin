@@ -214,10 +214,11 @@ class UpdateCharacter extends Component {
   updateProduct = e => {
     e.preventDefault();
     const notyf = new Notyf();
+
     httpPost({
       url: `api/admin/product/update/${this.props.id}`,
       data: {
-        features: this.state.selected.filter(Boolean),
+        features: this.state.selected.filter(f => f !== null),
 
       }
     })
@@ -478,7 +479,7 @@ class UpdateCharacter extends Component {
                   </CardFooter>
                 </Form>
                 <CardFooter>
-                  <Link to="/buttons/products">
+                  <Link to="/goods/products">
                     <Button size="sm" color="danger">
                       <i className="fa fa-dot-circle-o"></i> Назад
                   </Button>

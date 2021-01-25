@@ -334,7 +334,7 @@ export default function UpdateCharacteristicsIntegrationReactSelect(props) {
   }
 
   newCharacteristics.push({
-    value: false,
+    value: null,
     label: 'Не выбрано'
   })
 
