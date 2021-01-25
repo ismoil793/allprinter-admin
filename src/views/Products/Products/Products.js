@@ -443,13 +443,13 @@ class Products extends Component {
                       ? products.map(product => (
                         <tr key={product.id}>
                           <td>{product.id}</td>
-                          <td>
+                          <td style={{ width: '15%' }}>
                             <img
-                              style={{ width: "50%" }}
+                              style={{ width: "80%" }}
                               alt={product.model}
                               src={
                                 product.images && product.images.length
-                                  ? product.images[0].types.small_default
+                                  ? product.images[0].url
                                   : null
                               }
                             />
