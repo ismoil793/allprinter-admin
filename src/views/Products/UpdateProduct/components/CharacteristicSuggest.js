@@ -333,6 +333,11 @@ export default function UpdateCharacteristicsIntegrationReactSelect(props) {
     });
   }
 
+  newCharacteristics.push({
+    value: false,
+    label: 'Не выбрано'
+  })
+
   const classes = useStyles();
   const theme = useTheme();
   const [single, setSingle] = React.useState(null);
@@ -343,7 +348,7 @@ export default function UpdateCharacteristicsIntegrationReactSelect(props) {
     props.callbackFunction(value.value, props.index);
   };
 
-  
+
 
 
 
