@@ -89,8 +89,8 @@ class UpdateCategory extends Component {
           uz: response.data.data.name.uz,
           en: response.data.data.name.en,
           slug: response.data.data.slug,
-          image_preview: response.data.data.image
-            ? response.data.data.image
+          image_preview: response.data.data.img.url
+            ? response.data.data.img.url
             : null,
           icon_preview: response.data.data.icon
             ? response.data.data.icon.url
@@ -107,11 +107,11 @@ class UpdateCategory extends Component {
           meta_description: response.data.data.meta_description.ru,
           meta_keywords: response.data.data.meta_keywords.ru,
           meta_title: response.data.data.meta_title.ru,
-          meta_description_uz:  response.data.data.meta_description.uz ? response.data.data.meta_description.uz : '' ,
-          meta_keywords_uz:  response.data.data.meta_keywords.uz ? response.data.data.meta_keywords.uz : '',
-          meta_title_uz:  response.data.data.meta_title.uz ? response.data.data.meta_title.uz : '',
-          meta_description_en: response.data.data.meta_description.en ?response.data.data.meta_description.en  : '',
-          meta_keywords_en: response.data.data.meta_keywords.en ? response.data.data.meta_keywords.en : '' ,
+          meta_description_uz: response.data.data.meta_description.uz ? response.data.data.meta_description.uz : '',
+          meta_keywords_uz: response.data.data.meta_keywords.uz ? response.data.data.meta_keywords.uz : '',
+          meta_title_uz: response.data.data.meta_title.uz ? response.data.data.meta_title.uz : '',
+          meta_description_en: response.data.data.meta_description.en ? response.data.data.meta_description.en : '',
+          meta_keywords_en: response.data.data.meta_keywords.en ? response.data.data.meta_keywords.en : '',
           meta_title_en: response.data.data.meta_title.en ? response.data.data.meta_title.en : '',
           selected_features: response.data.data.features
             ? response.data.data.features
@@ -332,7 +332,7 @@ class UpdateCategory extends Component {
 
                   <Row>
                     <Col md="12">
-                    <FormGroup row>
+                      <FormGroup row>
                         <Col md="12">
                           <Label htmlFor="text-input">Описание</Label>
                           <Input
@@ -348,7 +348,7 @@ class UpdateCategory extends Component {
                     </Col>
 
                     <Col md="12">
-                    <FormGroup row>
+                      <FormGroup row>
                         <Col md="12">
                           <Label htmlFor="text-input">Описание</Label>
                           <Input
@@ -364,7 +364,7 @@ class UpdateCategory extends Component {
                     </Col>
 
                     <Col md="12">
-                    <FormGroup row>
+                      <FormGroup row>
                         <Col md="12">
                           <Label htmlFor="text-input">Описание</Label>
                           <Input
@@ -380,35 +380,35 @@ class UpdateCategory extends Component {
                     </Col>
                   </Row>
 
-                  {/*<Row>*/}
-                  {/*  <Col md="12">*/}
-                  {/*    <FormGroup row>*/}
-                  {/*      <Col md="3">*/}
-                  {/*        <Label htmlFor="file-input">*/}
-                  {/*          Добавить изображение*/}
-                  {/*        </Label>*/}
-                  {/*      </Col>*/}
-                  {/*      <Col xs="12" md="3">*/}
-                  {/*        <Input*/}
-                  {/*          type="file"*/}
-                  {/*          id="file-input"*/}
-                  {/*          onChange={this.changeImageHandler}*/}
-                  {/*        />*/}
-                  {/*      </Col>*/}
-                  {/*      <Col xs="12" md="6">*/}
-                  {/*        {this.state.image_preview ? (*/}
-                  {/*          <img*/}
-                  {/*            style={{ width: "50%" }}*/}
-                  {/*            src={this.state.image_preview}*/}
-                  {/*            alt="Чего"*/}
-                  {/*          />*/}
-                  {/*        ) : (*/}
-                  {/*          "Изображение отсуствует в данной категории"*/}
-                  {/*        )}*/}
-                  {/*      </Col>*/}
-                  {/*    </FormGroup>*/}
-                  {/*  </Col>*/}
-                  {/*</Row>*/}
+                  <Row>
+                    <Col md="12">
+                      <FormGroup row>
+                        <Col md="3">
+                          <Label htmlFor="file-input">
+                            Добавить изображение
+                         </Label>
+                        </Col>
+                        <Col xs="12" md="3">
+                          <Input
+                            type="file"
+                            id="file-input"
+                            onChange={this.changeImageHandler}
+                          />
+                        </Col>
+                        <Col xs="12" md="6">
+                          {this.state.image_preview ? (
+                            <img
+                              style={{ width: "50%" }}
+                              src={this.state.image_preview}
+                              alt="Изображение категории"
+                            />
+                          ) : (
+                              "Изображение отсуствует в данной категории"
+                            )}
+                        </Col>
+                      </FormGroup>
+                    </Col>
+                  </Row>
 
                   {/*<Row>*/}
                   {/*  <Col md="12">*/}
@@ -442,12 +442,12 @@ class UpdateCategory extends Component {
                   {/*  </Col>*/}
                   {/*</Row>*/}
 
-                  <Row>
+                  {/* <Row>
                     <Col md="12">
                       <FormGroup row>
                         <Col md="3">
                           <Label htmlFor="file-input">
-                            Добавить изображение{/* для Web*/}
+                            Добавить изображение
                           </Label>
                         </Col>
                         <Col xs="12" md="3">
@@ -466,12 +466,12 @@ class UpdateCategory extends Component {
                               alt="Чего"
                             />
                           ) : (
-                            "Web иконка отсуствует в данной категории"
-                          )}
+                              "Web иконка отсуствует в данной категории"
+                            )}
                         </Col>
                       </FormGroup>
                     </Col>
-                  </Row>
+                  </Row> */}
 
                   <Row>
                     <Col md="12">
@@ -517,201 +517,201 @@ class UpdateCategory extends Component {
 
 
                   <Row>
-                  <Col md="12">
-                    <FormGroup row>
+                    <Col md="12">
+                      <FormGroup row>
                         <Col md="3">
                           <Label htmlFor="text-input">Локализация meta данных</Label>
                         </Col>
                         <Col md="9">
-                        <Input type="select" name="locale" value={this.state.locale}  onChange={this.changeHandler} id="select">
-                        <option value="">Выберите язык </option>
-                          <option value="ru">ru</option>
-                          <option value="en">en</option>
-                          <option value="uz">uz</option>
-                        </Input>
+                          <Input type="select" name="locale" value={this.state.locale} onChange={this.changeHandler} id="select">
+                            <option value="">Выберите язык </option>
+                            <option value="ru">ru</option>
+                            <option value="en">en</option>
+                            <option value="uz">uz</option>
+                          </Input>
 
                         </Col>
                       </FormGroup>
                     </Col>
                     {this.state.locale === "ru" ? (
                       <>
-                    <Col md="12">
-                      <FormGroup row>
-                        <Col md="3">
-                          <Label htmlFor="text-input">Мета title</Label>
+                        <Col md="12">
+                          <FormGroup row>
+                            <Col md="3">
+                              <Label htmlFor="text-input">Мета title</Label>
+                            </Col>
+                            <Col md="9">
+                              <Input
+                                type="text"
+                                id="text-input"
+                                name="meta_title"
+                                placeholder=""
+                                value={this.state.meta_title}
+                                onChange={this.changeHandler}
+                              />
+
+                            </Col>
+                          </FormGroup>
                         </Col>
-                        <Col md="9">
-                          <Input
-                            type="text"
-                            id="text-input"
-                            name="meta_title"
-                            placeholder=""
-                            value={this.state.meta_title}
-                            onChange={this.changeHandler}
-                          />
 
+                        <Col md="12">
+                          <FormGroup row>
+                            <Col md="3">
+                              <Label htmlFor="text-input">Мета keywords</Label>
+                            </Col>
+                            <Col md="9">
+                              <Input
+                                type="text"
+                                id="text-input"
+                                name="meta_keywords"
+                                placeholder=""
+                                value={this.state.meta_keywords}
+                                onChange={this.changeHandler}
+                              />
+
+                            </Col>
+                          </FormGroup>
                         </Col>
-                      </FormGroup>
-                    </Col>
 
-                   <Col md="12">
-                      <FormGroup row>
-                        <Col md="3">
-                          <Label htmlFor="text-input">Мета keywords</Label>
+                        <Col md="12">
+                          <FormGroup row>
+                            <Col md="3">
+                              <Label htmlFor="text-input">Мета desсription</Label>
+                            </Col>
+                            <Col md="9">
+                              <Input
+                                type="text"
+                                id="text-input"
+                                name="meta_description"
+                                placeholder=""
+                                value={this.state.meta_description}
+                                onChange={this.changeHandler}
+                              />
+
+                            </Col>
+                          </FormGroup>
                         </Col>
-                        <Col md="9">
-                          <Input
-                            type="text"
-                            id="text-input"
-                            name="meta_keywords"
-                            placeholder=""
-                            value={this.state.meta_keywords}
-                            onChange={this.changeHandler}
-                          />
+                      </>) : this.state.locale === "uz" ? (
+                        <>
+                          <Col md="12">
+                            <FormGroup row>
+                              <Col md="3">
+                                <Label htmlFor="text-input">Мета title</Label>
+                              </Col>
+                              <Col md="9">
+                                <Input
+                                  type="text"
+                                  id="text-input"
+                                  name="meta_title_uz"
+                                  placeholder=""
+                                  value={this.state.meta_title_uz}
+                                  onChange={this.changeHandler}
+                                />
 
-                        </Col>
-                      </FormGroup>
-                    </Col>
+                              </Col>
+                            </FormGroup>
+                          </Col>
 
-                    <Col md="12">
-                      <FormGroup row>
-                        <Col md="3">
-                          <Label htmlFor="text-input">Мета desсription</Label>
-                        </Col>
-                        <Col md="9">
-                          <Input
-                            type="text"
-                            id="text-input"
-                            name="meta_description"
-                            placeholder=""
-                            value={this.state.meta_description}
-                            onChange={this.changeHandler}
-                          />
+                          <Col md="12">
+                            <FormGroup row>
+                              <Col md="3">
+                                <Label htmlFor="text-input">Мета keywords</Label>
+                              </Col>
+                              <Col md="9">
+                                <Input
+                                  type="text"
+                                  id="text-input"
+                                  name="meta_keywords_uz"
+                                  placeholder=""
+                                  value={this.state.meta_keywords_uz}
+                                  onChange={this.changeHandler}
+                                />
 
-                        </Col>
-                      </FormGroup>
-                    </Col>
-                </>) : this.state.locale==="uz" ? (
-                  <>
-                  <Col md="12">
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Мета title</Label>
-                    </Col>
-                    <Col md="9">
-                      <Input
-                        type="text"
-                        id="text-input"
-                        name="meta_title_uz"
-                        placeholder=""
-                        value={this.state.meta_title_uz}
-                        onChange={this.changeHandler}
-                      />
+                              </Col>
+                            </FormGroup>
+                          </Col>
 
-                    </Col>
-                  </FormGroup>
-                </Col>
+                          <Col md="12">
+                            <FormGroup row>
+                              <Col md="3">
+                                <Label htmlFor="text-input">Мета desсription</Label>
+                              </Col>
+                              <Col md="9">
+                                <Input
+                                  type="text"
+                                  id="text-input"
+                                  name="meta_description_uz"
+                                  placeholder=""
+                                  value={this.state.meta_description_uz}
+                                  onChange={this.changeHandler}
+                                />
 
-               <Col md="12">
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Мета keywords</Label>
-                    </Col>
-                    <Col md="9">
-                      <Input
-                        type="text"
-                        id="text-input"
-                        name="meta_keywords_uz"
-                        placeholder=""
-                        value={this.state.meta_keywords_uz}
-                        onChange={this.changeHandler}
-                      />
+                              </Col>
+                            </FormGroup>
+                          </Col>
 
-                    </Col>
-                  </FormGroup>
-                </Col>
+                        </>
+                      ) : (
+                          <>
+                            <Col md="12">
+                              <FormGroup row>
+                                <Col md="3">
+                                  <Label htmlFor="text-input">Мета title</Label>
+                                </Col>
+                                <Col md="9">
+                                  <Input
+                                    type="text"
+                                    id="text-input"
+                                    name="meta_title_en"
+                                    placeholder=""
+                                    value={this.state.meta_title_en}
+                                    onChange={this.changeHandler}
+                                  />
 
-                <Col md="12">
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Мета desсription</Label>
-                    </Col>
-                    <Col md="9">
-                      <Input
-                        type="text"
-                        id="text-input"
-                        name="meta_description_uz"
-                        placeholder=""
-                        value={this.state.meta_description_uz}
-                        onChange={this.changeHandler}
-                      />
+                                </Col>
+                              </FormGroup>
+                            </Col>
 
-                    </Col>
-                  </FormGroup>
-                </Col>
+                            <Col md="12">
+                              <FormGroup row>
+                                <Col md="3">
+                                  <Label htmlFor="text-input">Мета keywords</Label>
+                                </Col>
+                                <Col md="9">
+                                  <Input
+                                    type="text"
+                                    id="text-input"
+                                    name="meta_keywords_en"
+                                    placeholder=""
+                                    value={this.state.meta_keywords_en}
+                                    onChange={this.changeHandler}
+                                  />
 
-                </>
-                ) : (
-                  <>
-                  <Col md="12">
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Мета title</Label>
-                    </Col>
-                    <Col md="9">
-                      <Input
-                        type="text"
-                        id="text-input"
-                        name="meta_title_en"
-                        placeholder=""
-                        value={this.state.meta_title_en}
-                        onChange={this.changeHandler}
-                      />
+                                </Col>
+                              </FormGroup>
+                            </Col>
 
-                    </Col>
-                  </FormGroup>
-                </Col>
+                            <Col md="12">
+                              <FormGroup row>
+                                <Col md="3">
+                                  <Label htmlFor="text-input">Мета desсription</Label>
+                                </Col>
+                                <Col md="9">
+                                  <Input
+                                    type="text"
+                                    id="text-input"
+                                    name="meta_description_en"
+                                    placeholder=""
+                                    value={this.state.meta_description_en}
+                                    onChange={this.changeHandler}
+                                  />
 
-               <Col md="12">
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Мета keywords</Label>
-                    </Col>
-                    <Col md="9">
-                      <Input
-                        type="text"
-                        id="text-input"
-                        name="meta_keywords_en"
-                        placeholder=""
-                        value={this.state.meta_keywords_en}
-                        onChange={this.changeHandler}
-                      />
-
-                    </Col>
-                  </FormGroup>
-                </Col>
-
-                <Col md="12">
-                  <FormGroup row>
-                    <Col md="3">
-                      <Label htmlFor="text-input">Мета desсription</Label>
-                    </Col>
-                    <Col md="9">
-                      <Input
-                        type="text"
-                        id="text-input"
-                        name="meta_description_en"
-                        placeholder=""
-                        value={this.state.meta_description_en}
-                        onChange={this.changeHandler}
-                      />
-
-                    </Col>
-                  </FormGroup>
-                </Col>
-                </>
-                )}
-                </Row>
+                                </Col>
+                              </FormGroup>
+                            </Col>
+                          </>
+                        )}
+                  </Row>
 
 
 
