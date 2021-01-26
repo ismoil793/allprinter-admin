@@ -171,6 +171,7 @@ class Options extends Component {
                   method="post"
                   encType="multipart/form-data"
                   className="form-horizontal"
+                  onSubmit={e => e.preventDefault()}
                 >
                   <Row>
                     <FormGroup column>
@@ -290,7 +291,7 @@ class Options extends Component {
             </Card>
           </Col>
         </Row>
-      </div>
+      </div >
     );
   }
 }

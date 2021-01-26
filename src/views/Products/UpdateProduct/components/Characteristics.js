@@ -36,6 +36,7 @@ class UpdateCharacter extends Component {
       selected: [],
       old_selected: [],
       featureAdded: false,
+      selectUpdate: true,
 
       active: 1,
       visible: 1,
@@ -74,11 +75,19 @@ class UpdateCharacter extends Component {
       }
     }
 
+    console.log(this.state.selectUpdate)
+
     if (!this.state.featureAdded)
-      this.setState({
-        features: this.props.features,
-        selected: a
-      });
+      if (!this.state.selectUpdate)
+        this.setState({
+          features: this.props.features,
+          selectUpdate: true
+        });
+      else
+        this.setState({
+          features: this.props.features,
+          selected: a
+        });
     else
       this.setState({ featureAdded: false });
   }
@@ -189,6 +198,7 @@ class UpdateCharacter extends Component {
         this.props.getProduct()
         notyf.success(`Вы добавили характеристику ${this.state.feature_ru}`);
         this.setState({
+          selectUpdate: false,
           feature_ru: "",
           feature_uz: "",
           feature_en: ""
