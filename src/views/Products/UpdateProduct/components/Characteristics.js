@@ -35,6 +35,7 @@ class UpdateCharacter extends Component {
       features: [],
       selected: [],
       old_selected: [],
+      featureAdded: false,
 
       active: 1,
       visible: 1,
@@ -72,10 +73,14 @@ class UpdateCharacter extends Component {
         }
       }
     }
-    this.setState({
-      features: this.props.features,
-      selected: a
-    });
+
+    if (!this.state.featureAdded)
+      this.setState({
+        features: this.props.features,
+        selected: a
+      });
+    else
+      this.setState({ featureAdded: false });
   }
 
   componentDidUpdate(prevProps) {
@@ -146,9 +151,16 @@ class UpdateCharacter extends Component {
         visible: this.state.visible
       }
     })
-      .then(response => {
-        notyf.success(`Вы добавили значение ${this.state.feature_value_ru}`);
+      .then(async response => {
+        await this.updateProduct()
+        this.setState({
+          featureAdded: true
+        });
+      })
+      .then(r => {
         this.props.getProduct()
+        notyf.success(`Вы добавили значение ${this.state.feature_value_ru}`);
+
       })
       .catch(error => {
         console.log(error);
@@ -212,7 +224,8 @@ class UpdateCharacter extends Component {
   };
 
   updateProduct = e => {
-    e.preventDefault();
+    if (e)
+      e.preventDefault();
     const notyf = new Notyf();
 
     httpPost({
