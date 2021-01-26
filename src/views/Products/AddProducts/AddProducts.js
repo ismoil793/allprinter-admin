@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Button, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane,} from 'reactstrap';
+import React, { Component } from 'react';
+import { Button, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane, } from 'reactstrap';
 import AddForms from './AddForm'
 import InfoProduct from './components/InfoProduct'
 import Character from './components/Characteristics'
@@ -39,19 +39,19 @@ class AddProducts extends Component {
   }
 
   handleChildrenFormData = (type, data) => {
-    this.setState({[type]: data})
+    this.setState({ [type]: data })
   }
 
   handleInfoProduct = (val) => {
-    this.setState({isCreateNewProduct: val})
+    this.setState({ isCreateNewProduct: val })
   }
 
   callbackFunction = (childData) => {
-    this.setState({productData: childData})
+    this.setState({ productData: childData })
   }
 
   newCallbackFunction = (childData) => {
-    this.setState({productData: childData})
+    this.setState({ productData: childData })
   }
 
   lorem() {
@@ -107,9 +107,9 @@ class AddProducts extends Component {
 
 
           <Button onClick={this.handleSubmit}
-                  type="button"
-                  size="sm"
-                  color="primary"
+            type="button"
+            size="sm"
+            color="primary"
           >
             <i className="fa fa-dot-circle-o"></i> Сохранить
           </Button>
@@ -123,7 +123,7 @@ class AddProducts extends Component {
         {/*</TabPane>*/}
 
         <TabPane tabId="2">
-          {<Character id={this.state.productData.id} features={this.state.productData.features}/>}
+          {<Character id={this.state.productData.id} features={this.state.productData.features} />}
         </TabPane>
 
         {/* <TabPane tabId="4">
@@ -133,10 +133,10 @@ class AddProducts extends Component {
         </TabPane>
 
         <TabPane tabId="6">
-          {<ImageProduct id={this.state.productData.id}/>}
+          {<ImageProduct id={this.state.productData.id} />}
         </TabPane>
         <TabPane tabId="7">
-          {<PriceProduct id={this.state.productData.id}/>}
+          {<PriceProduct id={this.state.productData.id} />}
         </TabPane>
         {/*<TabPane tabId="1"> */}
         {/*  {<InfoProduct parentCallback = {this.callbackFunction} />}*/}

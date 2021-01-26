@@ -36,8 +36,8 @@ class Character extends Component {
       feature_uz: '',
       feature_en: '',
       feature_value_ru: '',
-      feature_value_uz:'',
-      feature_value_en:'',
+      feature_value_uz: '',
+      feature_value_en: '',
       feature_show: false,
       value_show: false,
       selectedfeature: null
@@ -49,22 +49,22 @@ class Character extends Component {
     this.getFeatures()
   }
 
-  getFeatures =() =>{
-    
+  getFeatures = () => {
+
     httpGet({
       url: "api/admin/feature",
-      params:{
+      params: {
         total: 1
       }
     })
-    .then(response => {
-      this.setState({
-        features: response.data.data
+      .then(response => {
+        this.setState({
+          features: response.data.data
+        });
+      })
+      .catch(error => {
+        console.log(error);
       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
   }
 
   handleChange = e => {
@@ -173,7 +173,7 @@ class Character extends Component {
           feature_ru: '',
           feature_uz: '',
           feature_en: ''
-          })
+        })
       })
       .catch(error => {
         console.log(error);
@@ -381,25 +381,25 @@ class Character extends Component {
                 <CardBody>
                   {this.props.features
                     ? this.props.features.map((feature, index) => (
-                        <FormGroup row>
-                          <Col md="3">
-                            <Input
-                              type="text"
-                              id="text-input"
-                              value={feature.name}
-                              placeholder=""
-                              readonly
-                            />
-                          </Col>
-                          <Col xs="12" md="9">
-                            <CharacteristicsIntegrationReactSelect
-                              callbackFunction={this.CallbackFunction}
-                              index={index}
-                              feature_values={feature.values}
-                            />
-                          </Col>
-                        </FormGroup>
-                      ))
+                      <FormGroup row>
+                        <Col md="3">
+                          <Input
+                            type="text"
+                            id="text-input"
+                            value={feature.name}
+                            placeholder=""
+                            readonly
+                          />
+                        </Col>
+                        <Col xs="12" md="9">
+                          <CharacteristicsIntegrationReactSelect
+                            callbackFunction={this.CallbackFunction}
+                            index={index}
+                            feature_values={feature.values}
+                          />
+                        </Col>
+                      </FormGroup>
+                    ))
                     : null}
                 </CardBody>
                 <CardFooter>

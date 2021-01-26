@@ -443,9 +443,9 @@ class Products extends Component {
                       ? products.map(product => (
                         <tr key={product.id}>
                           <td>{product.id}</td>
-                          <td style={{ width: '15%' }}>
+                          <td style={{ width: '10%' }}>
                             <img
-                              style={{ width: "80%" }}
+                              style={{ width: "55%" }}
                               alt={product.model}
                               src={
                                 product.images && product.images.length
