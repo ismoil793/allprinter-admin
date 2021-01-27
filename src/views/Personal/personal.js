@@ -271,7 +271,6 @@ class Personal extends Component {
           this.getDashboard()
         })
       });
-
   }
 
   Pagination = e => {
@@ -380,6 +379,8 @@ class Personal extends Component {
                           <Col md="3">
                             <Label htmlFor="select"><b>Имя:</b> </Label>
                           </Col>
+
+                          {console.log(this.state.user)}
 
                           <Col xs="12" md="4">
                             <Label htmlFor="select">{this.state.user.first_name}</Label>

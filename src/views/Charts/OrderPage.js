@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import {httpGet, httpPost, httpDelete} from "../../api";
-import {Notyf} from "notyf";
-import {Link} from "react-router-dom";
+import React, { Component } from "react";
+import { httpGet, httpPost, httpDelete } from "../../api";
+import { Notyf } from "notyf";
+import { Link } from "react-router-dom";
 import "notyf/notyf.min.css";
 import {
   Button,
@@ -137,11 +137,11 @@ class OrderPage extends Component {
   }
 
   ItemCallbackFunction = childData => {
-    this.setState({selecteditem: childData});
+    this.setState({ selecteditem: childData });
   };
 
   componentDidMount() {
-    httpGet({url: "api/admin/user_links"})
+    httpGet({ url: "api/admin/user_links" })
       .then(response => {
         this.setState({
           links: response.data.data
@@ -173,13 +173,13 @@ class OrderPage extends Component {
       }
     })
       .then(response => {
-        this.setState({regions: response.data.data});
+        this.setState({ regions: response.data.data });
       })
       .catch(error => {
         console.log(error);
       });
 
-    httpGet({url: "api/order/payments"})
+    httpGet({ url: "api/order/payments" })
       .then(response => {
         this.setState({
           payments: response.data.data
@@ -206,9 +206,9 @@ class OrderPage extends Component {
 
     // ***************   Fetching Cities from Back-end   *************** //
 
-    httpGet({url: "api/cities"})
+    httpGet({ url: "api/cities" })
       .then(response => {
-        this.setState({cities: response.data.data});
+        this.setState({ cities: response.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -315,7 +315,7 @@ class OrderPage extends Component {
     })
       .then(response => {
         notyf.success(`Вы изменили заказ `);
-        this.setState({order: response.data.data});
+        this.setState({ order: response.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -363,7 +363,7 @@ class OrderPage extends Component {
   };
 
   handleChange = e => {
-    this.setState({[e.target.name]: e.target.value});
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   SubmitHandler = e => {
@@ -382,7 +382,7 @@ class OrderPage extends Component {
     })
       .then(response => {
         notyf.success("Вы обновили статус заказа");
-        this.setState({order: response.data.data});
+        this.setState({ order: response.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -405,7 +405,7 @@ class OrderPage extends Component {
     })
       .then(response => {
         notyf.success("Вы обновили статус заказа");
-        this.setState({order: response.data.data});
+        this.setState({ order: response.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -424,7 +424,7 @@ class OrderPage extends Component {
       }
     })
       .then(response => {
-        this.setState({regions: response.data.data});
+        this.setState({ regions: response.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -474,7 +474,7 @@ class OrderPage extends Component {
     })
       .then(response => {
         notyf.success(`Вы изменили заказ `);
-        this.setState({order: response.data.data});
+        this.setState({ order: response.data.data });
       })
       .catch(error => {
         console.log(error);
@@ -482,17 +482,17 @@ class OrderPage extends Component {
   };
 
   toggle() {
-    this.setState({collapse: !this.state.collapse});
+    this.setState({ collapse: !this.state.collapse });
   }
 
   toggleFade() {
     this.setState(prevState => {
-      return {fadeIn: !prevState};
+      return { fadeIn: !prevState };
     });
   }
 
   render() {
-    const {order, states} = this.state;
+    const { order, states } = this.state;
     console.log(this.state.filtered_order);
 
     return (
@@ -612,7 +612,7 @@ class OrderPage extends Component {
                       <Row>
                         {order.invoices.map(invoice => (
                           <Col md="6">
-                            <b>{invoice.name}:</b> <br/>
+                            <b>{invoice.name}:</b> <br />
                             {invoice.pivot.price
                               .toString()
                               .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}{" "}
@@ -732,7 +732,7 @@ class OrderPage extends Component {
                                   : null}
                                 <option value="Другой">Другой</option>
                               </Input>
-                              <hr/>
+                              <hr />
                               {this.state.link_name === "Другой" ? (
                                 <Input
                                   type="text"
@@ -806,7 +806,7 @@ class OrderPage extends Component {
                       order.user && order.user.cashback ?
                         <ListGroupItem>
                           <b>Cashback пользователя:</b> {order.user.cashback.toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")} сум
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")} сум
                         </ListGroupItem>
                         :
                         <ListGroupItem>
@@ -1000,93 +1000,93 @@ class OrderPage extends Component {
               <CardBody>
                 <Table responsive bordered>
                   <thead>
-                  <tr>
-                    <th>Артикул</th>
-                    <th>Артикул контрагента</th>
-                    <th>Изображение</th>
-                    <th>Наименование</th>
-                    <th>Дилер</th>
-                    <th>К-во</th>
-                    <th>К-во у BS</th>
-                    <th>Цена за ед</th>
-                    <th>Общая входня цена</th>
-                    <th>Общая розничная цена</th>
-                    <th>Маржинальность</th>
-                    <th>Действие</th>
-                  </tr>
+                    <tr>
+                      <th>Артикул</th>
+                      <th>Артикул контрагента</th>
+                      <th>Изображение</th>
+                      <th>Наименование</th>
+                      <th>Дилер</th>
+                      <th>К-во</th>
+                      <th>К-во у PS</th>
+                      <th>Цена за ед</th>
+                      <th>Общая входня цена</th>
+                      <th>Общая розничная цена</th>
+                      {/* <th>Маржинальность</th> */}
+                      <th>Действие</th>
+                    </tr>
                   </thead>
 
                   <tbody>
-                  {typeof order.cart == "object"
-                    ? order.cart.items.map(item => (
-                      <tr key={item.item_shop_id}>
-                        <td>{item.reference}</td>
-                        <td>{item.shop_reference}</td>
+                    {typeof order.cart == "object"
+                      ? order.cart.items.map(item => (
+                        <tr key={item.item_shop_id}>
+                          <td>{item.reference}</td>
+                          <td>{item.shop_reference}</td>
 
-                        <td>
-                          <img
-                            src={item.product.images[0].types.small_default}
-                            alt=""
-                          />
-                        </td>
-                        <td>
-                          <Link
-                            to={{
-                              pathname: `/goods/updateproduct/${item.product.id}`,
-                              updateproduct_id: item.product.id
-                            }}
-                          >
-                            {item.product.name}
-                          </Link>
-                        </td>
-                        <td>{item.shop.name}</td>
-                        <td>{item.quantity}</td>
-                        <td>{item.brandstore_quantity}</td>
-                        <td>
-                          {(item.total_with_discount / item.quantity)
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
-                        </td>
-                        <td>
-                          {item.sum_initial_price ?
-                            item.sum_initial_price.toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                            : null
-                          }{" "}
-                        </td>
-                        <td>
-                          {item.total_with_discount ?
-                            item.total_with_discount.toString()
-                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                            : null
-                          }{" "}
-                        </td>
-
-                        <td>
-                          {
-                            item.total_with_discount ?
-                              (item.total_with_discount - item.sum_initial_price).toString()
+                          <td style={{ width: '10%' }}>
+                            <img
+                              src={item.product.images[0].url}
+                              alt=""
+                            />
+                          </td>
+                          <td style={{ width: '10%' }}>
+                            <Link
+                              to={{
+                                pathname: `/goods/updateproduct/${item.product.id}`,
+                                updateproduct_id: item.product.id
+                              }}
+                            >
+                              {item.product.name}
+                            </Link>
+                          </td>
+                          <td>{item.shop.name}</td>
+                          <td>{item.quantity}</td>
+                          <td>{item.brandstore_quantity}</td>
+                          <td>
+                            {(item.total_with_discount / item.quantity)
+                              .toString()
+                              .replace(/\B(?=(\d{3})+(?!\d))/g, " ")}
+                          </td>
+                          <td>
+                            {item.sum_initial_price ?
+                              item.sum_initial_price.toString()
                                 .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
                               : null
-                          }
-                          {" "}
-                        </td>
+                            }{" "}
+                          </td>
+                          <td>
+                            {item.total_with_discount ?
+                              item.total_with_discount.toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                              : null
+                            }{" "}
+                          </td>
 
-                        <td>
-                          <EditItems
-                            callback={this.getOrder}
-                            item_shop_id={item.item_shop_id}
-                            quantity={item.quantity}
-                          />
-                          <hr/>
-                          <DeleteItem
-                            callback={this.getOrder}
-                            item_shop_id={item.item_shop_id}
-                          />
-                        </td>
-                      </tr>
-                    ))
-                    : null}
+                          {/* <td>
+                            {
+                              item.total_with_discount ?
+                                (item.total_with_discount - item.sum_initial_price).toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                                : null
+                            }
+                            {" "}
+                          </td> */}
+
+                          <td>
+                            <EditItems
+                              callback={this.getOrder}
+                              item_shop_id={item.item_shop_id}
+                              quantity={item.quantity}
+                            />
+                            <hr />
+                            <DeleteItem
+                              callback={this.getOrder}
+                              item_shop_id={item.item_shop_id}
+                            />
+                          </td>
+                        </tr>
+                      ))
+                      : null}
                   </tbody>
 
                 </Table>
@@ -1094,140 +1094,140 @@ class OrderPage extends Component {
 
                 <Table responsive bordered>
                   <thead>
-                  <tr>
-                    <th>Общая входная цена</th>
-                    <th>Общая розничная цена</th>
-                    <th>Маржинальность заказа</th>
-                    <th>Потенциальный cashback</th>
-                    <th>Использованный cashback</th>
-                  </tr>
+                    <tr>
+                      <th>Общая входная цена</th>
+                      <th>Общая розничная цена</th>
+                      <th>Маржинальность заказа</th>
+                      <th>Потенциальный cashback</th>
+                      <th>Использованный cashback</th>
+                    </tr>
                   </thead>
 
                   <tbody>
-                  <tr>
+                    <tr>
 
-                    {console.log(order)}
+                      {console.log(order)}
 
-                    <td>{order.cart && order.cart.sum_initial_price ? order.cart.sum_initial_price.toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ") : null} сум
+                      <td>{order.cart && order.cart.sum_initial_price ? order.cart.sum_initial_price.toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, " ") : null} сум
                     </td>
 
-                    <td>{order.cart ? order.cart.total_with_discount.toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, " ") : null} сум
+                      <td>{order.cart ? order.cart.total_with_discount.toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, " ") : null} сум
                     </td>
-                    <td>{order.cart ? order.cart.marginality : null} сум</td>
-                    <td>{order.cart ? order.cart.potential_cashback : null} сум</td>
-                    <td>{order.cart ? order.cart.used_cashback : null} сум</td>
-                  </tr>
+                      <td>{order.cart ? order.cart.marginality : null} сум</td>
+                      <td>{order.cart ? order.cart.potential_cashback : null} сум</td>
+                      <td>{order.cart ? order.cart.used_cashback : null} сум</td>
+                    </tr>
                   </tbody>
                 </Table>
 
                 <Table responsive bordered>
                   <thead>
-                  <tr>
-                    <th>Общая сумма заказа ( ... )</th>
-                    <th>Сумма заказа после применения скидки</th>
-                    <th>Основание</th>
-                  </tr>
+                    <tr>
+                      <th>Общая сумма заказа ( ... )</th>
+                      <th>Сумма заказа после применения скидки</th>
+                      <th>Основание</th>
+                    </tr>
                   </thead>
 
                   <tbody>
-                  <tr>
-                    <td>
-                      {order.cart
-                        ? order.cart.total
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                        : null}{" "}
-                      сум
-                    </td>
-                    <td>
-                      {order.cart
-                        ? order.cart.total_with_discount
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
-                        : null}{" "}
-                      сум
-                    </td>
-                    {order.cart ? (
+                    <tr>
                       <td>
-                        {order.cart.used_cashback === 0 &&
-                        order.cart.coupon_price !== 0
-                          ? "Купон: " + order.cart.coupon_price
-                          : order.cart.used_cashback !== 0 &&
-                          order.cart.coupon_price === 0
-                            ? "Cashback: " + order.cart.used_cashback
-                            : "Не использовано"}
-                      </td>) : null}
-                  </tr>
+                        {order.cart
+                          ? order.cart.total
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                          : null}{" "}
+                      сум
+                    </td>
+                      <td>
+                        {order.cart
+                          ? order.cart.total_with_discount
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+                          : null}{" "}
+                      сум
+                    </td>
+                      {order.cart ? (
+                        <td>
+                          {order.cart.used_cashback === 0 &&
+                            order.cart.coupon_price !== 0
+                            ? "Купон: " + order.cart.coupon_price
+                            : order.cart.used_cashback !== 0 &&
+                              order.cart.coupon_price === 0
+                              ? "Cashback: " + order.cart.used_cashback
+                              : "Не использовано"}
+                        </td>) : null}
+                    </tr>
                   </tbody>
                 </Table>
 
                 <Table responsive bordered>
                   <thead>
-                  <tr>
-                    <th>Комментарий клиента к заказу</th>
-                    <th>
-                      Комментарий модератора к заказу{" "}
-                      <Button onClick={this.toggleSmall} className="mr-1">
-                        Добавить
+                    <tr>
+                      <th>Комментарий клиента к заказу</th>
+                      <th>
+                        Комментарий модератора к заказу{" "}
+                        <Button onClick={this.toggleSmall} className="mr-1">
+                          Добавить
                       </Button>
-                      <Modal
-                        isOpen={this.state.small}
-                        toggle={this.toggleSmall}
-                        className={"modal-lg " + this.props.className}
-                      >
-                        <ModalHeader toggle={this.toggleSmall}>
-                          Добавить комментарий
+                        <Modal
+                          isOpen={this.state.small}
+                          toggle={this.toggleSmall}
+                          className={"modal-lg " + this.props.className}
+                        >
+                          <ModalHeader toggle={this.toggleSmall}>
+                            Добавить комментарий
                         </ModalHeader>
-                        <Form onSubmit={this.UpdateOrder}>
-                          <ModalBody>
-                            <FormGroup row>
-                              <Col md="3">
-                                <Label htmlFor="select">Примечание</Label>
-                              </Col>
-                              <Col xs="12" md="9">
-                                <Input
-                                  onChange={this.handleChange}
-                                  type="text"
-                                  name="admin_comment"
-                                  value={this.state.admin_comment}
-                                />
-                              </Col>
-                            </FormGroup>
-                          </ModalBody>
-                          <ModalFooter>
-                            <Button
-                              type="submit"
-                              color="primary"
-                              onClick={this.toggleSmall}
-                            >
-                              Сохранить
+                          <Form onSubmit={this.UpdateOrder}>
+                            <ModalBody>
+                              <FormGroup row>
+                                <Col md="3">
+                                  <Label htmlFor="select">Примечание</Label>
+                                </Col>
+                                <Col xs="12" md="9">
+                                  <Input
+                                    onChange={this.handleChange}
+                                    type="text"
+                                    name="admin_comment"
+                                    value={this.state.admin_comment}
+                                  />
+                                </Col>
+                              </FormGroup>
+                            </ModalBody>
+                            <ModalFooter>
+                              <Button
+                                type="submit"
+                                color="primary"
+                                onClick={this.toggleSmall}
+                              >
+                                Сохранить
                             </Button>{" "}
-                            <Button
-                              color="secondary"
-                              onClick={this.toggleSmall}
-                            >
-                              Отменить
+                              <Button
+                                color="secondary"
+                                onClick={this.toggleSmall}
+                              >
+                                Отменить
                             </Button>
-                          </ModalFooter>
-                        </Form>
-                      </Modal>{" "}
-                    </th>
-                  </tr>
+                            </ModalFooter>
+                          </Form>
+                        </Modal>{" "}
+                      </th>
+                    </tr>
                   </thead>
 
                   <tbody>
-                  <tr>
-                    <td>
-                      {order.comment ? order.comment : "Нет комментарий"}
-                    </td>
-                    <td>
-                      {order.admin_comment
-                        ? order.admin_comment
-                        : "Нет комментарий"}
-                    </td>
-                  </tr>
+                    <tr>
+                      <td>
+                        {order.comment ? order.comment : "Нет комментарий"}
+                      </td>
+                      <td>
+                        {order.admin_comment
+                          ? order.admin_comment
+                          : "Нет комментарий"}
+                      </td>
+                    </tr>
                   </tbody>
                 </Table>
               </CardBody>
@@ -1271,7 +1271,7 @@ class OrderPage extends Component {
                       <Label htmlFor="select">Добавить продукт</Label>
                     </Col>
                     <Col xs="12" md="9">
-                      <SearchItems itemFunction={this.ItemCallbackFunction}/>
+                      <SearchItems itemFunction={this.ItemCallbackFunction} />
                       {/* <ProductIntegrationReactSelect
                         itemFunction={this.ItemCallbackFunction}
                         items={this.state.items}
@@ -1392,64 +1392,64 @@ class OrderPage extends Component {
                 <CardBody>
                   <Table responsive bordered>
                     <thead>
-                    <tr>
-                      <th>Артикул</th>
-                      <th>Артикул Контрагента</th>
-                      <th>Изображение</th>
-                      <th>Наименование</th>
-                      <th>Дилер</th>
-                      <th>Отправить</th>
-                      <th>Изменить</th>
-                      <th>Удалить</th>
-                    </tr>
+                      <tr>
+                        <th>Артикул</th>
+                        <th>Артикул Контрагента</th>
+                        <th>Изображение</th>
+                        <th>Наименование</th>
+                        <th>Дилер</th>
+                        <th>Отправить</th>
+                        <th>Изменить</th>
+                        <th>Удалить</th>
+                      </tr>
                     </thead>
 
                     <tbody>
-                    {this.state.filtered_order
-                      ? this.state.filtered_order.map(item => (
-                        <tr key={item.item_shop_id}>
-                          <td>{item.reference}</td>
-                          <td>{item.shop_reference}</td>
-                          <td>
-                            <img src={item.images} alt=""/>
-                          </td>
-                          <td>
-                            <Link
-                              to={{
-                                pathname: `/goods/updateproduct/${item.product_id}`,
-                                updateproduct_id: item.product_id
-                              }}
-                            >
-                              {item.name}
-                            </Link>
-                          </td>
-                          <td>{item.shop_name}</td>
-                          {item.comportal_sended === 0 ? (
+                      {this.state.filtered_order
+                        ? this.state.filtered_order.map(item => (
+                          <tr key={item.item_shop_id}>
+                            <td>{item.reference}</td>
+                            <td>{item.shop_reference}</td>
                             <td>
-                              <ComportalItem
+                              <img src={item.images} alt="" />
+                            </td>
+                            <td>
+                              <Link
+                                to={{
+                                  pathname: `/goods/updateproduct/${item.product_id}`,
+                                  updateproduct_id: item.product_id
+                                }}
+                              >
+                                {item.name}
+                              </Link>
+                            </td>
+                            <td>{item.shop_name}</td>
+                            {item.comportal_sended === 0 ? (
+                              <td>
+                                <ComportalItem
+                                  callback={this.getOrder}
+                                  item_shop_id={item.item_shop_id}
+                                />
+                              </td>
+                            ) : (
+                                <td>Отправлено</td>
+                              )}
+                            <td>
+                              <EditItems
+                                callback={this.getOrder}
+                                item_shop_id={item.item_shop_id}
+                                quantity={item.quantity}
+                              />
+                            </td>
+                            <td>
+                              <DeleteItem
                                 callback={this.getOrder}
                                 item_shop_id={item.item_shop_id}
                               />
                             </td>
-                          ) : (
-                            <td>Отправлено</td>
-                          )}
-                          <td>
-                            <EditItems
-                              callback={this.getOrder}
-                              item_shop_id={item.item_shop_id}
-                              quantity={item.quantity}
-                            />
-                          </td>
-                          <td>
-                            <DeleteItem
-                              callback={this.getOrder}
-                              item_shop_id={item.item_shop_id}
-                            />
-                          </td>
-                        </tr>
-                      ))
-                      : null}
+                          </tr>
+                        ))
+                        : null}
                     </tbody>
                   </Table>
                 </CardBody>
@@ -1466,26 +1466,26 @@ class OrderPage extends Component {
               <CardBody>
                 <Table responsive bordered>
                   <thead>
-                  <tr>
-                    <th>№</th>
-                    <th>Статус</th>
-                    <th>Комментарий</th>
-                    <th>Менеджер</th>
-                    <th>Дата добавления</th>
-                  </tr>
+                    <tr>
+                      <th>№</th>
+                      <th>Статус</th>
+                      <th>Комментарий</th>
+                      <th>Менеджер</th>
+                      <th>Дата добавления</th>
+                    </tr>
                   </thead>
                   <tbody>
-                  {order.history
-                    ? order.history.map((history, i) => (
-                      <tr>
-                        <td>{i + 1}</td>
-                        <td>{history.name}</td>
-                        <td>{history.description}</td>
-                        <td>{history.user ? history.user.first_name + ' ' + history.user.last_name : null}</td>
-                        <td>{history.created_at}</td>
-                      </tr>
-                    ))
-                    : null}
+                    {order.history
+                      ? order.history.map((history, i) => (
+                        <tr>
+                          <td>{i + 1}</td>
+                          <td>{history.name}</td>
+                          <td>{history.description}</td>
+                          <td>{history.user ? history.user.first_name + ' ' + history.user.last_name : null}</td>
+                          <td>{history.created_at}</td>
+                        </tr>
+                      ))
+                      : null}
                   </tbody>
                 </Table>
               </CardBody>
