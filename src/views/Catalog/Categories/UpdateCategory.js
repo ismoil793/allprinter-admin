@@ -89,7 +89,8 @@ class UpdateCategory extends Component {
           uz: response.data.data.name.uz,
           en: response.data.data.name.en,
           slug: response.data.data.slug,
-          image_preview: response.data.data.img.url
+
+          image_preview: response.data.data.img && response.data.data.img.url
             ? response.data.data.img.url
             : null,
           icon_preview: response.data.data.icon
@@ -98,6 +99,8 @@ class UpdateCategory extends Component {
           wicon_preview: response.data.data.wicon
             ? response.data.data.wicon.url
             : null,
+
+
           visible: response.data.data.visible,
           active: response.data.data.active,
           reference: response.data.data.reference,

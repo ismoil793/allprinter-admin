@@ -230,7 +230,6 @@ class Categories extends Component {
                       ? categories.map(category => (
 
                         <tr>
-                          {console.log(category)}
                           <td>{category.id}</td>
                           <td>{category.name.ru}</td>
                           <td>{category.child_count}</td>
