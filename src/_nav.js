@@ -158,7 +158,7 @@ export default {
           url: "/visual/sliders",
           icon: "fa fa-picture-o",
           children: [
-            { 
+            {
               name: "Веб версия",
               url: "/visual/sliders/web",
               icon: "fa fa-globe",

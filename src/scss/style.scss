@@ -3,12 +3,11 @@
 // Import styles
 @import "~@coreui/coreui/scss/coreui.scss";
 // Temp fix for reactstrap
-@import '~@coreui/coreui/scss/_dropdown-menu-right.scss';
+@import "~@coreui/coreui/scss/_dropdown-menu-right.scss";
 // If you want to add something do it here
 @import "custom";
 // ie fixes
 @import "ie-fix";
-
 
 img {
   max-width: 100%;
@@ -16,4 +15,16 @@ img {
 
 .app-header {
   height: 60px;
+}
+
+.sidebar {
+  background-color: #393e46;
+}
+
+// .sidebar .nav-link.active {
+//   background: #20a8d8;
+// }
+
+.sidebar .nav-link.active .nav-icon {
+  color: #fff;
 }

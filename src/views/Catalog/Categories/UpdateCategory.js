@@ -48,6 +48,8 @@ class UpdateCategory extends Component {
       meta_title: "",
       meta_keywords_uz: '',
       meta_title_uz: '',
+      meta_description_ru: '',
+      meta_description_uz: '',
       meta_description_en: '',
       meta_keywords_en: '',
       meta_title_en: '',
@@ -107,7 +109,7 @@ class UpdateCategory extends Component {
           description_ru: response.data.data.description.ru,
           description_uz: response.data.data.description.uz,
           description_en: response.data.data.description.en,
-          meta_description: response.data.data.meta_description.ru,
+          meta_description_ru: response.data.data.meta_description.ru,
           meta_keywords: response.data.data.meta_keywords.ru,
           meta_title: response.data.data.meta_title.ru,
           meta_description_uz: response.data.data.meta_description.uz ? response.data.data.meta_description.uz : '',
@@ -222,6 +224,9 @@ class UpdateCategory extends Component {
     }
     if (this.state.meta_keywords_uz) {
       formData.append("meta_keywords[uz]", this.state.meta_keywords_uz);
+    }
+    if (this.state.meta_description_ru) {
+      formData.append("meta_description[ru]", this.state.meta_description_ru);
     }
     if (this.state.meta_description_uz) {
       formData.append("meta_description[uz]", this.state.meta_description_uz);
@@ -585,9 +590,9 @@ class UpdateCategory extends Component {
                               <Input
                                 type="text"
                                 id="text-input"
-                                name="meta_description"
+                                name="meta_description_ru"
                                 placeholder=""
-                                value={this.state.meta_description}
+                                value={this.state.meta_description_ru}
                                 onChange={this.changeHandler}
                               />
 

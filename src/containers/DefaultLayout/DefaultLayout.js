@@ -1,14 +1,13 @@
 import React, { Component, Suspense } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import * as router from 'react-router-dom';
-import { 
+import {
   Container,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Button,
-
 } from 'reactstrap';
 import Echo from "laravel-echo";
 import Socketio from "socket.io-client";
@@ -39,7 +38,7 @@ const DefaultFooter = React.lazy(() => import('./DefaultFooter'));
 const DefaultHeader = React.lazy(() => import('./DefaultHeader'));
 
 class DefaultLayout extends Component {
- 
+
   constructor(props) {
     super(props);
 
@@ -57,8 +56,8 @@ class DefaultLayout extends Component {
     this.toggleSuccess = this.toggleSuccess.bind(this);
   }
 
-  async componentDidMount () {
-  await  getLoggedUserData()
+  async componentDidMount() {
+    await getLoggedUserData()
       .then(response => {
         const sidebars = response.data.data.sidebars;
         const admin_id = response.data.data.id;
@@ -66,18 +65,18 @@ class DefaultLayout extends Component {
         let tempUrls = [];
 
         let result = keys.map((key) => {
-         
+
           let tempObj = {};
           const firsLevelChildKeys = Object.keys(sidebars[key].childs);
-          
+
           tempObj = sidebars[key].data;
-          if(firsLevelChildKeys.length !== 0) {
+          if (firsLevelChildKeys.length !== 0) {
             tempObj.children = [];
             firsLevelChildKeys.forEach(childKey => {
               let tempObj2 = {};
               const secondLevelChildKeys = Object.keys(sidebars[key].childs[childKey].childs);
-              tempObj2 = sidebars[key].childs[childKey].data;    
-              if(secondLevelChildKeys.length !== 0) {
+              tempObj2 = sidebars[key].childs[childKey].data;
+              if (secondLevelChildKeys.length !== 0) {
                 tempObj2.children = [];
                 secondLevelChildKeys.forEach(grandChildKey => {
                   tempObj2.children.push(sidebars[key].childs[childKey].childs[grandChildKey].data);
@@ -89,15 +88,15 @@ class DefaultLayout extends Component {
           } else if (sidebars[key].data.hasOwnProperty('url')) tempUrls.push(sidebars[key].data.url);
           return tempObj;
         })
-     
-       
+
+
         let final = []
-        for (let i = 0 ; i < result.length ; i++){
-          if(result[i].type === 'admin'){
-          final.push(result[i])
+        for (let i = 0; i < result.length; i++) {
+          if (result[i].type === 'admin') {
+            final.push(result[i])
           }
         }
-       
+
         this.setState({
           sidebars: {
             items: final
@@ -119,7 +118,7 @@ class DefaultLayout extends Component {
         }
       }
     });
-    
+
     if (this.state.admin_id) {
       echo
         .private(`Admin.${this.state.admin_id}`)
@@ -146,7 +145,7 @@ class DefaultLayout extends Component {
     e.preventDefault()
     this.props.history.push('/login')
   }
-  
+
   toggleSuccess() {
     this.setState({
       successModal: !this.state.successModal,
@@ -168,11 +167,11 @@ class DefaultLayout extends Component {
     if (!cookies.get("access_token")) {
       return <Redirect to="/login" />
     }
-    
+
     return (
       <div className="app">
         <Modal isOpen={this.state.successModal} toggle={this.toggleSuccess} centered
-                className={'modal-success '}>
+          className={'modal-success '}>
           <ModalHeader toggle={this.toggleSuccess}>Астериск</ModalHeader>
           <ModalBody>
             {this.state.asteriskType === 1 ? "Открыть карточку пользователя?" : this.state.asteriskType === 2 ? "Абонент в базе не обнаружен. Создать заказ?" : "Что то пошло не так"}
@@ -184,26 +183,26 @@ class DefaultLayout extends Component {
           </ModalFooter>
         </Modal>
         <AppHeader fixed>
-          <Suspense  fallback={this.loading()}>
-            <DefaultHeader onLogout={e=>this.signOut(e)}/>
+          <Suspense fallback={this.loading()}>
+            <DefaultHeader onLogout={e => this.signOut(e)} />
           </Suspense>
         </AppHeader>
         <div className="app-body">
           <AppSidebar fixed display="lg">
-            <Snowfall snowflakeCount={10}/>
+            <Snowfall snowflakeCount={10} />
             <AppSidebarHeader />
             <AppSidebarForm />
             <Suspense>
-            <AppSidebarNav navConfig={this.state.sidebars} {...this.props} router={router}/>
+              <AppSidebarNav navConfig={this.state.sidebars} {...this.props} router={router} />
             </Suspense>
             <AppSidebarFooter />
             <AppSidebarMinimizer />
           </AppSidebar>
           <main className="main">
-            <AppBreadcrumb appRoutes={routes} router={router}/>
+            <AppBreadcrumb appRoutes={routes} router={router} />
             <Container fluid>
               <Suspense fallback={this.loading()}>
-            
+
                 <Switch>
                   {routes.map((route, idx) => {
                     return route.component ? (
@@ -224,7 +223,7 @@ class DefaultLayout extends Component {
           </main>
           <AppAside fixed>
             <Suspense fallback={this.loading()}>
-              
+
               <DefaultAside />
             </Suspense>
           </AppAside>

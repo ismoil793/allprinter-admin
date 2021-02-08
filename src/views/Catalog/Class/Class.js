@@ -93,7 +93,7 @@ class Classes extends Component {
         );
       }
     }
-    let newPaging = paging.length > 35 ? paging.slice(this.state.first, this.state.last) : paging
+    let newPaging = paging.length > 35 || window.innerWidth < 1680 ? paging.slice(this.state.first, this.state.last) : paging
     return newPaging
   };
 
