@@ -16,30 +16,31 @@ class UpdateParentCategory extends React.Component {
   componentDidMount() {
 
     httpGet({
-      url: "api/admin/category", 
+      url: "api/admin/category",
       params: {
         category_id: localStorage.getItem("category_id")
       }
     })
-    .then(response => {
-      this.setState({
-        checked: response.data.data.category.id,
-       });
-    })
-    .catch(error => {
-      console.log(error);
-    });
-
-      httpGet({
-        url: "api/admin/category",
-        params: {
-          type: "recursive"
-        },
-        headers: {
-          "X-Localization": "ru",
-          "Content-Type": "application/json"
-        }
+      .then(response => {
+        console.log('response.data.data.category.id', response.data.data)
+        this.setState({
+          checked: [response.data.data.parent.id],
+        });
       })
+      .catch(error => {
+        console.log(error);
+      });
+
+    httpGet({
+      url: "api/admin/category",
+      params: {
+        type: "recursive"
+      },
+      headers: {
+        "X-Localization": "ru",
+        "Content-Type": "application/json"
+      }
+    })
       .then(response => {
         let categories = response.data.data;
         let nodes = [];
@@ -60,6 +61,7 @@ class UpdateParentCategory extends React.Component {
 
         let result = [];
         result.push(this.props.selected_parent);
+
         this.setState({
           categories: nodes,
           checked: result
